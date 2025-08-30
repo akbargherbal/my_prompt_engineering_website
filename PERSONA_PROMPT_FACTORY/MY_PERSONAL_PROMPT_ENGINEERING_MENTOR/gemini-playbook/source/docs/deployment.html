@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>deployment</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            line-height: 1.6; 
+            color: #333; 
+            background: #fff;
+        }
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        .header { 
+            background: #2c3e50; 
+            color: white; 
+            padding: 1rem 0; 
+            position: sticky; 
+            top: 0; 
+            z-index: 100;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .home-btn { 
+            position: fixed; 
+            top: 20px; 
+            right: 20px; 
+            background: #e74c3c; 
+            color: white; 
+            padding: 12px 16px; 
+            border-radius: 50px; 
+            text-decoration: none; 
+            font-weight: bold; 
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            transition: all 0.3s;
+        }
+        .home-btn:hover { background: #c0392b; transform: translateY(-2px); }
+        .breadcrumb { 
+            background: #ecf0f1; 
+            padding: 10px 0; 
+            margin-bottom: 20px; 
+            font-size: 14px;
+        }
+        .breadcrumb a { color: #3498db; text-decoration: none; }
+        .breadcrumb a:hover { text-decoration: underline; }
+        .content { 
+            background: white; 
+            padding: 2rem; 
+            border-radius: 8px; 
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .file-list { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); 
+            gap: 1rem; 
+            margin: 2rem 0; 
+        }
+        .file-item { 
+            padding: 1rem; 
+            border: 1px solid #ddd; 
+            border-radius: 8px; 
+            background: #f8f9fa;
+            transition: all 0.3s;
+        }
+        .file-item:hover { 
+            transform: translateY(-2px); 
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15); 
+        }
+        .file-item a { 
+            color: #2c3e50; 
+            text-decoration: none; 
+            font-weight: 500; 
+            display: block;
+        }
+        .file-item a:hover { color: #3498db; }
+        .file-type { 
+            font-size: 12px; 
+            color: #7f8c8d; 
+            margin-top: 5px; 
+        }
+        .tree { font-family: monospace; white-space: pre-line; background: #f8f9fa; padding: 1rem; border-radius: 8px; }
+        pre { background: #2c3e50; color: #ecf0f1; padding: 1rem; border-radius: 8px; overflow-x: auto; }
+        code { background: #ecf0f1; padding: 2px 4px; border-radius: 4px; font-size: 0.9em; }
+        pre code { background: none; padding: 0; }
+        h1, h2, h3, h4, h5, h6 { color: #2c3e50; margin: 1.5rem 0 1rem 0; }
+        h1 { border-bottom: 3px solid #3498db; padding-bottom: 10px; }
+        a { color: #3498db; }
+        a:hover { color: #2980b9; }
+        .footer { 
+            text-align: center; 
+            padding: 2rem; 
+            color: #7f8c8d; 
+            border-top: 1px solid #ecf0f1; 
+            margin-top: 3rem; 
+        }
+        @media (max-width: 768px) {
+            .container { padding: 10px; }
+            .file-list { grid-template-columns: 1fr; }
+            .content { padding: 1rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="container">
+            <h1>deployment</h1>
+        </div>
+    </div>
+    <a href="/" class="home-btn">🏠 Home</a>
+    <div class="container">
+        <div class="breadcrumb">
+            <a href="/">Home</a> / <a href="/PERSONA_PROMPT_FACTORY/">PERSONA_PROMPT_FACTORY</a> / <a href="/PERSONA_PROMPT_FACTORY/MY_PERSONAL_PROMPT_ENGINEERING_MENTOR/">MY_PERSONAL_PROMPT_ENGINEERING_MENTOR</a> / <a href="/PERSONA_PROMPT_FACTORY/MY_PERSONAL_PROMPT_ENGINEERING_MENTOR/gemini-playbook/">gemini-playbook</a> / <a href="/PERSONA_PROMPT_FACTORY/MY_PERSONAL_PROMPT_ENGINEERING_MENTOR/gemini-playbook/source/">source</a> / <a href="/PERSONA_PROMPT_FACTORY/MY_PERSONAL_PROMPT_ENGINEERING_MENTOR/gemini-playbook/source/docs/">docs</a>
+        </div>
+        <div class="content">
+            <h1 id="gemini-cli-execution-and-deployment">Gemini CLI Execution and Deployment</h1>
+<p>This document describes how to run Gemini CLI and explains the deployment architecture that Gemini CLI uses.</p>
+<h2 id="running-gemini-cli">Running Gemini CLI</h2>
+<p>There are several ways to run Gemini CLI. The option you choose depends on how you intend to use Gemini CLI.</p>
+<hr />
+<h3 id="1-standard-installation-recommended-for-typical-users">1. Standard installation (Recommended for typical users)</h3>
+<p>This is the recommended way for end-users to install Gemini CLI. It involves downloading the Gemini CLI package from the NPM registry.</p>
+<ul>
+<li><strong>Global install:</strong></li>
+</ul>
+<p><code>bash
+  npm install -g @google/gemini-cli</code></p>
+<p>Then, run the CLI from anywhere:</p>
+<p><code>bash
+  gemini</code></p>
+<ul>
+<li><strong>NPX execution:</strong></li>
+</ul>
+<p><code>bash
+  # Execute the latest version from NPM without a global install
+  npx @google/gemini-cli</code></p>
+<hr />
+<h3 id="2-running-in-a-sandbox-dockerpodman">2. Running in a sandbox (Docker/Podman)</h3>
+<p>For security and isolation, Gemini CLI can be run inside a container. This is the default way that the CLI executes tools that might have side effects.</p>
+<ul>
+<li><strong>Directly from the Registry:</strong>
+  You can run the published sandbox image directly. This is useful for environments where you only have Docker and want to run the CLI.
+  <code>bash
+  # Run the published sandbox image
+  docker run --rm -it us-docker.pkg.dev/gemini-code-dev/gemini-cli/sandbox:0.1.1</code></li>
+<li><strong>Using the <code>--sandbox</code> flag:</strong>
+  If you have Gemini CLI installed locally (using the standard installation described above), you can instruct it to run inside the sandbox container.
+  <code>bash
+  gemini --sandbox -y -p "your prompt here"</code></li>
+</ul>
+<hr />
+<h3 id="3-running-from-source-recommended-for-gemini-cli-contributors">3. Running from source (Recommended for Gemini CLI contributors)</h3>
+<p>Contributors to the project will want to run the CLI directly from the source code.</p>
+<ul>
+<li><strong>Development Mode:</strong>
+  This method provides hot-reloading and is useful for active development.
+  <code>bash
+  # From the root of the repository
+  npm run start</code></li>
+<li><strong>Production-like mode (Linked package):</strong>
+  This method simulates a global installation by linking your local package. It's useful for testing a local build in a production workflow.</li>
+</ul>
+<p>```bash
+  # Link the local cli package to your global node_modules
+  npm link packages/cli</p>
+<p># Now you can run your local version using the <code>gemini</code> command
+  gemini
+  ```</p>
+<hr />
+<h3 id="4-running-the-latest-gemini-cli-commit-from-github">4. Running the latest Gemini CLI commit from GitHub</h3>
+<p>You can run the most recently committed version of Gemini CLI directly from the GitHub repository. This is useful for testing features still in development.</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Execute the CLI directly from the main branch on GitHub</span>
+npx<span class="w"> </span>https://github.com/google-gemini/gemini-cli
+</code></pre></div>
+
+<h2 id="deployment-architecture">Deployment architecture</h2>
+<p>The execution methods described above are made possible by the following architectural components and processes:</p>
+<p><strong>NPM packages</strong></p>
+<p>Gemini CLI project is a monorepo that publishes two core packages to the NPM registry:</p>
+<ul>
+<li><code>@google/gemini-cli-core</code>: The backend, handling logic and tool execution.</li>
+<li><code>@google/gemini-cli</code>: The user-facing frontend.</li>
+</ul>
+<p>These packages are used when performing the standard installation and when running Gemini CLI from the source.</p>
+<p><strong>Build and packaging processes</strong></p>
+<p>There are two distinct build processes used, depending on the distribution channel:</p>
+<ul>
+<li>
+<p><strong>NPM publication:</strong> For publishing to the NPM registry, the TypeScript source code in <code>@google/gemini-cli-core</code> and <code>@google/gemini-cli</code> is transpiled into standard JavaScript using the TypeScript Compiler (<code>tsc</code>). The resulting <code>dist/</code> directory is what gets published in the NPM package. This is a standard approach for TypeScript libraries.</p>
+</li>
+<li>
+<p><strong>GitHub <code>npx</code> execution:</strong> When running the latest version of Gemini CLI directly from GitHub, a different process is triggered by the <code>prepare</code> script in <code>package.json</code>. This script uses <code>esbuild</code> to bundle the entire application and its dependencies into a single, self-contained JavaScript file. This bundle is created on-the-fly on the user's machine and is not checked into the repository.</p>
+</li>
+</ul>
+<p><strong>Docker sandbox image</strong></p>
+<p>The Docker-based execution method is supported by the <code>gemini-cli-sandbox</code> container image. This image is published to a container registry and contains a pre-installed, global version of Gemini CLI.</p>
+<h2 id="release-process">Release process</h2>
+<p>The release process is automated through GitHub Actions. The release workflow performs the following actions:</p>
+<ol>
+<li>Build the NPM packages using <code>tsc</code>.</li>
+<li>Publish the NPM packages to the artifact registry.</li>
+<li>Create GitHub releases with bundled assets.</li>
+</ol>
+        </div>
+        <div class="footer">
+            Generated on 2025-08-30 07:28:47
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>extension</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            line-height: 1.6; 
+            color: #333; 
+            background: #fff;
+        }
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        .header { 
+            background: #2c3e50; 
+            color: white; 
+            padding: 1rem 0; 
+            position: sticky; 
+            top: 0; 
+            z-index: 100;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .home-btn { 
+            position: fixed; 
+            top: 20px; 
+            right: 20px; 
+            background: #e74c3c; 
+            color: white; 
+            padding: 12px 16px; 
+            border-radius: 50px; 
+            text-decoration: none; 
+            font-weight: bold; 
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            transition: all 0.3s;
+        }
+        .home-btn:hover { background: #c0392b; transform: translateY(-2px); }
+        .breadcrumb { 
+            background: #ecf0f1; 
+            padding: 10px 0; 
+            margin-bottom: 20px; 
+            font-size: 14px;
+        }
+        .breadcrumb a { color: #3498db; text-decoration: none; }
+        .breadcrumb a:hover { text-decoration: underline; }
+        .content { 
+            background: white; 
+            padding: 2rem; 
+            border-radius: 8px; 
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .file-list { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); 
+            gap: 1rem; 
+            margin: 2rem 0; 
+        }
+        .file-item { 
+            padding: 1rem; 
+            border: 1px solid #ddd; 
+            border-radius: 8px; 
+            background: #f8f9fa;
+            transition: all 0.3s;
+        }
+        .file-item:hover { 
+            transform: translateY(-2px); 
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15); 
+        }
+        .file-item a { 
+            color: #2c3e50; 
+            text-decoration: none; 
+            font-weight: 500; 
+            display: block;
+        }
+        .file-item a:hover { color: #3498db; }
+        .file-type { 
+            font-size: 12px; 
+            color: #7f8c8d; 
+            margin-top: 5px; 
+        }
+        .tree { font-family: monospace; white-space: pre-line; background: #f8f9fa; padding: 1rem; border-radius: 8px; }
+        pre { background: #2c3e50; color: #ecf0f1; padding: 1rem; border-radius: 8px; overflow-x: auto; }
+        code { background: #ecf0f1; padding: 2px 4px; border-radius: 4px; font-size: 0.9em; }
+        pre code { background: none; padding: 0; }
+        h1, h2, h3, h4, h5, h6 { color: #2c3e50; margin: 1.5rem 0 1rem 0; }
+        h1 { border-bottom: 3px solid #3498db; padding-bottom: 10px; }
+        a { color: #3498db; }
+        a:hover { color: #2980b9; }
+        .footer { 
+            text-align: center; 
+            padding: 2rem; 
+            color: #7f8c8d; 
+            border-top: 1px solid #ecf0f1; 
+            margin-top: 3rem; 
+        }
+        @media (max-width: 768px) {
+            .container { padding: 10px; }
+            .file-list { grid-template-columns: 1fr; }
+            .content { padding: 1rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="container">
+            <h1>extension</h1>
+        </div>
+    </div>
+    <a href="/" class="home-btn">🏠 Home</a>
+    <div class="container">
+        <div class="breadcrumb">
+            <a href="/">Home</a> / <a href="/PERSONA_PROMPT_FACTORY/">PERSONA_PROMPT_FACTORY</a> / <a href="/PERSONA_PROMPT_FACTORY/MY_PERSONAL_PROMPT_ENGINEERING_MENTOR/">MY_PERSONAL_PROMPT_ENGINEERING_MENTOR</a> / <a href="/PERSONA_PROMPT_FACTORY/MY_PERSONAL_PROMPT_ENGINEERING_MENTOR/gemini-playbook/">gemini-playbook</a> / <a href="/PERSONA_PROMPT_FACTORY/MY_PERSONAL_PROMPT_ENGINEERING_MENTOR/gemini-playbook/source/">source</a> / <a href="/PERSONA_PROMPT_FACTORY/MY_PERSONAL_PROMPT_ENGINEERING_MENTOR/gemini-playbook/source/docs/">docs</a>
+        </div>
+        <div class="content">
+            <h1 id="gemini-cli-extensions">Gemini CLI Extensions</h1>
+<p>Gemini CLI supports extensions that can be used to configure and extend its functionality.</p>
+<h2 id="how-it-works">How it works</h2>
+<p>On startup, Gemini CLI looks for extensions in two locations:</p>
+<ol>
+<li><code>&lt;workspace&gt;/.gemini/extensions</code></li>
+<li><code>&lt;home&gt;/.gemini/extensions</code></li>
+</ol>
+<p>Gemini CLI loads all extensions from both locations. If an extension with the same name exists in both locations, the extension in the workspace directory takes precedence.</p>
+<p>Within each location, individual extensions exist as a directory that contains a <code>gemini-extension.json</code> file. For example:</p>
+<p><code>&lt;workspace&gt;/.gemini/extensions/my-extension/gemini-extension.json</code></p>
+<h3 id="gemini-extensionjson"><code>gemini-extension.json</code></h3>
+<p>The <code>gemini-extension.json</code> file contains the configuration for the extension. The file has the following structure:</p>
+<div class="codehilite"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;my-extension&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;version&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1.0.0&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;mcpServers&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;my-server&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;command&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;node my-server.js&quot;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;contextFileName&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;GEMINI.md&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;excludeTools&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;run_shell_command&quot;</span><span class="p">]</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<ul>
+<li><code>name</code>: The name of the extension. This is used to uniquely identify the extension and for conflict resolution when extension commands have the same name as user or project commands.</li>
+<li><code>version</code>: The version of the extension.</li>
+<li><code>mcpServers</code>: A map of MCP servers to configure. The key is the name of the server, and the value is the server configuration. These servers will be loaded on startup just like MCP servers configured in a <a href="./cli/configuration.md"><code>settings.json</code> file</a>. If both an extension and a <code>settings.json</code> file configure an MCP server with the same name, the server defined in the <code>settings.json</code> file takes precedence.</li>
+<li><code>contextFileName</code>: The name of the file that contains the context for the extension. This will be used to load the context from the workspace. If this property is not used but a <code>GEMINI.md</code> file is present in your extension directory, then that file will be loaded.</li>
+<li><code>excludeTools</code>: An array of tool names to exclude from the model. You can also specify command-specific restrictions for tools that support it, like the <code>run_shell_command</code> tool. For example, <code>"excludeTools": ["run_shell_command(rm -rf)"]</code> will block the <code>rm -rf</code> command.</li>
+</ul>
+<p>When Gemini CLI starts, it loads all the extensions and merges their configurations. If there are any conflicts, the workspace configuration takes precedence.</p>
+<h2 id="extension-commands">Extension Commands</h2>
+<p>Extensions can provide <a href="./cli/commands.md#custom-commands">custom commands</a> by placing TOML files in a <code>commands/</code> subdirectory within the extension directory. These commands follow the same format as user and project custom commands and use standard naming conventions.</p>
+<h3 id="example">Example</h3>
+<p>An extension named <code>gcp</code> with the following structure:</p>
+<div class="codehilite"><pre><span></span><code><span class="na">.gemini</span><span class="err">/</span><span class="no">extensions</span><span class="err">/</span><span class="no">gcp</span><span class="err">/</span>
+<span class="err">├──</span><span class="w"> </span><span class="nf">gemini-extension.json</span>
+<span class="err">└──</span><span class="w"> </span><span class="nf">commands</span><span class="err">/</span>
+<span class="w">    </span><span class="err">├──</span><span class="w"> </span><span class="nf">deploy.toml</span>
+<span class="w">    </span><span class="err">└──</span><span class="w"> </span><span class="nf">gcs</span><span class="err">/</span>
+<span class="w">        </span><span class="err">└──</span><span class="w"> </span><span class="nf">sync.toml</span>
+</code></pre></div>
+
+<p>Would provide these commands:</p>
+<ul>
+<li><code>/deploy</code> - Shows as <code>[gcp] Custom command from deploy.toml</code> in help</li>
+<li><code>/gcs:sync</code> - Shows as <code>[gcp] Custom command from sync.toml</code> in help</li>
+</ul>
+<h3 id="conflict-resolution">Conflict Resolution</h3>
+<p>Extension commands have the lowest precedence. When a conflict occurs with user or project commands:</p>
+<ol>
+<li><strong>No conflict</strong>: Extension command uses its natural name (e.g., <code>/deploy</code>)</li>
+<li><strong>With conflict</strong>: Extension command is renamed with the extension prefix (e.g., <code>/gcp.deploy</code>)</li>
+</ol>
+<p>For example, if both a user and the <code>gcp</code> extension define a <code>deploy</code> command:</p>
+<ul>
+<li><code>/deploy</code> - Executes the user's deploy command</li>
+<li><code>/gcp.deploy</code> - Executes the extension's deploy command (marked with <code>[gcp]</code> tag)</li>
+</ul>
+        </div>
+        <div class="footer">
+            Generated on 2025-08-30 07:28:47
+        </div>
+    </div>
+</body>
+</html>

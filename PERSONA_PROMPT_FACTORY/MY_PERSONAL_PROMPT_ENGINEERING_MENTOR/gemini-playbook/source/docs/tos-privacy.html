@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>tos-privacy</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            line-height: 1.6; 
+            color: #333; 
+            background: #fff;
+        }
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        .header { 
+            background: #2c3e50; 
+            color: white; 
+            padding: 1rem 0; 
+            position: sticky; 
+            top: 0; 
+            z-index: 100;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .home-btn { 
+            position: fixed; 
+            top: 20px; 
+            right: 20px; 
+            background: #e74c3c; 
+            color: white; 
+            padding: 12px 16px; 
+            border-radius: 50px; 
+            text-decoration: none; 
+            font-weight: bold; 
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            transition: all 0.3s;
+        }
+        .home-btn:hover { background: #c0392b; transform: translateY(-2px); }
+        .breadcrumb { 
+            background: #ecf0f1; 
+            padding: 10px 0; 
+            margin-bottom: 20px; 
+            font-size: 14px;
+        }
+        .breadcrumb a { color: #3498db; text-decoration: none; }
+        .breadcrumb a:hover { text-decoration: underline; }
+        .content { 
+            background: white; 
+            padding: 2rem; 
+            border-radius: 8px; 
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .file-list { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); 
+            gap: 1rem; 
+            margin: 2rem 0; 
+        }
+        .file-item { 
+            padding: 1rem; 
+            border: 1px solid #ddd; 
+            border-radius: 8px; 
+            background: #f8f9fa;
+            transition: all 0.3s;
+        }
+        .file-item:hover { 
+            transform: translateY(-2px); 
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15); 
+        }
+        .file-item a { 
+            color: #2c3e50; 
+            text-decoration: none; 
+            font-weight: 500; 
+            display: block;
+        }
+        .file-item a:hover { color: #3498db; }
+        .file-type { 
+            font-size: 12px; 
+            color: #7f8c8d; 
+            margin-top: 5px; 
+        }
+        .tree { font-family: monospace; white-space: pre-line; background: #f8f9fa; padding: 1rem; border-radius: 8px; }
+        pre { background: #2c3e50; color: #ecf0f1; padding: 1rem; border-radius: 8px; overflow-x: auto; }
+        code { background: #ecf0f1; padding: 2px 4px; border-radius: 4px; font-size: 0.9em; }
+        pre code { background: none; padding: 0; }
+        h1, h2, h3, h4, h5, h6 { color: #2c3e50; margin: 1.5rem 0 1rem 0; }
+        h1 { border-bottom: 3px solid #3498db; padding-bottom: 10px; }
+        a { color: #3498db; }
+        a:hover { color: #2980b9; }
+        .footer { 
+            text-align: center; 
+            padding: 2rem; 
+            color: #7f8c8d; 
+            border-top: 1px solid #ecf0f1; 
+            margin-top: 3rem; 
+        }
+        @media (max-width: 768px) {
+            .container { padding: 10px; }
+            .file-list { grid-template-columns: 1fr; }
+            .content { padding: 1rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="container">
+            <h1>tos-privacy</h1>
+        </div>
+    </div>
+    <a href="/" class="home-btn">🏠 Home</a>
+    <div class="container">
+        <div class="breadcrumb">
+            <a href="/">Home</a> / <a href="/PERSONA_PROMPT_FACTORY/">PERSONA_PROMPT_FACTORY</a> / <a href="/PERSONA_PROMPT_FACTORY/MY_PERSONAL_PROMPT_ENGINEERING_MENTOR/">MY_PERSONAL_PROMPT_ENGINEERING_MENTOR</a> / <a href="/PERSONA_PROMPT_FACTORY/MY_PERSONAL_PROMPT_ENGINEERING_MENTOR/gemini-playbook/">gemini-playbook</a> / <a href="/PERSONA_PROMPT_FACTORY/MY_PERSONAL_PROMPT_ENGINEERING_MENTOR/gemini-playbook/source/">source</a> / <a href="/PERSONA_PROMPT_FACTORY/MY_PERSONAL_PROMPT_ENGINEERING_MENTOR/gemini-playbook/source/docs/">docs</a>
+        </div>
+        <div class="content">
+            <h1 id="gemini-cli-terms-of-service-and-privacy-notice">Gemini CLI: Terms of Service and Privacy Notice</h1>
+<p>Gemini CLI is an open-source tool that lets you interact with Google's powerful language models directly from your command-line interface. The Terms of Service and Privacy Notices that apply to your usage of the Gemini CLI depend on the type of account you use to authenticate with Google.</p>
+<p>This article outlines the specific terms and privacy policies applicable for different account types and authentication methods. Note: See <a href="./quota-and-pricing.md">quotas and pricing</a> for the quota and pricing details that apply to your usage of the Gemini CLI.</p>
+<h2 id="how-to-determine-your-authentication-method">How to determine your authentication method</h2>
+<p>Your authentication method refers to the method you use to log into and access the Gemini CLI. There are four ways to authenticate:</p>
+<ul>
+<li>Logging in with your Google account to Gemini Code Assist for Individuals</li>
+<li>Logging in with your Google account to Gemini Code Assist for Workspace, Standard, or Enterprise Users</li>
+<li>Using an API key with Gemini Developer</li>
+<li>Using an API key with Vertex AI GenAI API</li>
+</ul>
+<p>For each of these four methods of authentication, different Terms of Service and Privacy Notices may apply.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Authentication</th>
+<th style="text-align: left;">Account</th>
+<th style="text-align: left;">Terms of Service</th>
+<th style="text-align: left;">Privacy Notice</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Gemini Code Assist via Google</td>
+<td style="text-align: left;">Individual</td>
+<td style="text-align: left;"><a href="https://policies.google.com/terms?hl=en-US">Google Terms of Service</a></td>
+<td style="text-align: left;"><a href="https://developers.google.com/gemini-code-assist/resources/privacy-notice-gemini-code-assist-individuals">Gemini Code Assist Privacy Notice for Individuals</a></td>
+</tr>
+<tr>
+<td style="text-align: left;">Gemini Code Assist via Google</td>
+<td style="text-align: left;">Standard/Enterprise</td>
+<td style="text-align: left;"><a href="https://cloud.google.com/terms">Google Cloud Platform Terms of Service</a></td>
+<td style="text-align: left;"><a href="https://cloud.google.com/gemini/docs/codeassist/security-privacy-compliance#standard_and_enterprise_data_protection_and_privacy">Gemini Code Assist Privacy Notice for Standard and Enterprise</a></td>
+</tr>
+<tr>
+<td style="text-align: left;">Gemini Developer API</td>
+<td style="text-align: left;">Unpaid</td>
+<td style="text-align: left;"><a href="https://ai.google.dev/gemini-api/terms#unpaid-services">Gemini API Terms of Service - Unpaid Services</a></td>
+<td style="text-align: left;"><a href="https://policies.google.com/privacy">Google Privacy Policy</a></td>
+</tr>
+<tr>
+<td style="text-align: left;">Gemini Developer API</td>
+<td style="text-align: left;">Paid</td>
+<td style="text-align: left;"><a href="https://ai.google.dev/gemini-api/terms#paid-services">Gemini API Terms of Service - Paid Services</a></td>
+<td style="text-align: left;"><a href="https://policies.google.com/privacy">Google Privacy Policy</a></td>
+</tr>
+<tr>
+<td style="text-align: left;">Vertex AI Gen API</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><a href="https://cloud.google.com/terms/service-terms/">Google Cloud Platform Service Terms</a></td>
+<td style="text-align: left;"><a href="https://cloud.google.com/terms/cloud-privacy-notice">Google Cloud Privacy Notice</a></td>
+</tr>
+</tbody>
+</table>
+<h2 id="1-if-you-have-logged-in-with-your-google-account-to-gemini-code-assist-for-individuals">1. If you have logged in with your Google account to Gemini Code Assist for Individuals</h2>
+<p>For users who use their Google account to access <a href="https://developers.google.com/gemini-code-assist/docs/overview#supported-features-gca">Gemini Code Assist for Individuals</a>, these Terms of Service and Privacy Notice documents apply:</p>
+<ul>
+<li><strong>Terms of Service:</strong> Your use of the Gemini CLI is governed by the <a href="https://policies.google.com/terms?hl=en-US">Google Terms of Service</a>.</li>
+<li><strong>Privacy Notice:</strong> The collection and use of your data is described in the <a href="https://developers.google.com/gemini-code-assist/resources/privacy-notice-gemini-code-assist-individuals">Gemini Code Assist Privacy Notice for Individuals</a>.</li>
+</ul>
+<h2 id="2-if-you-have-logged-in-with-your-google-account-to-gemini-code-assist-for-workspace-standard-or-enterprise-users">2. If you have logged in with your Google account to Gemini Code Assist for Workspace, Standard, or Enterprise Users</h2>
+<p>For users who use their Google account to access the <a href="https://cloud.google.com/gemini/docs/codeassist/overview#editions-overview">Standard or Enterprise edition</a> of Gemini Code Assist, these Terms of Service and Privacy Notice documents apply:</p>
+<ul>
+<li><strong>Terms of Service:</strong> Your use of the Gemini CLI is governed by the <a href="https://cloud.google.com/terms">Google Cloud Platform Terms of Service</a>.</li>
+<li><strong>Privacy Notice:</strong> The collection and use of your data is described in the <a href="https://cloud.google.com/gemini/docs/codeassist/security-privacy-compliance#standard_and_enterprise_data_protection_and_privacy">Gemini Code Assist Privacy Notices for Standard and Enterprise Users</a>.</li>
+</ul>
+<h2 id="3-if-you-have-logged-in-with-a-gemini-api-key-to-the-gemini-developer-api">3. If you have logged in with a Gemini API key to the Gemini Developer API</h2>
+<p>If you are using a Gemini API key for authentication with the <a href="https://ai.google.dev/gemini-api/docs">Gemini Developer API</a>, these Terms of Service and Privacy Notice documents apply:</p>
+<ul>
+<li><strong>Terms of Service:</strong> Your use of the Gemini CLI is governed by the <a href="https://ai.google.dev/gemini-api/terms">Gemini API Terms of Service</a>. These terms may differ depending on whether you are using an unpaid or paid service:</li>
+<li>For unpaid services, refer to the <a href="https://ai.google.dev/gemini-api/terms#unpaid-services">Gemini API Terms of Service - Unpaid Services</a>.</li>
+<li>For paid services, refer to the <a href="https://ai.google.dev/gemini-api/terms#paid-services">Gemini API Terms of Service - Paid Services</a>.</li>
+<li><strong>Privacy Notice:</strong> The collection and use of your data is described in the <a href="https://policies.google.com/privacy">Google Privacy Policy</a>.</li>
+</ul>
+<h2 id="4-if-you-have-logged-in-with-a-gemini-api-key-to-the-vertex-ai-genai-api">4. If you have logged in with a Gemini API key to the Vertex AI GenAI API</h2>
+<p>If you are using a Gemini API key for authentication with a <a href="https://cloud.google.com/vertex-ai/generative-ai/docs/reference/rest">Vertex AI GenAI API</a> backend, these Terms of Service and Privacy Notice documents apply:</p>
+<ul>
+<li><strong>Terms of Service:</strong> Your use of the Gemini CLI is governed by the <a href="https://cloud.google.com/terms/service-terms/">Google Cloud Platform Service Terms</a>.</li>
+<li><strong>Privacy Notice:</strong> The collection and use of your data is described in the <a href="https://cloud.google.com/terms/cloud-privacy-notice">Google Cloud Privacy Notice</a>.</li>
+</ul>
+<h3 id="usage-statistics-opt-out">Usage Statistics Opt-Out</h3>
+<p>You may opt-out from sending Usage Statistics to Google by following the instructions available here: <a href="./cli/configuration.md#usage-statistics">Usage Statistics Configuration</a>.</p>
+<h2 id="frequently-asked-questions-faq-for-the-gemini-cli">Frequently Asked Questions (FAQ) for the Gemini CLI</h2>
+<h3 id="1-is-my-code-including-prompts-and-answers-used-to-train-googles-models">1. Is my code, including prompts and answers, used to train Google's models?</h3>
+<p>Whether your code, including prompts and answers, is used to train Google's models depends on the type of authentication method you use and your account type.</p>
+<p>By default (if you have not opted out):</p>
+<ul>
+<li><strong>Google account with Gemini Code Assist for Individuals</strong>: Yes. When you use your personal Google account, the <a href="https://developers.google.com/gemini-code-assist/resources/privacy-notice-gemini-code-assist-individuals">Gemini Code Assist Privacy Notice for Individuals</a> applies. Under this notice,
+  your <strong>prompts, answers, and related code are collected</strong> and may be used to improve Google's products, including for model training.</li>
+<li><strong>Google account with Gemini Code Assist for Workspace, Standard, or Enterprise</strong>: No. For these accounts, your data is governed by the <a href="https://cloud.google.com/gemini/docs/codeassist/security-privacy-compliance#standard_and_enterprise_data_protection_and_privacy">Gemini Code Assist Privacy Notices</a> terms, which treat your inputs as confidential. Your <strong>prompts, answers, and related code are not collected</strong> and are not used to train models.</li>
+<li><strong>Gemini API key via the Gemini Developer API</strong>: Whether your code is collected or used depends on whether you are using an unpaid or paid service.</li>
+<li><strong>Unpaid services</strong>: Yes. When you use the Gemini API key via the Gemini Developer API with an unpaid service, the <a href="https://ai.google.dev/gemini-api/terms#unpaid-services">Gemini API Terms of Service - Unpaid Services</a> terms apply. Under this notice, your <strong>prompts, answers, and related code are collected</strong> and may be used to improve Google's products, including for model training.</li>
+<li><strong>Paid services</strong>: No. When you use the Gemini API key via the Gemini Developer API with a paid service, the <a href="https://ai.google.dev/gemini-api/terms#paid-services">Gemini API Terms of Service - Paid Services</a> terms apply, which treats your inputs as confidential. Your <strong>prompts, answers, and related code are not collected</strong> and are not used to train models.</li>
+<li><strong>Gemini API key via the Vertex AI GenAI API</strong>: No. For these accounts, your data is governed by the <a href="https://cloud.google.com/terms/cloud-privacy-notice">Google Cloud Privacy Notice</a> terms, which treat your inputs as confidential. Your <strong>prompts, answers, and related code are not collected</strong> and are not used to train models.</li>
+</ul>
+<p>For more information about opting out, refer to the next question.</p>
+<h3 id="2-what-are-usage-statistics-and-what-does-the-opt-out-control">2. What are Usage Statistics and what does the opt-out control?</h3>
+<p>The <strong>Usage Statistics</strong> setting is the single control for all optional data collection in the Gemini CLI.</p>
+<p>The data it collects depends on your account and authentication type:</p>
+<ul>
+<li><strong>Google account with Gemini Code Assist for Individuals</strong>: When enabled, this setting allows Google to collect both anonymous telemetry (for example, commands run and performance metrics) and <strong>your prompts and answers, including code,</strong> for model improvement.</li>
+<li><strong>Google account with Gemini Code Assist for Workspace, Standard, or Enterprise</strong>: This setting only controls the collection of anonymous telemetry. Your prompts and answers, including code, are never collected, regardless of this setting.</li>
+<li><strong>Gemini API key via the Gemini Developer API</strong>:
+  <strong>Unpaid services</strong>: When enabled, this setting allows Google to collect both anonymous telemetry (like commands run and performance metrics) and <strong>your prompts and answers, including code,</strong> for model improvement. When disabled we will use your data as described in <a href="https://ai.google.dev/gemini-api/terms#data-use-unpaid">How Google Uses Your Data</a>.
+  <strong>Paid services</strong>: This setting only controls the collection of anonymous telemetry. Google logs prompts and responses for a limited period of time, solely for the purpose of detecting violations of the Prohibited Use Policy and any required legal or regulatory disclosures.</li>
+<li><strong>Gemini API key via the Vertex AI GenAI API:</strong> This setting only controls the collection of anonymous telemetry. Your prompts and answers, including code, are never collected, regardless of this setting.</li>
+</ul>
+<p>Please refer to the Privacy Notice that applies to your authentication method for more information about what data is collected and how this data is used.</p>
+<p>You can disable Usage Statistics for any account type by following the instructions in the <a href="./cli/configuration.md#usage-statistics">Usage Statistics Configuration</a> documentation.</p>
+        </div>
+        <div class="footer">
+            Generated on 2025-08-30 07:28:47
+        </div>
+    </div>
+</body>
+</html>

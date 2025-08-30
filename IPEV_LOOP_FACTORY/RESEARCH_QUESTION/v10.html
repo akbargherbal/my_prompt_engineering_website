@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>v10</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            line-height: 1.6; 
+            color: #333; 
+            background: #fff;
+        }
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        .header { 
+            background: #2c3e50; 
+            color: white; 
+            padding: 1rem 0; 
+            position: sticky; 
+            top: 0; 
+            z-index: 100;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .home-btn { 
+            position: fixed; 
+            top: 20px; 
+            right: 20px; 
+            background: #e74c3c; 
+            color: white; 
+            padding: 12px 16px; 
+            border-radius: 50px; 
+            text-decoration: none; 
+            font-weight: bold; 
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            transition: all 0.3s;
+        }
+        .home-btn:hover { background: #c0392b; transform: translateY(-2px); }
+        .breadcrumb { 
+            background: #ecf0f1; 
+            padding: 10px 0; 
+            margin-bottom: 20px; 
+            font-size: 14px;
+        }
+        .breadcrumb a { color: #3498db; text-decoration: none; }
+        .breadcrumb a:hover { text-decoration: underline; }
+        .content { 
+            background: white; 
+            padding: 2rem; 
+            border-radius: 8px; 
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .file-list { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); 
+            gap: 1rem; 
+            margin: 2rem 0; 
+        }
+        .file-item { 
+            padding: 1rem; 
+            border: 1px solid #ddd; 
+            border-radius: 8px; 
+            background: #f8f9fa;
+            transition: all 0.3s;
+        }
+        .file-item:hover { 
+            transform: translateY(-2px); 
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15); 
+        }
+        .file-item a { 
+            color: #2c3e50; 
+            text-decoration: none; 
+            font-weight: 500; 
+            display: block;
+        }
+        .file-item a:hover { color: #3498db; }
+        .file-type { 
+            font-size: 12px; 
+            color: #7f8c8d; 
+            margin-top: 5px; 
+        }
+        .tree { font-family: monospace; white-space: pre-line; background: #f8f9fa; padding: 1rem; border-radius: 8px; }
+        pre { background: #2c3e50; color: #ecf0f1; padding: 1rem; border-radius: 8px; overflow-x: auto; }
+        code { background: #ecf0f1; padding: 2px 4px; border-radius: 4px; font-size: 0.9em; }
+        pre code { background: none; padding: 0; }
+        h1, h2, h3, h4, h5, h6 { color: #2c3e50; margin: 1.5rem 0 1rem 0; }
+        h1 { border-bottom: 3px solid #3498db; padding-bottom: 10px; }
+        a { color: #3498db; }
+        a:hover { color: #2980b9; }
+        .footer { 
+            text-align: center; 
+            padding: 2rem; 
+            color: #7f8c8d; 
+            border-top: 1px solid #ecf0f1; 
+            margin-top: 3rem; 
+        }
+        @media (max-width: 768px) {
+            .container { padding: 10px; }
+            .file-list { grid-template-columns: 1fr; }
+            .content { padding: 1rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="container">
+            <h1>v10</h1>
+        </div>
+    </div>
+    <a href="/" class="home-btn">🏠 Home</a>
+    <div class="container">
+        <div class="breadcrumb">
+            <a href="/">Home</a> / <a href="/IPEV_LOOP_FACTORY/">IPEV_LOOP_FACTORY</a> / <a href="/IPEV_LOOP_FACTORY/RESEARCH_QUESTION/">RESEARCH_QUESTION</a>
+        </div>
+        <div class="content">
+            <p>├── IPEV_LOOP.md
+  Content:</p>
+<h1 id="the-developers-guide-to-mastering-agentic-llms-from-ambiguity-to-reliability">The Developer's Guide to Mastering Agentic LLMs: From Ambiguity to Reliability</h1>
+<h2 id="introduction-the-two-week-failure-that-led-to-a-breakthrough">Introduction: The Two-Week Failure That Led to a Breakthrough</h2>
+<p>If you've tried using an Agentic LLM like Gemini CLI for a complex, multi-step task, you may have felt a familiar frustration. You give it a clear goal, a list of files, and what seems like a simple instruction—"process these files and append the results to an output file"—only to watch it fail in baffling ways.</p>
+<p>Perhaps it gets stuck in a logic loop, refusing to start the work because of an overly rigid protocol you designed. Or, worse, it starts the work, reports success after every step, but you later discover it was overwriting your output file on each iteration, leaving you with only the last piece of the puzzle.</p>
+<p>This isn't a hypothetical scenario. It was the real-world, two-week struggle that led to the framework in this guide. The initial conclusion was that the tool was "no good," but the reality was more nuanced: <strong>the mental model for instructing these agents was wrong.</strong></p>
+<p>Agentic LLMs are not just chatbots with access to a terminal. They are powerful execution engines that operate at the literal edge of ambiguity. Our success hinges on our ability to close the gap between our high-level human intent and the agent's low-level, literal tool execution.</p>
+<p>This guide provides a durable strategy to do just that. It introduces the <strong>Intent-Plan-Execute-Verify (IPEV) loop</strong>, a design pattern that transforms agents from unreliable black boxes into transparent, predictable, and self-correcting partners.</p>
+<h2 id="the-core-challenge-the-ambiguity-gap">The Core Challenge: The Ambiguity Gap</h2>
+<p>The fundamental reason that simple prompts fail for stateful tasks (like file I/O, database changes, or API calls) is the <strong>Ambiguity Gap</strong>.</p>
+<p>Let's analyze the two failure modes from our foundational example:</p>
+<ol>
+<li>
+<p><strong>The Over-Constrained Prompt (Brittle Rigidity):</strong> The first attempt involved a highly detailed, multi-file prompt with a mandatory "Environment Grounding Protocol."</p>
+<ul>
+<li><strong>Intent:</strong> To eliminate any possible misinterpretation of the environment (OS, paths).</li>
+<li><strong>Result:</strong> The agent became paralyzed. It couldn't satisfy the rigid, brittle prerequisites, and the cognitive overhead of the protocol prevented it from ever starting the actual task. It was like giving a chef a 100-page safety manual to read before boiling water.</li>
+<li><strong>Lesson:</strong> Over-constraining an agent with rigid, procedural rules makes it fragile. It removes the agent's ability to use its own intelligence to adapt and solve problems.</li>
+</ul>
+</li>
+<li>
+<p><strong>The Under-Specified Prompt (Implicit Trust):</strong> The second attempt simplified the instructions, trusting the agent to understand the core task.</p>
+<ul>
+<li><strong>Intent:</strong> To remove the procedural roadblocks and focus on the primary goal.</li>
+<li><strong>Result:</strong> The agent successfully processed all the files but failed on the most critical detail. The human instruction "append to the file" was conceptually understood, but the agent's default <code>write_file</code> tool executed an <em>overwrite</em> operation. The final output contained only the result of the last operation.</li>
+<li><strong>Lesson:</strong> Never assume an agent's tool execution will perfectly match your high-level intent. The ambiguity of natural language is the primary source of critical, silent failures.</li>
+</ul>
+</li>
+</ol>
+<p>These failures reveal a universal truth: for any task that changes the state of a system, you cannot afford ambiguity. The solution is not more rules or more trust, but a better operational protocol.</p>
+<h2 id="the-solution-the-intent-plan-execute-verify-ipev-loop">The Solution: The Intent-Plan-Execute-Verify (IPEV) Loop</h2>
+<p>The IPEV loop is a simple but powerful framework for structuring your instructions. It forces the agent to make its reasoning and execution strategy explicit <em>before</em> taking any action, turning a potential failure into a transparent, correctable step.</p>
+<p>It consists of four phases for every significant action the agent takes:</p>
+<h3 id="1-intent-the-what">1. <strong>Intent (The "What")</strong></h3>
+<p>This is the high-level objective. It's where you define the goal for a specific step in the workflow. This is what most prompts already do well.</p>
+<ul>
+<li><strong>Purpose:</strong> To set the context and desired outcome for the agent.</li>
+<li><strong>Example:</strong> <code>"My intent is to process the source file '01-intro.md' and append the translated content to 'output.md'."</code></li>
+</ul>
+<h3 id="2-plan-the-how">2. <strong>Plan (The "How")</strong></h3>
+<p>This is the heart of the IPEV loop and the single most important addition to your prompting strategy. Before acting, you require the agent to translate its high-level intent into a low-level, unambiguous execution plan. This plan must specify the <strong>exact tool, command, and parameters</strong> it will use.</p>
+<ul>
+<li><strong>Purpose:</strong> To close the Ambiguity Gap. It forces the agent to show its work and commit to a specific, literal action, exposing any potential misinterpretations before they cause harm.</li>
+<li><strong>Good Plan (Unambiguous):</strong> <code>"PLAN: I will read the content of '01-intro.md'. After generation, I will append the result to 'output.md' by calling the Python</code>write_file<code>tool with the</code>mode<code>parameter set to</code>'a'<code>."</code></li>
+<li><strong>Bad Plan (Ambiguous):</strong> <code>"PLAN: I will save the output to the file."</code> (This is just a restatement of the intent and doesn't specify <em>how</em>).</li>
+</ul>
+<p>By demanding a plan, you move the potential point of failure from a silent execution error to a transparent planning error, which is easily caught and corrected.</p>
+<h3 id="3-execute-the-do">3. <strong>Execute (The "Do")</strong></h3>
+<p>This step is straightforward: the agent executes the <em>exact</em> plan it just declared.</p>
+<ul>
+<li><strong>Purpose:</strong> To perform the state-changing action in a predictable way.</li>
+<li><strong>Instruction:</strong> <code>"Now, execute the plan you have stated."</code></li>
+</ul>
+<h3 id="4-verify-the-proof">4. <strong>Verify (The "Proof")</strong></h3>
+<p>After execution, the agent must perform a check to confirm that the action had the intended effect. This creates a closed feedback loop, allowing the agent to catch its own errors and self-correct.</p>
+<ul>
+<li><strong>Purpose:</strong> To confirm success and detect failure immediately. This prevents errors from compounding.</li>
+<li><strong>Good Verification Steps:</strong></li>
+<li><strong>File I/O:</strong> <code>"VERIFY: I will now use the shell tool to run</code>ls -l output.md<code>and confirm its file size has increased since the last step."</code></li>
+<li><strong>API Call:</strong> <code>"VERIFY: I will now send a GET request to the</code>/users/123<code>endpoint and confirm the response contains the updated user data."</code></li>
+<li><strong>Database:</strong> <code>"VERIFY: I will now execute a</code>SELECT COUNT(*)<code>query on the</code>products<code>table to confirm a new row was added."</code></li>
+</ul>
+<p>If the verification step fails, the agent knows its plan or its tool failed, and it can halt or move to a pre-defined contingency plan.</p>
+<h3 id="putting-it-all-together-the-ipev-prompt-template">Putting It All Together: The IPEV Prompt Template</h3>
+<p>Here is a general-purpose template you can adapt for your own agentic workflows.</p>
+<div class="codehilite"><pre><span></span><code><span class="gh"># Mission: [Your High-Level Goal]</span>
+
+<span class="gu">## 1. Core Protocol: The IPEV Loop</span>
+
+For every state-changing action in this mission, you MUST follow the Intent-Plan-Execute-Verify loop. Do not deviate.
+
+<span class="k">1.</span>  <span class="gs">**INTENT:**</span> State your immediate objective.
+<span class="k">2.</span>  <span class="gs">**PLAN:**</span> Propose the precise, low-level command or tool call you will use. This plan must be unambiguous. For file writing, you must specify the mode (e.g., &#39;append&#39; vs. &#39;overwrite&#39;).
+<span class="k">3.</span>  <span class="gs">**EXECUTE:**</span> Run the exact command from your plan.
+<span class="k">4.</span>  <span class="gs">**VERIFY:**</span> After execution, perform a check to prove the operation was successful. If verification fails, you must report the failure and HALT.
+
+<span class="gu">## 2. Mission Parameters</span>
+
+<span class="k">-</span><span class="w"> </span><span class="gs">**Input(s):**</span> [Describe your source data, files, APIs, etc.]
+<span class="k">-</span><span class="w"> </span><span class="gs">**Output(s):**</span> [Describe the desired final state, output files, etc.]
+<span class="k">-</span><span class="w"> </span><span class="gs">**Critical Constraints:**</span> [List any &quot;hard rules,&quot; like &quot;never read from the output file&quot; or &quot;all API calls must include an auth header.&quot;]
+
+<span class="gu">## 3. Execution Flow</span>
+
+<span class="k">1.</span>  Acknowledge these instructions.
+<span class="k">2.</span>  Begin the IPEV loop for the first task.
+<span class="k">3.</span>  Continue the loop for all subsequent tasks until the mission is complete.
+<span class="k">4.</span>  Signal completion.
+
+Now, begin.
+</code></pre></div>
+
+<h2 id="beyond-files-where-to-use-the-ipev-loop">Beyond Files: Where to Use the IPEV Loop</h2>
+<p>The power of this pattern is its versatility. It provides a reliable framework for any task where a misunderstanding can lead to negative consequences.</p>
+<ul>
+<li><strong>DevOps &amp; Cloud Management:</strong> Before running a <code>terraform apply</code> or a <code>kubectl</code> command, force the agent to PLAN the exact command and VERIFY the state of the resources afterward.</li>
+<li><strong>Code Refactoring:</strong> Have the agent PLAN which files it will modify and what changes it will make, then EXECUTE the changes, and finally VERIFY by running the project's test suite.</li>
+<li><strong>Data Analysis &amp; ETL:</strong> For a pipeline that reads from a source, transforms data, and loads it into a destination, each step can be an IPEV loop to ensure data integrity.</li>
+<li><strong>Automated Testing:</strong> Use IPEV to interact with a web UI. PLAN the locator and action (e.g., "click the button with <code>id='submit'</code>"), EXECUTE the click, and VERIFY the expected outcome (e.g., "confirm the URL has changed to <code>/dashboard</code>").</li>
+</ul>
+<h2 id="conclusion-from-prompt-engineer-to-agent-architect">Conclusion: From Prompt Engineer to Agent Architect</h2>
+<p>Working with Agentic LLMs requires a mental shift. We are no longer just "prompting" a model for a text or code completion. We are <strong>architecting autonomous systems</strong> that interact with the real world.</p>
+<p>Our role is to design the operational protocols, the safety checks, and the feedback loops that allow these powerful agents to work reliably and predictably. The IPEV loop is a foundational pattern in this new discipline. By embedding it into your instructions, you move beyond the frustrating cycle of trial-and-error and begin to build robust, resilient, and truly helpful AI agents.</p>
+<p>├── critique.md
+  Content:</p>
+<h3 id="a-formal-critique-of-the-ipev-loop-framework"><strong>A Formal Critique of the IPEV Loop Framework</strong></h3>
+<p><strong>Thesis:</strong> The IPEV Loop, as originally conceived, is a highly effective framework for solving the problem of <strong>agent ambiguity</strong> in a <strong>stable environment</strong>. However, our real-world testing has revealed that it is not sufficiently equipped to handle <strong>tool instability</strong> and <strong>state corruption</strong>, which are prevalent in bleeding-edge agentic systems. The rewrite should focus on evolving the framework from a "happy path" protocol into a resilient, fault-tolerant system.</p>
+<hr />
+<h4 id="critique-1-the-brittle-halt-on-verification-failure"><strong>Critique 1: The "Brittle Halt" on Verification Failure</strong></h4>
+<ul>
+<li><strong>What the Paper Says:</strong> The protocol's primary safety mechanism is the rule: "If verification fails, you must report the failure and HALT."</li>
+<li><strong>What Actually Happened:</strong> The <code>pytest</code> verification step hung indefinitely. The agent's only recourse was to "Attempt Reiteration" or be cancelled by the user. The "HALT" command provided no path forward when the verification process itself was the source of the bug.</li>
+<li><strong>Objective Critique:</strong> The "HALT" command is a primitive, not a strategy. It treats verification failure as a monolithic, unrecoverable event. The framework lacks a "meta-debugging" protocol for situations where the agent needs to debug its own tools or verification steps. It's like a programmer whose only debugging tool is to stop the program.</li>
+<li><strong>Recommendation for Rewrite:</strong></li>
+<li>Reframe the <code>VERIFY</code> step. It's not just a pass/fail check; it's a potential point of failure that requires its own diagnostic sub-protocol.</li>
+<li>Introduce the concept of a <strong>"Diagnostic Mode"</strong> or a <strong>"Meta-Debugging Loop."</strong> If a <code>VERIFY</code> step fails repeatedly, the agent's mission should pivot: its new goal is to diagnose and fix the verification process itself.</li>
+<li>The paper should provide concrete examples of diagnostic steps, such as isolating the failing component (running a single test file) and instrumenting the command for more data (using flags like <code>-v</code> and <code>--timeout</code>).</li>
+</ul>
+<hr />
+<h4 id="critique-2-the-lack-of-a-control-channel-for-meta-commands"><strong>Critique 2: The Lack of a Control Channel for Meta-Commands</strong></h4>
+<ul>
+<li><strong>What the Paper Says:</strong> The framework is designed for "state-changing actions" within a mission. It implicitly assumes all user prompts are inputs to the IPEV loop.</li>
+<li><strong>What Actually Happened:</strong> When you issued a simple, non-state-changing command ("document the problem"), the agent correctly executed it but then, due to its rigid adherence to the protocol, incorrectly followed up with a <code>VERIFY</code> step (<code>pytest</code>) that was not part of your intent.</li>
+<li><strong>Objective Critique:</strong> The framework conflates "mission commands" with "user commands." It lacks a separate, prioritized "control channel" for the user to inspect state, override behavior, or perform actions that should not trigger the full IPEV loop. This makes the agent feel disobedient when it is actually being overly obedient.</li>
+<li><strong>Recommendation for Rewrite:</strong></li>
+<li>Formalize the concept of a <strong>"Directive"</strong> or an <strong>"Override Command."</strong></li>
+<li>The paper should establish a rule: "If a prompt is prefixed with <code>DIRECTIVE:</code>, the agent MUST execute only that command and MUST NOT proceed to a <code>VERIFY</code> step unless explicitly told to."</li>
+<li>This introduces a crucial layer of user control, allowing the developer to step outside the formal loop when necessary without having to abandon the session.</li>
+</ul>
+<hr />
+<h4 id="critique-3-the-stateless-agent-assumption"><strong>Critique 3: The "Stateless Agent" Assumption</strong></h4>
+<ul>
+<li><strong>What the Paper Says:</strong> The IPEV loop is focused on verifying the state of the <em>external world</em> (files, APIs, databases). It does not address the <em>internal state</em> of the agent or its host tool.</li>
+<li><strong>What Actually Happened:</strong> Repeated cancellations of the <code>pytest</code> command corrupted the Gemini CLI's internal chat history. This "poisoned" the session, making all subsequent commands fail with an API error. The IPEV loop had no mechanism to detect or recover from this internal state corruption.</li>
+<li><strong>Objective Critique:</strong> The framework is blind to the agent's own health. It assumes the agent is an infallible executor, but in reality, the agent's software (the CLI) can enter a broken state. A protocol that cannot detect its own internal corruption is not truly resilient.</li>
+<li><strong>Recommendation for Rewrite:</strong></li>
+<li>Introduce a new core concept: <strong>"Agent State Management."</strong></li>
+<li>The protocol must include a <strong>"Health Check"</strong> step, especially after unexpected errors or cancellations. This could be as simple as checking for error indicators in the UI (<code>X 2 errors</code>).</li>
+<li>Elevate the importance of <strong>Checkpointing</strong>. The paper should recommend saving a checkpoint (<code>/chat save</code>) after every successful <code>VERIFY</code> step to create a "known-good state."</li>
+<li>Define a formal <strong>Recovery Protocol:</strong> "If a Health Check fails, the immediate priority is to restore the last known-good checkpoint (<code>/chat resume</code>)."</li>
+</ul>
+<hr />
+<h4 id="critique-4-the-reliable-tool-assumption"><strong>Critique 4: The "Reliable Tool" Assumption</strong></h4>
+<ul>
+<li><strong>What the Paper Says:</strong> The framework assumes the agent's tools (<code>shell</code>, <code>write_file</code>) are reliable and will either succeed or fail gracefully.</li>
+<li><strong>What Actually Happened:</strong> The <code>shell</code> tool, when executing our specific <code>pytest --timeout</code> command, triggered a bug in the Gemini CLI that caused the entire application to freeze.</li>
+<li><strong>Objective Critique:</strong> The framework does not have a contingency plan for when its own tools are the source of a critical failure. It lacks a protocol for "working around" the agent's own limitations.</li>
+<li><strong>Recommendation for Rewrite:</strong></li>
+<li>Add a section on <strong>"Tool Instability and Workarounds."</strong></li>
+<li>The protocol should include a final, manual override step: "If a command is found to reliably crash the host application, that command must be moved to an external, stable environment (e.g., a standard system terminal). The results must then be manually provided back to the agent for analysis."</li>
+<li>This acknowledges the reality of working with beta software and provides a practical escape route when the agent's own capabilities are the bottleneck.</li>
+</ul>
+<p>By incorporating these critiques, your paper will evolve from a guide on how to work with an ideal agent into a much more valuable and durable guide on how to achieve reliable results with the real, imperfect, and unstable agents we have today.</p>
+<p>├── ipev_prompt_factory.md
+  Content:</p>
+<h1 id="ipev-prompt-factory-template">IPEV Prompt Factory Template</h1>
+<h2 id="your-role-ipev-prompt-architect">Your Role: IPEV Prompt Architect</h2>
+<p>You are an expert prompt engineer specializing in creating reliable, IPEV-compliant prompts for Gemini CLI and similar agentic code editors. Your mission is to transform user requests into structured, foolproof prompts that follow the Intent-Plan-Execute-Verify loop methodology.</p>
+<h2 id="core-protocol-information-gathering-prompt-generation">Core Protocol: Information Gathering + Prompt Generation</h2>
+<h3 id="phase-1-intelligent-interview-ask-only-whats-missing">Phase 1: Intelligent Interview (Ask Only What's Missing)</h3>
+<p>The user will provide a task description. Your job is to identify what information is missing and ask targeted questions to fill the gaps. <strong>Keep it minimal</strong> - ask only what you truly need.</p>
+<p><strong>Essential Information to Gather:</strong></p>
+<ol>
+<li><strong>Task Classification:</strong></li>
+<li>
+<p>Is this: Debugging | Testing | Feature Implementation | Learning | Refactoring?</p>
+</li>
+<li>
+<p><strong>Project Context (if not provided):</strong></p>
+</li>
+<li>Tech stack/language?</li>
+<li>Any specific libraries/frameworks I should avoid or prefer?</li>
+<li>
+<p>Project structure (monorepo, specific directories to focus on)?</p>
+</li>
+<li>
+<p><strong>Success Criteria (if unclear):</strong></p>
+</li>
+<li>How will you know this task is complete?</li>
+<li>
+<p>What should the verification step check?</p>
+</li>
+<li>
+<p><strong>Constraints (if any):</strong></p>
+</li>
+<li>Files/directories to avoid touching?</li>
+<li>Specific approaches to use or avoid?</li>
+<li>Testing requirements?</li>
+</ol>
+<h3 id="phase-2-ipev-prompt-generation">Phase 2: IPEV Prompt Generation</h3>
+<p>Once you have sufficient information, generate a complete IPEV-structured prompt following this template:</p>
+<hr />
+<h2 id="generated-ipev-prompt-template">Generated IPEV Prompt Template:</h2>
+<div class="codehilite"><pre><span></span><code><span class="gh"># Mission: [SPECIFIC_TASK_DESCRIPTION]</span>
+
+<span class="gu">## 1. Core Protocol: The IPEV Loop</span>
+
+For every state-changing action in this mission, you MUST follow the Intent-Plan-Execute-Verify loop:
+
+<span class="k">1.</span> <span class="gs">**INTENT:**</span> State your immediate objective for this step
+<span class="k">2.</span> <span class="gs">**PLAN:**</span> Specify the exact commands/tools you will use (be precise about file modes, parameters, etc.)
+<span class="k">3.</span> <span class="gs">**EXECUTE:**</span> Run the exact plan you stated
+<span class="k">4.</span> <span class="gs">**VERIFY:**</span> Perform a check to confirm success. For code tasks, this typically means:
+<span class="w">   </span><span class="k">-</span><span class="w"> </span>Running existing tests if available
+<span class="w">   </span><span class="k">-</span><span class="w"> </span>Testing the specific functionality you implemented/fixed
+<span class="w">   </span><span class="k">-</span><span class="w"> </span>Confirming expected behavior/output
+
+<span class="gu">## 2. Project Context</span>
+
+<span class="k">-</span><span class="w"> </span><span class="gs">**Tech Stack:**</span> [LANGUAGES/FRAMEWORKS]
+<span class="k">-</span><span class="w"> </span><span class="gs">**Project Structure:**</span> [KEY_DIRECTORIES_OR_FILES]
+<span class="k">-</span><span class="w"> </span><span class="gs">**Preferred Libraries:**</span> [USER_PREFERENCES]
+<span class="k">-</span><span class="w"> </span><span class="gs">**Avoid:**</span> [CONSTRAINTS]
+
+<span class="gu">## 3. Task-Specific Guidelines</span>
+
+<span class="gu">### For [TASK_TYPE] Tasks:</span>
+[CUSTOMIZED_INSTRUCTIONS_BASED_ON_TASK_TYPE]
+
+<span class="gu">## 4. Success Criteria</span>
+
+<span class="gs">**Task Complete When:**</span>
+[SPECIFIC_COMPLETION_CRITERIA]
+
+<span class="gs">**Final Verification Must Confirm:**</span>
+[SPECIFIC_VERIFICATION_STEPS]
+
+<span class="gu">## 5. Execution Flow</span>
+
+<span class="k">1.</span> Acknowledge these instructions
+<span class="k">2.</span> Survey the current project state (examine relevant files/directories)
+<span class="k">3.</span> Begin IPEV loops for each logical step
+<span class="k">4.</span> Provide a final summary of all changes made
+
+<span class="gs">**CRITICAL:**</span> If any verification step fails, HALT immediately and report the failure. Do not continue with subsequent steps.
+
+Now begin.
+</code></pre></div>
+
+<hr />
+<h2 id="task-specific-instruction-templates">Task-Specific Instruction Templates</h2>
+<h3 id="for-debugging-tasks">For Debugging Tasks:</h3>
+<div class="codehilite"><pre><span></span><code><span class="o">-</span><span class="w"> </span><span class="nv">Start</span><span class="w"> </span><span class="nv">by</span><span class="w"> </span><span class="nv">reproducing</span><span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">issue</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="nv">possible</span>
+<span class="o">-</span><span class="w"> </span><span class="nv">Document</span><span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">current</span><span class="w"> </span><span class="nv">vs</span>.<span class="w"> </span><span class="nv">expected</span><span class="w"> </span><span class="nv">behavior</span>
+<span class="o">-</span><span class="w"> </span><span class="nv">Identify</span><span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">root</span><span class="w"> </span><span class="nv">cause</span><span class="w"> </span><span class="nv">before</span><span class="w"> </span><span class="nv">proposing</span><span class="w"> </span><span class="nv">fixes</span>
+<span class="o">-</span><span class="w"> </span><span class="nv">Test</span><span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">fix</span><span class="w"> </span><span class="nv">against</span><span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">original</span><span class="w"> </span><span class="nv">issue</span>
+<span class="o">-</span><span class="w"> </span><span class="nv">Verify</span><span class="w"> </span><span class="nv">no</span><span class="w"> </span><span class="nv">new</span><span class="w"> </span><span class="nv">issues</span><span class="w"> </span><span class="nv">were</span><span class="w"> </span><span class="nv">introduced</span>
+</code></pre></div>
+
+<h3 id="for-testing-tasks">For Testing Tasks:</h3>
+<div class="codehilite"><pre><span></span><code><span class="o">-</span><span class="w"> </span><span class="nv">Examine</span><span class="w"> </span><span class="nv">existing</span><span class="w"> </span><span class="nv">test</span><span class="w"> </span><span class="nv">patterns</span><span class="w"> </span><span class="nv">in</span><span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">project</span>
+<span class="o">-</span><span class="w"> </span><span class="nv">Follow</span><span class="w"> </span><span class="nv">established</span><span class="w"> </span><span class="nv">testing</span><span class="w"> </span><span class="nv">conventions</span>
+<span class="o">-</span><span class="w"> </span><span class="nv">Ensure</span><span class="w"> </span><span class="nv">new</span><span class="w"> </span><span class="nv">tests</span><span class="w"> </span><span class="nv">cover</span><span class="w"> </span><span class="nv">edge</span><span class="w"> </span><span class="nv">cases</span><span class="w"> </span><span class="nv">and</span><span class="w"> </span><span class="nv">error</span><span class="w"> </span><span class="nv">conditions</span>
+<span class="o">-</span><span class="w"> </span><span class="nv">Verify</span><span class="w"> </span><span class="nv">all</span><span class="w"> </span><span class="nv">tests</span><span class="w"> </span><span class="nv">pass</span><span class="w"> </span><span class="nv">before</span><span class="w"> </span><span class="nv">completion</span>
+<span class="o">-</span><span class="w"> </span><span class="nv">Update</span><span class="w"> </span><span class="nv">test</span><span class="w"> </span><span class="nv">documentation</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="nv">needed</span>
+</code></pre></div>
+
+<h3 id="for-feature-implementation-tasks">For Feature Implementation Tasks:</h3>
+<div class="codehilite"><pre><span></span><code><span class="o">-</span><span class="w"> </span><span class="nv">Review</span><span class="w"> </span><span class="nv">existing</span><span class="w"> </span><span class="nv">similar</span><span class="w"> </span><span class="nv">features</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="nv">consistency</span>
+<span class="o">-</span><span class="w"> </span><span class="nv">Follow</span><span class="w"> </span><span class="nv">established</span><span class="w"> </span><span class="nv">project</span><span class="w"> </span><span class="nv">patterns</span><span class="w"> </span><span class="nv">and</span><span class="w"> </span><span class="nv">conventions</span>
+<span class="o">-</span><span class="w"> </span><span class="nv">Implement</span><span class="w"> </span><span class="nv">incrementally</span><span class="w"> </span><span class="nv">with</span><span class="w"> </span><span class="nv">verification</span><span class="w"> </span><span class="nv">at</span><span class="w"> </span><span class="nv">each</span><span class="w"> </span><span class="nv">step</span>
+<span class="o">-</span><span class="w"> </span><span class="nv">Add</span><span class="w"> </span><span class="nv">appropriate</span><span class="w"> </span><span class="nv">error</span><span class="w"> </span><span class="nv">handling</span>
+<span class="o">-</span><span class="w"> </span><span class="k">Include</span><span class="w"> </span><span class="nv">tests</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">new</span><span class="w"> </span><span class="nv">functionality</span>
+</code></pre></div>
+
+<h3 id="for-learning-tasks">For Learning Tasks:</h3>
+<div class="codehilite"><pre><span></span><code><span class="o">-</span><span class="w"> </span><span class="nx">Focus</span><span class="w"> </span><span class="nx">on</span><span class="w"> </span><span class="nx">understanding</span><span class="w"> </span><span class="nx">existing</span><span class="w"> </span><span class="nx">code</span><span class="w"> </span><span class="nx">patterns</span><span class="w"> </span><span class="nx">first</span>
+<span class="o">-</span><span class="w"> </span><span class="nx">Document</span><span class="w"> </span><span class="nx">your</span><span class="w"> </span><span class="nx">learning</span><span class="w"> </span><span class="nx">process</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="nx">key</span><span class="w"> </span><span class="nx">insights</span>
+<span class="o">-</span><span class="w"> </span><span class="nx">Create</span><span class="w"> </span><span class="nx">simple</span><span class="w"> </span><span class="nx">examples</span><span class="w"> </span><span class="nx">to</span><span class="w"> </span><span class="nx">validate</span><span class="w"> </span><span class="nx">understanding</span>
+<span class="o">-</span><span class="w"> </span><span class="nx">Ask</span><span class="w"> </span><span class="nx">clarifying</span><span class="w"> </span><span class="nx">questions</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="nx">concepts</span><span class="w"> </span><span class="nx">are</span><span class="w"> </span><span class="nx">unclear</span>
+<span class="o">-</span><span class="w"> </span><span class="nx">Summarize</span><span class="w"> </span><span class="nx">key</span><span class="w"> </span><span class="nx">takeaways</span><span class="w"> </span><span class="nx">at</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">end</span>
+</code></pre></div>
+
+<h3 id="for-refactoring-tasks">For Refactoring Tasks:</h3>
+<div class="codehilite"><pre><span></span><code>- Run existing tests before making any changes
+- Make incremental changes with frequent verification
+- Preserve existing functionality exactly
+- Follow established coding standards in the project
+- Ensure all tests still pass after refactoring
+</code></pre></div>
+
+<h2 id="usage-instructions">Usage Instructions</h2>
+<ol>
+<li><strong>Save this template as:</strong> <code>ipev-factory.md</code></li>
+<li><strong>To use:</strong> Prompt with <code>"Read @ipev-factory.md. I need help with: [YOUR_TASK_DESCRIPTION]"</code></li>
+<li><strong>The factory will:</strong> Interview you briefly, then generate your custom IPEV prompt</li>
+<li><strong>Save the generated prompt as:</strong> <code>prompt.md</code></li>
+<li><strong>Execute with:</strong> <code>"Read @prompt.md and follow its instructions"</code></li>
+</ol>
+<h2 id="example-usage">Example Usage</h2>
+<p><strong>User:</strong> "Read @ipev-factory.md. I need help with: My Python API is returning 500 errors on the /users endpoint"</p>
+<p><strong>Factory Response:</strong> 
+- "I see this is a debugging task. What's your tech stack? (Flask, FastAPI, Django, etc.)"
+- "Do you have existing tests for this endpoint?"
+- "Any specific error logs or symptoms you've noticed?"
+- [After answers] → Generates custom debugging IPEV prompt</p>
+<p><strong>Result:</strong> A tailored prompt that guides Gemini CLI through systematic debugging with proper verification at each step.</p>
+<p>├── mission.md
+  Content:</p>
+<h1 id="mission-autonomously-translate-django-testing-to-fastapi">Mission: Autonomously Translate Django Testing to FastAPI</h1>
+<h2 id="1-your-primary-objective">1. Your Primary Objective</h2>
+<p>Your goal is to create a comprehensive testing guide by translating principles from a series of source markdown files and appending the results to a single output file.</p>
+<h2 id="2-the-ipev-protocol-intent-plan-execute-verify">2. The IPEV Protocol (Intent-Plan-Execute-Verify)</h2>
+<p>For every file you process, you MUST follow this four-step loop. This is your primary operational directive.</p>
+<ol>
+<li><strong>INTENT:</strong> State the high-level goal for the current file (e.g., "Process <code>01_the-why-of-testing-in-django.md</code>").</li>
+<li><strong>PLAN:</strong> Propose the precise, low-level commands you will execute.<ul>
+<li>For file I/O, you MUST specify the function and mode (e.g., <code>open('path', 'a')</code> for appending).</li>
+<li><strong>Crucially, you must state how you will append the content. Your default file-writing tool may overwrite; you must explicitly use an append method.</strong></li>
+</ul>
+</li>
+<li><strong>EXECUTE:</strong> Run the exact commands from your plan.</li>
+<li><strong>VERIFY:</strong> After execution, perform a check to confirm the operation was successful.<ul>
+<li>For an append operation, a suitable verification is to check that the output file's size has increased.</li>
+<li>If verification fails, you must halt and report the failure.</li>
+</ul>
+</li>
+</ol>
+<h2 id="3-mission-parameters">3. Mission Parameters</h2>
+<ul>
+<li><strong>Source Directory:</strong> <code>django-testing-with-pytest-from-zero-to-confident/</code></li>
+<li><strong>Output File:</strong> <code>From_Django_Testing_to_FastAPI_Testing.md</code></li>
+<li><strong>File Processing Order:</strong> Process files in strict numerical order, starting with <code>00_front-matters.md</code>.</li>
+</ul>
+<h2 id="4-execution-flow">4. Execution Flow</h2>
+<ol>
+<li>Acknowledge these instructions.</li>
+<li>Initialize the process by creating the output file if it doesn't exist.</li>
+<li>Begin the IPEV loop, starting with the first file.</li>
+<li>Continue the loop for all subsequent files in numerical order until completion.</li>
+<li>Signal when the mission is complete.</li>
+</ol>
+<h2 id="5-content-generation-schema">5. Content Generation Schema</h2>
+<p>For each chapter, your appended output <em>must</em> follow this exact markdown structure.</p>
+<hr />
+<h1 id="chapter-x-original-django-chapter-title-fastapi-translation">Chapter X: [Original Django Chapter Title] → FastAPI Translation</h1>
+<h2 id="core-concepts-fastapi-translation">Core Concepts &amp; FastAPI Translation</h2>
+<p>(Analysis of concepts, addressing async, dependency injection, etc.)</p>
+<h2 id="practical-fastapi-examples">Practical FastAPI Examples</h2>
+<p>(Complete, runnable FastAPI code examples.)</p>
+<h2 id="key-takeaways">Key Takeaways</h2>
+<p>(A concise bulleted list.)</p>
+<hr />
+<p>Now, begin.</p>
+        </div>
+        <div class="footer">
+            Generated on 2025-08-30 07:28:43
+        </div>
+    </div>
+</body>
+</html>

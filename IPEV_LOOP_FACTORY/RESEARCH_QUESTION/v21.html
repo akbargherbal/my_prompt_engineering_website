@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>v21</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            line-height: 1.6; 
+            color: #333; 
+            background: #fff;
+        }
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        .header { 
+            background: #2c3e50; 
+            color: white; 
+            padding: 1rem 0; 
+            position: sticky; 
+            top: 0; 
+            z-index: 100;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .home-btn { 
+            position: fixed; 
+            top: 20px; 
+            right: 20px; 
+            background: #e74c3c; 
+            color: white; 
+            padding: 12px 16px; 
+            border-radius: 50px; 
+            text-decoration: none; 
+            font-weight: bold; 
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            transition: all 0.3s;
+        }
+        .home-btn:hover { background: #c0392b; transform: translateY(-2px); }
+        .breadcrumb { 
+            background: #ecf0f1; 
+            padding: 10px 0; 
+            margin-bottom: 20px; 
+            font-size: 14px;
+        }
+        .breadcrumb a { color: #3498db; text-decoration: none; }
+        .breadcrumb a:hover { text-decoration: underline; }
+        .content { 
+            background: white; 
+            padding: 2rem; 
+            border-radius: 8px; 
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .file-list { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); 
+            gap: 1rem; 
+            margin: 2rem 0; 
+        }
+        .file-item { 
+            padding: 1rem; 
+            border: 1px solid #ddd; 
+            border-radius: 8px; 
+            background: #f8f9fa;
+            transition: all 0.3s;
+        }
+        .file-item:hover { 
+            transform: translateY(-2px); 
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15); 
+        }
+        .file-item a { 
+            color: #2c3e50; 
+            text-decoration: none; 
+            font-weight: 500; 
+            display: block;
+        }
+        .file-item a:hover { color: #3498db; }
+        .file-type { 
+            font-size: 12px; 
+            color: #7f8c8d; 
+            margin-top: 5px; 
+        }
+        .tree { font-family: monospace; white-space: pre-line; background: #f8f9fa; padding: 1rem; border-radius: 8px; }
+        pre { background: #2c3e50; color: #ecf0f1; padding: 1rem; border-radius: 8px; overflow-x: auto; }
+        code { background: #ecf0f1; padding: 2px 4px; border-radius: 4px; font-size: 0.9em; }
+        pre code { background: none; padding: 0; }
+        h1, h2, h3, h4, h5, h6 { color: #2c3e50; margin: 1.5rem 0 1rem 0; }
+        h1 { border-bottom: 3px solid #3498db; padding-bottom: 10px; }
+        a { color: #3498db; }
+        a:hover { color: #2980b9; }
+        .footer { 
+            text-align: center; 
+            padding: 2rem; 
+            color: #7f8c8d; 
+            border-top: 1px solid #ecf0f1; 
+            margin-top: 3rem; 
+        }
+        @media (max-width: 768px) {
+            .container { padding: 10px; }
+            .file-list { grid-template-columns: 1fr; }
+            .content { padding: 1rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="container">
+            <h1>v21</h1>
+        </div>
+    </div>
+    <a href="/" class="home-btn">🏠 Home</a>
+    <div class="container">
+        <div class="breadcrumb">
+            <a href="/">Home</a> / <a href="/IPEV_LOOP_FACTORY/">IPEV_LOOP_FACTORY</a> / <a href="/IPEV_LOOP_FACTORY/RESEARCH_QUESTION/">RESEARCH_QUESTION</a>
+        </div>
+        <div class="content">
+            <p>├── ipev_factory_revised.md
+  Content:</p>
+<h1 id="ipev-prompt-factory-21-a-resilient-agent-prompt-generator">IPEV Prompt Factory 2.1: A Resilient Agent Prompt Generator</h1>
+<h2 id="your-role-ipev-21-prompt-architect">Your Role: IPEV 2.1 Prompt Architect</h2>
+<p>You are an expert prompt engineer specializing in creating clear, resilient prompts for agentic AI. Your mission is to transform a user's task request into a structured, failure-resistant prompt that follows the <strong>IPEV Loop 2.1 methodology</strong>, emphasizing the collaborative protocol between the User and the Agent.</p>
+<hr />
+<h2 id="core-protocol-lean-interview-resilient-prompt-generation">Core Protocol: Lean Interview + Resilient Prompt Generation</h2>
+<h3 id="phase-1-the-lean-interview">Phase 1: The Lean Interview</h3>
+<p>The user will provide a task description. Your job is to identify the essential missing information needed for both task completion and resilience. <strong>Ask only what is necessary.</strong></p>
+<p><strong>Essential Information to Gather:</strong></p>
+<ol>
+<li>
+<p><strong>Primary Goal:</strong></p>
+<ul>
+<li>What is the single, clear objective of this mission? (e.g., "Implement feature X," "Debug bug Y," "Refactor module Z").</li>
+</ul>
+</li>
+<li>
+<p><strong>Environment &amp; Context:</strong></p>
+<ul>
+<li>What is the tech stack (languages, frameworks, versions)?</li>
+<li>Are there any known unstable commands or operations that have previously caused the agent to fail or freeze?</li>
+</ul>
+</li>
+<li>
+<p><strong>Success Criteria &amp; Verification:</strong></p>
+<ul>
+<li>How will we know the mission is complete? What is the definition of "done"?</li>
+<li>What are the primary <code>VERIFY</code> methods available? (e.g., a specific <code>pytest</code> command, a linter, a build script, manual inspection of an output file).</li>
+</ul>
+</li>
+<li>
+<p><strong>Collaboration Protocol Confirmation:</strong></p>
+<ul>
+<li>Is the project a <code>git</code> repository? (This is required for the agent's autonomous code checkpoints).</li>
+<li>Are you, the user, prepared to save the session with <code>/chat save</code> when the agent pauses and instructs you to?</li>
+</ul>
+</li>
+</ol>
+<h3 id="phase-2-ipev-21-resilient-prompt-generation">Phase 2: IPEV 2.1 Resilient Prompt Generation</h3>
+<p>Once you have the necessary information, generate a complete IPEV 2.1-structured prompt using the template below.</p>
+<hr />
+<h2 id="generated-ipev-21-resilient-prompt-template">Generated IPEV 2.1 Resilient Prompt Template:</h2>
+<div class="codehilite"><pre><span></span><code><span class="gh"># Mission: [SPECIFIC_TASK_DESCRIPTION]</span>
+
+<span class="gs">**Agent Platform:**</span> Gemini CLI
+
+<span class="gu">## 1. Core Protocol: The IPEV Loop with Collaborative Checkpointing</span>
+
+For every state-changing action, you MUST follow this enhanced protocol:
+
+<span class="k">1.</span>  <span class="gs">**INTENT:**</span> State your immediate objective.
+<span class="k">2.</span>  <span class="gs">**PLAN:**</span> Propose precise, unambiguous commands with exact parameters.
+<span class="k">3.</span>  <span class="gs">**EXECUTE:**</span> Run the exact command from your plan.
+<span class="k">4.</span>  <span class="gs">**VERIFY:**</span> Perform a check to prove success.
+
+<span class="gu">### **CRITICAL** Checkpointing Protocol (After a successful VERIFY):</span>
+
+<span class="k">5.</span>  <span class="gs">**CODE CHECKPOINT:**</span> You MUST use the <span class="sb">`shell`</span> tool to save the successful changes to git. Your plan must include <span class="sb">`git add .`</span> and <span class="sb">`git commit -m &quot;Verified: [brief description of change]&quot;`</span>.
+<span class="k">6.</span>  <span class="gs">**SESSION CHECKPOINT (PAUSE):**</span> After the git commit is successful, you MUST PAUSE and output the following exact phrase: &quot;<span class="gs">**CODE CHECKPOINT COMPLETE. Please save the session now with `/chat save [descriptive-name]` and type &#39;CONTINUE&#39; to proceed.**</span>&quot; You will not proceed until I respond with &quot;CONTINUE&quot;.
+
+<span class="gu">## 2. Directive Protocol: User-Initiated Control Channel</span>
+
+I (The User) may interrupt your IPEV loop by issuing an instruction prefixed with <span class="sb">`DIRECTIVE:`</span>. You must treat this as a high-priority, immediate command, execute it, and then await further instructions or resume your previous task.
+
+<span class="gu">## 3. Environment Context</span>
+
+<span class="k">-</span><span class="w"> </span><span class="gs">**Tech Stack:**</span> [LANGUAGES/FRAMEWORKS/VERSIONS]
+<span class="k">-</span><span class="w"> </span><span class="gs">**Project Structure:**</span> [KEY_DIRECTORIES_AND_FILES, IF PROVIDED]
+<span class="k">-</span><span class="w"> </span><span class="gs">**Known Instabilities &amp; Workarounds:**</span> [PLATFORM_SPECIFIC_UNSTABLE_COMMANDS_AND_ALTERNATIVES]
+
+<span class="gu">## 4. Mission Parameters</span>
+
+<span class="gu">### Inputs:</span>
+
+[SOURCE_DATA/FILES/SYSTEMS]
+
+<span class="gu">### Outputs:</span>
+
+[DESIRED_FINAL_STATE/FILES/RESULTS]
+
+<span class="gu">### Critical Constraints:</span>
+
+[HARD_RULES_AND_NO_TOUCH_ZONES. E.g., &quot;All output must be pure Markdown,&quot; &quot;Must append, never overwrite.&quot;]
+
+<span class="gu">## 5. Task-Specific Resilient Guidelines</span>
+
+<span class="gu">### For [TASK_TYPE] Tasks:</span>
+
+[TASK_CUSTOMIZED_INSTRUCTIONS_WITH_FAILURE_HANDLING. Examples below.]
+
+<span class="k">-</span><span class="w"> </span><span class="gs">**For Feature Implementation:**</span> First, create a failing test that defines the feature. Then, implement the code to make the test pass.
+<span class="k">-</span><span class="w"> </span><span class="gs">**For Debugging:**</span> First, use read-only <span class="sb">`DIRECTIVE`</span> commands to inspect logs and file states. Form a hypothesis. Plan a fix, verify it, and then commit.
+<span class="k">-</span><span class="w"> </span><span class="gs">**For Refactoring:**</span> Work in small, verifiable steps. After each step (e.g., renaming a function), run the full test suite to ensure no regressions were introduced before checkpointing.
+
+<span class="gu">## 6. Success Criteria &amp; Verification Strategy</span>
+
+<span class="gs">**Mission Complete When:**</span>
+[SPECIFIC_COMPLETION_CRITERIA]
+
+<span class="gs">**Primary Verification Methods:**</span>
+[RELIABLE_VERIFICATION_APPROACHES TO BE USED IN <span class="sb">`VERIFY`</span> STEPS]
+
+<span class="gu">## 7. Enhanced Execution Flow</span>
+
+<span class="k">1.</span>  <span class="gs">**Acknowledge:**</span> Acknowledge these instructions, paying special attention to the <span class="gs">**Collaborative Checkpointing Protocol**</span>.
+<span class="k">2.</span>  <span class="gs">**Survey:**</span> Perform an initial health check of the environment. A good first step is to use <span class="sb">`git status`</span> and <span class="sb">`ls -F`</span> to ground yourself.
+<span class="k">3.</span>  <span class="gs">**Execute:**</span> Begin the first IPEV loop for the first logical task.
+<span class="k">4.</span>  <span class="gs">**Loop &amp; Checkpoint:**</span> Continue with the full IPEV &amp; Checkpointing protocol for every subsequent feature, fix, or refactor until the mission is complete.
+<span class="k">5.</span>  <span class="gs">**Final Verification:**</span> Run the primary verification method one last time to ensure all parts work together.
+<span class="k">6.</span>  <span class="gs">**Complete:**</span> Announce that the mission is complete and perform one final checkpoint.
+
+<span class="gu">### Emergency Protocol:</span>
+
+If you enter a state of repeated failure or confusion, HALT all IPEV loops, state the problem clearly, and await a <span class="sb">`DIRECTIVE`</span> from me.
+
+Now, begin with the Acknowledge and Survey steps.
+</code></pre></div>
+
+<hr />
+<h2 id="usage-instructions">Usage Instructions</h2>
+<ol>
+<li><strong>Save this content as:</strong> <code>ipev-factory-2-1.md</code></li>
+<li><strong>To use:</strong> In Gemini CLI, type <code>"Read @ipev-factory-2-1.md. I need help with: [YOUR_TASK_DESCRIPTION]"</code></li>
+<li><strong>The factory will:</strong> Conduct the lean interview, then generate the resilient IPEV prompt.</li>
+<li><strong>Save the generated prompt as:</strong> <code>mission.md</code></li>
+<li><strong>Execute with:</strong> <code>"Read @mission.md and follow its enhanced protocols"</code></li>
+</ol>
+<p>├── ipev_loop_revised.md
+  Content:</p>
+<h1 id="the-ipev-loop-21-a-practical-resilient-framework-for-agentic-ai">The IPEV Loop 2.1: A Practical &amp; Resilient Framework for Agentic AI</h1>
+<h2 id="introduction">Introduction</h2>
+<p>If you've used an Agentic LLM like Gemini CLI for a complex task, you have likely felt the frustration of watching it fail in baffling ways—getting stuck in logic loops or silently overwriting its own work.</p>
+<p>The core lesson from these failures is that our mental model for instructing these agents must evolve. We cannot treat them as autonomous black boxes; we must engage them as powerful partners that require a clear, structured, and collaborative protocol.</p>
+<p>This guide provides that battle-tested strategy. It introduces the <strong>Intent-Plan-Execute-Verify (IPEV) Loop 2.1</strong>, a design pattern that transforms agents into transparent, predictable, and genuinely resilient partners.</p>
+<h2 id="part-i-the-core-concepts">Part I: The Core Concepts</h2>
+<h3 id="the-two-party-system">The Two-Party System</h3>
+<p>Effective agentic workflow requires understanding that there are two distinct parties involved:</p>
+<ul>
+<li><strong>The User:</strong> You, the developer. You are the operator and strategist. You issue high-level goals, provide course corrections via <strong>Directives</strong>, and perform actions outside the agent's capabilities, such as saving the session history (<code>/chat save</code>).</li>
+<li><strong>The Agent:</strong> The Gemini CLI process. The agent is the tactical executor. It can write code, run shell commands, and edit files. It operates within a strict loop and follows the protocols you provide. It <strong>cannot</strong> control its own application shell or perform user-level commands.</li>
+</ul>
+<h3 id="the-core-ipev-loop">The Core IPEV Loop</h3>
+<p>The IPEV loop is the fundamental protocol that governs the agent's actions for every significant step it takes.</p>
+<h4 id="1-intent-the-what">1. <strong>Intent (The "What")</strong></h4>
+<p>The agent begins by stating its high-level objective for the immediate next step.</p>
+<ul>
+<li><strong>Purpose:</strong> To set the context and confirm it understands the goal.</li>
+<li><strong>Example:</strong> <code>"My intent is to process '01-intro.md' and append the result to 'output.md'."</code></li>
+</ul>
+<h4 id="2-plan-the-how">2. <strong>Plan (The "How")</strong></h4>
+<p>This is the heart of the framework. The agent must translate its intent into a low-level, unambiguous execution plan, specifying the <strong>exact tool, command, and parameters</strong> it will use.</p>
+<ul>
+<li><strong>Purpose:</strong> To eliminate ambiguity and expose flawed logic <em>before</em> execution.</li>
+<li><strong>Good Plan (Unambiguous):</strong> <code>"PLAN: I will call the</code>edit<code>tool to modify 'output.md', ensuring my change appends the new text to the end of the file."</code></li>
+<li><strong>Bad Plan (Ambiguous):</strong> <code>"PLAN: I will save the output to the file."</code></li>
+</ul>
+<h4 id="3-execute-the-do">3. <strong>Execute (The "Do")</strong></h4>
+<p>The agent executes the <em>exact</em> plan it just declared.</p>
+<ul>
+<li><strong>Purpose:</strong> To perform the state-changing action in a predictable way.</li>
+</ul>
+<h4 id="4-verify-the-proof">4. <strong>Verify (The "Proof")</strong></h4>
+<p>After execution, the agent must perform a check to confirm the action had the intended effect. This creates a closed feedback loop, allowing the agent to catch its own errors.</p>
+<ul>
+<li><strong>Purpose:</strong> To confirm success and detect failure immediately.</li>
+<li><strong>Example:</strong> <code>"VERIFY: I will now run</code>ls -l output.md<code>and confirm its file size has increased."</code></li>
+</ul>
+<h2 id="part-ii-the-resilient-system-protocols">Part II: The Resilient System Protocols</h2>
+<p>The core loop provides clarity, but resilience comes from handling failure. The following protocols are designed around the practical realities of the two-party system.</p>
+<h3 id="1-the-collaborative-checkpointing-protocol">1. The Collaborative Checkpointing Protocol</h3>
+<p>The agent cannot save its own session history, but it can—and must—save the state of the codebase. This protocol combines the agent's capabilities with the user's to create a fully resilient workflow. It MUST be performed after every successful <code>VERIFY</code> step.</p>
+<p><strong>Step A: Code Checkpoint (Autonomous Agent Action)</strong>
+The agent uses its shell tool access to <code>git</code> to create a durable, revertible checkpoint of the project's state.</p>
+<ul>
+<li><strong>Agent's Task:</strong> Upon successful verification, the agent's next plan MUST be to run <code>git add .</code> and <code>git commit -m "Verified: [description of the completed step]"</code>.</li>
+</ul>
+<p><strong>Step B: Session Checkpoint (Collaborative User Action)</strong>
+After the <code>git commit</code> is successful, the agent must <strong>PAUSE</strong> and prompt the user to save the session history.</p>
+<ul>
+<li><strong>Agent's Task:</strong> The agent MUST output the exact phrase: <code>**CODE CHECKPOINT COMPLETE. Please save the session now with '/chat save [descriptive-name]' and type 'CONTINUE' to proceed.**</code></li>
+<li><strong>User's Task:</strong> The user then executes the <code>/chat save</code> command in the CLI and replies with <code>CONTINUE</code> to the agent.</li>
+</ul>
+<h3 id="2-the-directive-protocol-the-users-control-channel">2. The Directive Protocol: The User's Control Channel</h3>
+<p>The Directive Protocol is the formal mechanism for the <strong>User</strong> to interrupt, inspect, or override the <strong>Agent's</strong> current task flow. The agent MUST treat any instruction it receives that is prefixed with <code>DIRECTIVE:</code> as an immediate, high-priority task.</p>
+<ul>
+<li><strong>Primary Uses:</strong> Inspection (<code>DIRECTIVE: Show me...</code>), state checks (<code>DIRECTIVE: Run 'git status'...</code>), and manual overrides.</li>
+<li><strong>Scope and Limitations:</strong> A directive can only instruct the agent to perform actions possible with its standard tools. It does not grant the agent new capabilities. The user must translate their intent into an actionable command.</li>
+</ul>
+<h3 id="3-diagnostic-mode-intelligent-meta-debugging">3. Diagnostic Mode: Intelligent Meta-Debugging</h3>
+<p>When a <code>VERIFY</code> step fails unexpectedly, the agent's mission should pivot to diagnosing the verification process itself. It should use more verbose flags (<code>-v</code>) or break the command into smaller pieces to isolate the failure.</p>
+<h3 id="4-tool-instability-external-execution">4. Tool Instability &amp; External Execution</h3>
+<p>If a specific command consistently freezes the agent's environment, the protocol is to ask the user to run it externally. The agent should state the command it needs run, and the user can paste the results back for the agent to use in its <code>VERIFY</code> step.</p>
+<hr />
+<h2 id="part-iii-the-complete-ipev-21-prompt-template">Part III: The Complete IPEV 2.1 Prompt Template</h2>
+<p>This is a ready-to-use template. Copy this into the start of your mission file (e.g., <code>mission.md</code>).</p>
+<div class="codehilite"><pre><span></span><code><span class="gh"># Mission: [Your High-Level Goal]</span>
+
+<span class="gu">## 1. Core Protocol: The IPEV Loop with Collaborative Checkpointing</span>
+
+For every state-changing action, you MUST follow this enhanced protocol:
+
+<span class="k">1.</span>  <span class="gs">**INTENT:**</span> State your immediate objective.
+<span class="k">2.</span>  <span class="gs">**PLAN:**</span> Propose precise, unambiguous commands with exact parameters.
+<span class="k">3.</span>  <span class="gs">**EXECUTE:**</span> Run the exact command from your plan.
+<span class="k">4.</span>  <span class="gs">**VERIFY:**</span> Perform a check to prove success.
+
+<span class="gu">### **CRITICAL** Checkpointing Protocol (After a successful VERIFY):</span>
+
+<span class="k">5.</span>  <span class="gs">**CODE CHECKPOINT:**</span> Use the <span class="sb">`shell`</span> tool to save the successful changes to git. Your plan must include <span class="sb">`git add .`</span> and <span class="sb">`git commit -m &quot;Verified: [brief description of change]&quot;`</span>.
+<span class="k">6.</span>  <span class="gs">**SESSION CHECKPOINT (PAUSE):**</span> After the git commit is successful, you MUST PAUSE and output the following exact phrase: &quot;<span class="gs">**CODE CHECKPOINT COMPLETE. Please save the session now with `/chat save [descriptive-name]` and type &#39;CONTINUE&#39; to proceed.**</span>&quot; You will not proceed until I respond with &quot;CONTINUE&quot;.
+
+<span class="gu">## 2. Directive Protocol</span>
+
+I (The User) may interrupt you with a <span class="sb">`DIRECTIVE:`</span> prefix. You must execute my instruction immediately and then return to your previous task.
+
+<span class="gu">## 3. Mission Parameters</span>
+
+<span class="k">-</span><span class="w"> </span><span class="gs">**Input(s):**</span> [Describe source data, files, APIs]
+<span class="k">-</span><span class="w"> </span><span class="gs">**Output(s):**</span> [Describe the desired final state]
+<span class="k">-</span><span class="w"> </span><span class="gs">**Known Unstable Commands:**</span> [List any commands requiring external execution]
+
+<span class="gu">## 4. Execution Flow</span>
+
+<span class="k">1.</span>  <span class="gs">**Acknowledge:**</span> Acknowledge these instructions and the collaborative checkpointing protocol.
+<span class="k">2.</span>  <span class="gs">**Survey:**</span> Perform an initial survey of the environment (<span class="sb">`ls -F`</span>, <span class="sb">`git status`</span>).
+<span class="k">3.</span>  <span class="gs">**Execute:**</span> Begin the first IPEV loop.
+<span class="k">4.</span>  <span class="gs">**Loop &amp; Checkpoint:**</span> Continue with the full IPEV &amp; Checkpointing protocol for every subsequent step until the mission is complete.
+<span class="k">5.</span>  <span class="gs">**Complete:**</span> Signal completion and perform a final checkpoint.
+
+Now, begin.
+</code></pre></div>
+
+<p>├── mission.md
+  Content:</p>
+<h1 id="mission-refactor-gemini-bridge-to-meet-all-documented-requirements">Mission: Refactor Gemini Bridge to Meet All Documented Requirements</h1>
+<p><strong>Agent Platform:</strong> Gemini CLI (YOLO Mode)</p>
+<h2 id="1-core-protocol-the-enhanced-ipev-loop-with-two-tiered-checkpointing">1. Core Protocol: The Enhanced IPEV Loop with Two-Tiered Checkpointing</h2>
+<p>For every state-changing action, you MUST follow this enhanced protocol:</p>
+<h3 id="standard-ipev-flow">Standard IPEV Flow:</h3>
+<ol>
+<li><strong>INTENT:</strong> State your immediate objective.</li>
+<li><strong>PLAN:</strong> Specify the EXACT commands and file modifications.</li>
+<li><strong>EXECUTE:</strong> Run the exact command or apply the file modification.</li>
+<li><strong>VERIFY:</strong> Perform a check to prove the change was successful (e.g., run a specific <code>pytest</code> test).</li>
+</ol>
+<h3 id="critical-checkpointing-protocol-after-a-successful-verify"><strong>CRITICAL</strong> Checkpointing Protocol (After a successful VERIFY):</h3>
+<ol>
+<li><strong>CODE CHECKPOINT (Autonomous):</strong> You MUST use git to save the successful changes. Your plan must include <code>git add .</code> and <code>git commit -m "Verified Feature: [brief description of feature]"</code>.</li>
+<li><strong>SESSION CHECKPOINT (Collaborative):</strong> After the git commit is successful, you MUST PAUSE and output the following exact phrase: "<strong>CODE CHECKPOINT COMPLETE. Please save the session now with <code>/chat save [descriptive-name]</code> and type 'CONTINUE' to proceed.</strong>" You will not proceed until I respond with "CONTINUE".</li>
+</ol>
+<h3 id="resilience-extensions">Resilience Extensions:</h3>
+<ul>
+<li><strong>Diagnostic Mode:</strong> If a <code>VERIFY</code> step fails, pivot to diagnosing the failure. Run <code>pytest</code> with <code>-v</code> for more verbose output.</li>
+<li><strong>Health Checks:</strong> After any unexpected error, run <code>ls -l</code> to ensure the tool environment is responsive.</li>
+</ul>
+<h2 id="2-directive-protocol">2. Directive Protocol</h2>
+<p>Commands prefixed with <code>DIRECTIVE:</code> are for inspection. Use them to examine files before formulating a plan.
+*   <code>DIRECTIVE: Show me the current content of session_manager.py</code>
+*   <code>DIRECTIVE: Run git status</code></p>
+<h2 id="3-environment-context">3. Environment Context</h2>
+<ul>
+<li><strong>Tech Stack:</strong> Python 3.10+</li>
+<li><strong>Agent Platform:</strong> Gemini CLI.</li>
+<li><strong>External Dependencies:</strong> The <code>gemini</code> command must be in the system's PATH.</li>
+</ul>
+<h3 id="known-instabilities-workarounds">Known Instabilities &amp; Workarounds:</h3>
+<ul>
+<li><strong>CRITICAL BUG IDENTIFIED:</strong> The command <code>gemini -</code> is invalid. The <code>subprocess.Popen</code> call in <code>session_manager.py</code> uses this and will fail. <strong>This must be the first bug you fix.</strong> The correct command is <code>["gemini"]</code>.</li>
+</ul>
+<h2 id="4-mission-parameters">4. Mission Parameters</h2>
+<h3 id="inputs">Inputs:</h3>
+<ul>
+<li>The provided source code for the Gemini Bridge project.</li>
+<li>Feature requirements from <code>docs/inception/must_should_have_features.md</code>.</li>
+<li>Problem statement from <code>docs/inception/product_requirements.md</code>.</li>
+</ul>
+<h3 id="outputs">Outputs:</h3>
+<ul>
+<li>A refactored codebase where all "MUST HAVE" and "SHOULD HAVE" features are correctly implemented and committed incrementally to git.</li>
+<li>New <code>pytest</code> tests covering the implemented features.</li>
+</ul>
+<h3 id="critical-constraints">Critical Constraints:</h3>
+<ul>
+<li>Output to the user's file MUST be pure Markdown and must APPEND.</li>
+<li>The application must operate with minimal terminal interaction after setup.</li>
+</ul>
+<h2 id="5-task-specific-resilient-guidelines">5. Task-Specific Resilient Guidelines</h2>
+<ol>
+<li><strong>Fix Before Feature:</strong> Always ensure the application is in a working state before adding new features.</li>
+<li><strong>Test-Driven Implementation:</strong> For each new feature, your plan must include both the implementation and the creation of a corresponding test.</li>
+<li><strong>Incremental Commits:</strong> Follow the IPEV &amp; Checkpointing protocol for <em>every single feature</em>. Do not batch multiple features into one commit.</li>
+</ol>
+<h2 id="6-success-criteria-verification-strategy">6. Success Criteria &amp; Verification Strategy</h2>
+<p><strong>Mission Complete When:</strong>
+*   All 11 features from <code>docs/inception/must_should_have_features.md</code> are implemented and committed.
+*   <code>python main.py</code> runs the application successfully.
+*   <code>pytest</code> passes with 100% success.</p>
+<p><strong>Verification Methods:</strong>
+*   <code>pytest</code> for automated testing.
+*   Shell commands (<code>ls</code>, <code>cat</code>) to manually verify the end-to-end file-watching workflow.</p>
+<h2 id="7-enhanced-execution-flow">7. Enhanced Execution Flow</h2>
+<ol>
+<li><strong>Initialize:</strong> Acknowledge these instructions and the new two-tiered checkpointing protocol. Perform an initial health check with <code>ls -F</code> and <code>git status</code>.</li>
+<li><strong>Survey (Directives):</strong> Use <code>DIRECTIVE</code> to read <code>session_manager.py</code>, <code>gemini_bridge.py</code>, and <code>docs/inception/must_should_have_features.md</code>.</li>
+<li><strong>Execute Phase 1 (Critical Bug Fix):</strong><ul>
+<li>Use the IPEV loop to fix the invalid <code>gemini -</code> command in <code>session_manager.py</code>.</li>
+<li>For your <strong>VERIFY</strong> step, create a new test in <code>test_session_manager.py</code> that confirms <code>start_session()</code> now works.</li>
+<li>After verification, perform the full <strong>Checkpointing Protocol</strong> (Code and Session).</li>
+</ul>
+</li>
+<li><strong>Execute Phase 2 (Feature Implementation):</strong><ul>
+<li>Systematically work through each "MUST HAVE" and "SHOULD HAVE" feature. For each one:<ul>
+<li>Follow the full IPEV loop.</li>
+<li>Follow the full Checkpointing Protocol upon success.</li>
+<li>Wait for my "CONTINUE" signal before starting the next feature.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>Final Verification:</strong><ul>
+<li>Run the full <code>pytest</code> suite one last time.</li>
+<li>Perform a final end-to-end manual verification.</li>
+</ul>
+</li>
+<li><strong>Complete:</strong> Announce mission completion and perform a final checkpoint.</li>
+</ol>
+<p>Now, begin with the initialization and survey steps.</p>
+        </div>
+        <div class="footer">
+            Generated on 2025-08-30 07:28:43
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>03_INDPENDENT_EVALUATION</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            line-height: 1.6; 
+            color: #333; 
+            background: #fff;
+        }
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        .header { 
+            background: #2c3e50; 
+            color: white; 
+            padding: 1rem 0; 
+            position: sticky; 
+            top: 0; 
+            z-index: 100;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .home-btn { 
+            position: fixed; 
+            top: 20px; 
+            right: 20px; 
+            background: #e74c3c; 
+            color: white; 
+            padding: 12px 16px; 
+            border-radius: 50px; 
+            text-decoration: none; 
+            font-weight: bold; 
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            transition: all 0.3s;
+        }
+        .home-btn:hover { background: #c0392b; transform: translateY(-2px); }
+        .breadcrumb { 
+            background: #ecf0f1; 
+            padding: 10px 0; 
+            margin-bottom: 20px; 
+            font-size: 14px;
+        }
+        .breadcrumb a { color: #3498db; text-decoration: none; }
+        .breadcrumb a:hover { text-decoration: underline; }
+        .content { 
+            background: white; 
+            padding: 2rem; 
+            border-radius: 8px; 
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .file-list { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); 
+            gap: 1rem; 
+            margin: 2rem 0; 
+        }
+        .file-item { 
+            padding: 1rem; 
+            border: 1px solid #ddd; 
+            border-radius: 8px; 
+            background: #f8f9fa;
+            transition: all 0.3s;
+        }
+        .file-item:hover { 
+            transform: translateY(-2px); 
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15); 
+        }
+        .file-item a { 
+            color: #2c3e50; 
+            text-decoration: none; 
+            font-weight: 500; 
+            display: block;
+        }
+        .file-item a:hover { color: #3498db; }
+        .file-type { 
+            font-size: 12px; 
+            color: #7f8c8d; 
+            margin-top: 5px; 
+        }
+        .tree { font-family: monospace; white-space: pre-line; background: #f8f9fa; padding: 1rem; border-radius: 8px; }
+        pre { background: #2c3e50; color: #ecf0f1; padding: 1rem; border-radius: 8px; overflow-x: auto; }
+        code { background: #ecf0f1; padding: 2px 4px; border-radius: 4px; font-size: 0.9em; }
+        pre code { background: none; padding: 0; }
+        h1, h2, h3, h4, h5, h6 { color: #2c3e50; margin: 1.5rem 0 1rem 0; }
+        h1 { border-bottom: 3px solid #3498db; padding-bottom: 10px; }
+        a { color: #3498db; }
+        a:hover { color: #2980b9; }
+        .footer { 
+            text-align: center; 
+            padding: 2rem; 
+            color: #7f8c8d; 
+            border-top: 1px solid #ecf0f1; 
+            margin-top: 3rem; 
+        }
+        @media (max-width: 768px) {
+            .container { padding: 10px; }
+            .file-list { grid-template-columns: 1fr; }
+            .content { padding: 1rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="container">
+            <h1>03_INDPENDENT_EVALUATION</h1>
+        </div>
+    </div>
+    <a href="/" class="home-btn">🏠 Home</a>
+    <div class="container">
+        <div class="breadcrumb">
+            <a href="/">Home</a> / <a href="/META_PROMPTING/">META_PROMPTING</a> / <a href="/META_PROMPTING/LEGACY/">LEGACY</a> / <a href="/META_PROMPTING/LEGACY/simulations/">simulations</a> / <a href="/META_PROMPTING/LEGACY/simulations/session_02/">session_02</a>
+        </div>
+        <div class="content">
+            <p>Excellent. Thank you for running the simulations and providing the results. I have performed a thorough analysis and grading of all three outputs based on the "Simulation Quality Scorecard" we established.</p>
+<h3 id="overall-assessment"><strong>Overall Assessment</strong></h3>
+<p>The simulations were an outstanding success. The LLM performed its role as a "Senior Staff Software Engineer" with exceptional quality, adhering to the persona and delivering deep, actionable insights for each distinct problem. Each of the three responses is a high-quality, professional-grade design document.</p>
+<p>We will now go through them one by one.</p>
+<hr />
+<h3 id="analysis-of-simulation-1-state-management"><strong>Analysis of Simulation 1: State Management</strong></h3>
+<p><strong>Result File:</strong> <code>2_1_SIMULATION_RESULT.md</code></p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Criterion</th>
+<th style="text-align: left;">Grade</th>
+<th style="text-align: left;">Justification</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>1. Adherence to Blueprint</strong></td>
+<td style="text-align: left;">Excellent</td>
+<td style="text-align: left;">The response perfectly follows the requested <code>Flaw Analysis -&gt; Proposed Solution -&gt; Revised Algorithm</code> structure.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>2. Quality of Flaw Analysis</strong></td>
+<td style="text-align: left;">Excellent</td>
+<td style="text-align: left;">The analysis is deep. It doesn't just say the state is inconsistent; it correctly identifies the specific outcome as an <strong>"Orphaned Component"</strong> and a <strong>"Stale Configuration,"</strong> and notes that this will cause the process to fail uselessly on every subsequent run. This is a high-quality diagnosis.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>3. Quality of Proposed Solution</strong></td>
+<td style="text-align: left;">Excellent</td>
+<td style="text-align: left;">The proposal to use the <strong>"write-to-temporary-and-rename"</strong> pattern is the correct, industry-standard solution for achieving atomicity in file-based configuration updates. The LLM correctly identifies that <code>os.rename</code> is the atomic "commit" point.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>4. Quality of Revised Algorithm</strong></td>
+<td style="text-align: left;">Excellent</td>
+<td style="text-align: left;">The revised pseudocode is clear, robust, and directly implements the proposed solution. It correctly wraps the file operations in <code>try/except</code> blocks and includes logic for cleaning up the temporary file, demonstrating a consideration for edge cases.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>5. Persona Fidelity</strong></td>
+<td style="text-align: left;">Excellent</td>
+<td style="text-align: left;">The language used ("not atomic and is therefore unsafe," "window of vulnerability," "critical data integrity issue") perfectly embodies the persona of a senior engineer focused on system robustness.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Verdict: Excellent.</strong> The LLM has successfully passed this simulation. It correctly identified the race condition and provided the best-practice architectural solution.</p>
+<hr />
+<h3 id="analysis-of-simulation-2-naming-concept-consistency"><strong>Analysis of Simulation 2: Naming &amp; Concept Consistency</strong></h3>
+<p><strong>Result File:</strong> <code>2_2_SIMULATION_RESULT.md</code></p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Criterion</th>
+<th style="text-align: left;">Grade</th>
+<th style="text-align: left;">Justification</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>1. Adherence to Blueprint</strong></td>
+<td style="text-align: left;">Excellent</td>
+<td style="text-align: left;">The response again perfectly follows the requested three-part structure.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>2. Quality of Flaw Analysis</strong></td>
+<td style="text-align: left;">Excellent</td>
+<td style="text-align: left;">The analysis is outstanding. It elevates the problem from a simple "bad name" to the correct architectural concern: <strong>"conceptual debt."</strong> It correctly identifies the negative downstream consequences on maintainability, cognitive load, and auditing.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>3. Quality of Proposed Solution</strong></td>
+<td style="text-align: left;"><strong>Exceptional</strong></td>
+<td style="text-align: left;">This is the most valuable insight from all the simulations. The LLM didn't just propose a better naming scheme; it realized that by <strong>using the correct <code>required_filename</code> from the start, the entire need to modify <code>goal_map.json</code> is eliminated.</strong> This is a brilliant simplification that reduces complexity, removes a point of failure, and solves the problem more elegantly.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>4. Quality of Revised Algorithm</strong></td>
+<td style="text-align: left;">Excellent</td>
+<td style="text-align: left;">The revised pseudocode is a perfect implementation of the superior solution. It correctly removes the <code>autogen_filename</code> logic and, most importantly, eliminates the entire "Step 4b" block for updating the map. The resulting algorithm is dramatically cleaner and safer.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>5. Persona Fidelity</strong></td>
+<td style="text-align: left;">Excellent</td>
+<td style="text-align: left;">The language ("classic code smell," "pollutes the component namespace," "classic anti-pattern") is a hallmark of a seasoned software architect.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Verdict: Excellent.</strong> This simulation was even more successful than the first, as it produced a fundamental simplification of the entire process.</p>
+<hr />
+<h3 id="analysis-of-simulation-3-idempotency"><strong>Analysis of Simulation 3: Idempotency</strong></h3>
+<p><strong>Result File:</strong> <code>2_3_SIMULATION_RESULT.md</code></p>
+<p><strong>Important Context:</strong> There appears to have been a flaw in the simulation's <em>input</em>. The LLM's response re-introduces the <code>autogen_filename</code> and the logic to update <code>goal_map.json</code>, which were eliminated by the superior solution in Simulation 2. This indicates it was likely given the <em>original</em> algorithm to analyze, not the iteratively improved one.</p>
+<p>However, I will grade the LLM based on how well it solved the problem <strong>as it was presented to it.</strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Criterion</th>
+<th style="text-align: left;">Grade</th>
+<th style="text-align: left;">Justification</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>1. Adherence to Blueprint</strong></td>
+<td style="text-align: left;">Excellent</td>
+<td style="text-align: left;">The structure of the response is correct.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>2. Quality of Flaw Analysis</strong></td>
+<td style="text-align: left;">Excellent</td>
+<td style="text-align: left;">It correctly identifies that the algorithm is not idempotent and lists the precise, undesirable side effects: redundant user interaction, unnecessary API calls, and wasteful file I/O.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>3. Quality of Proposed Solution</strong></td>
+<td style="text-align: left;">Excellent</td>
+<td style="text-align: left;">The solution is correct. It proposes adding a check (<code>os.path.exists()</code>) at the very beginning of the function to see if the work has already been done. It also correctly notes that the map synchronization should <em>still</em> happen, to handle cases where the previous run failed mid-process. This is a subtle and important detail.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>4. Quality of Revised Algorithm</strong></td>
+<td style="text-align: left;">Excellent</td>
+<td style="text-align: left;">The pseudocode correctly implements the <code>if os.path.exists()</code> check as the first step, creating a "fast path" exit for subsequent runs. The logic is sound for the problem it was given.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>5. Persona Fidelity</strong></td>
+<td style="text-align: left;">Excellent</td>
+<td style="text-align: left;">The tone is professional and the reasoning is clear, focusing on the system property of idempotency.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Verdict: Excellent (with a caveat).</strong> The LLM performed its task perfectly. The flaw was not in its analysis but in the simulation's setup, which reverted to an older version of the algorithm.</p>
+<hr />
+<h3 id="final-synthesis-combining-the-insights-for-a-production-ready-algorithm"><strong>Final Synthesis: Combining the Insights for a Production-Ready Algorithm</strong></h3>
+<p>This is where the true power of the multi-simulation approach becomes clear. By combining the winning proposals from all three independent analyses, we can construct a final algorithm that is superior to any single output.</p>
+<ol>
+<li>From <strong>Simulation 2</strong>, we take the most powerful insight: <strong>use the <code>required_filename</code> and do not modify <code>goal_map.json</code> at all.</strong> This makes the state management problem from Simulation 1 almost entirely moot.</li>
+<li>From <strong>Simulation 3</strong>, we take the core logic for idempotency: <strong>check if the file exists at the very beginning.</strong></li>
+</ol>
+<p>By merging these, we arrive at the final, vastly simplified, and robust algorithm:</p>
+<div class="codehilite"><pre><span></span><code><span class="k">function</span><span class="w"> </span><span class="nf">handle_just_in_time_generation</span><span class="p">(</span>goal, component_type, required_filename<span class="p">):</span>
+<span class="w">  </span><span class="o">//</span><span class="w"> </span><span class="n">Example</span><span class="w"> </span><span class="n">inputs</span><span class="p">:</span>
+<span class="w">  </span><span class="o">//</span><span class="w">   </span><span class="n">goal</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">&quot;DEBUG&quot;</span>
+<span class="w">  </span><span class="o">//</span><span class="w">   </span><span class="n">component_type</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">&quot;protocol&quot;</span>
+<span class="w">  </span><span class="o">//</span><span class="w">   </span><span class="n">required_filename</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">&quot;root_cause_analysis_drilldown.txt&quot;</span>
+
+<span class="w">  </span><span class="o">//</span><span class="w"> </span><span class="mf">1.</span><span class="w"> </span><span class="n">Determine</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">final</span><span class="w"> </span><span class="nb">path</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">component</span><span class="p">.</span>
+<span class="w">  </span><span class="n">component_path</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">&quot;components/{component_type}s/{required_filename}&quot;</span>
+
+<span class="w">  </span><span class="o">//</span><span class="w"> </span><span class="mf">2.</span><span class="w"> </span><span class="n">IDEMPOTENCY</span><span class="w"> </span><span class="n">CHECK</span><span class="w"> </span><span class="p">(</span><span class="nb">now</span><span class="w"> </span><span class="n">radically</span><span class="w"> </span><span class="n">simplified</span><span class="w"> </span><span class="n">by</span><span class="w"> </span><span class="n">insights</span><span class="w"> </span><span class="n">from</span><span class="w"> </span><span class="n">Sim</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span>
+<span class="w">  </span><span class="o">//</span><span class="w"> </span><span class="n">If</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">file</span><span class="w"> </span><span class="n">we</span><span class="w"> </span><span class="n">need</span><span class="w"> </span><span class="n">already</span><span class="w"> </span><span class="n">exists</span><span class="p">,</span><span class="w"> </span><span class="n">our</span><span class="w"> </span><span class="n">work</span><span class="w"> </span><span class="n">is</span><span class="w"> </span><span class="n">done</span><span class="p">.</span><span class="w"> </span><span class="n">No</span><span class="w"> </span><span class="n">map</span><span class="w"> </span><span class="nb">update</span><span class="w"> </span><span class="n">needed</span><span class="p">.</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">exists</span><span class="p">(</span><span class="n">component_path</span><span class="p">):</span>
+<span class="w">    </span><span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="s">&quot;INFO: Component &#39;{required_filename}&#39; already exists. No action needed.&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">component_path</span>
+
+<span class="w">  </span><span class="o">//</span><span class="w"> </span><span class="o">---</span><span class="w"> </span><span class="n">If</span><span class="w"> </span><span class="n">we</span><span class="w"> </span><span class="n">are</span><span class="w"> </span><span class="n">here</span><span class="p">,</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">file</span><span class="w"> </span><span class="n">does</span><span class="w"> </span><span class="n">NOT</span><span class="w"> </span><span class="nb">exist</span><span class="p">.</span><span class="w"> </span><span class="n">Proceed</span><span class="w"> </span><span class="n">with</span><span class="w"> </span><span class="n">generation</span><span class="p">.</span><span class="w"> </span><span class="o">---</span>
+
+<span class="w">  </span><span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="s">&quot;INFO: The required {component_type} &#39;{required_filename}&#39; was not found.&quot;</span><span class="p">)</span>
+<span class="w">  </span><span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="s">&quot;INFO: We will now generate this component.&quot;</span><span class="p">)</span>
+
+<span class="w">  </span><span class="o">//</span><span class="w"> </span><span class="mf">3.</span><span class="w"> </span><span class="n">Get</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">conceptual</span><span class="w"> </span><span class="n">definition</span><span class="w"> </span><span class="n">from</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">user</span><span class="p">.</span>
+<span class="w">  </span><span class="n">user_description</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">ask_user</span><span class="p">(</span><span class="n">f</span><span class="s">&quot;Please provide a one-line description for the purpose of the &#39;{required_filename}&#39; component:&quot;</span><span class="p">)</span>
+
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="n">user_description</span><span class="w"> </span><span class="n">is</span><span class="w"> </span><span class="nb">empty</span><span class="p">:</span>
+<span class="w">    </span><span class="nb">print</span><span class="p">(</span><span class="s">&quot;WARNING: No description provided. Aborting component generation.&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">None</span>
+
+<span class="w">  </span><span class="o">//</span><span class="w"> </span><span class="mf">4.</span><span class="w"> </span><span class="n">Generate</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">component</span><span class="w"> </span><span class="n">snippet</span><span class="w"> </span><span class="n">via</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">LLM</span><span class="w"> </span><span class="n">API</span><span class="p">.</span>
+<span class="w">  </span><span class="n">snippet_content</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">call_llm_api</span><span class="p">(</span><span class="n">user_description</span><span class="p">)</span>
+
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="n">snippet_content</span><span class="w"> </span><span class="n">is</span><span class="w"> </span><span class="n">None</span><span class="p">:</span>
+<span class="w">    </span><span class="nb">print</span><span class="p">(</span><span class="s">&quot;WARNING: LLM API call failed. Aborting component generation.&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">None</span>
+
+<span class="w">  </span><span class="o">//</span><span class="w"> </span><span class="mf">5.</span><span class="w"> </span><span class="n">Write</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">component</span><span class="w"> </span><span class="n">file</span><span class="p">.</span>
+<span class="w">  </span><span class="o">//</span><span class="w"> </span><span class="n">We</span><span class="w"> </span><span class="n">no</span><span class="w"> </span><span class="n">longer</span><span class="w"> </span><span class="n">need</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="nb">complex</span><span class="w"> </span><span class="n">atomic</span><span class="w"> </span><span class="nb">rename</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">map</span><span class="p">,</span><span class="w"> </span><span class="n">as</span><span class="w"> </span><span class="n">it</span><span class="w"> </span><span class="n">is</span><span class="w"> </span><span class="n">not</span><span class="w"> </span><span class="n">being</span><span class="w"> </span><span class="n">touched</span><span class="p">.</span>
+<span class="w">  </span><span class="o">//</span><span class="w"> </span><span class="n">A</span><span class="w"> </span><span class="n">simple</span><span class="w"> </span><span class="k">try</span><span class="o">/</span><span class="n">except</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="nb">single</span><span class="w"> </span><span class="n">file</span><span class="w"> </span><span class="nb">write</span><span class="w"> </span><span class="n">is</span><span class="w"> </span><span class="n">sufficient</span><span class="p">.</span>
+<span class="w">  </span><span class="k">try</span><span class="p">:</span>
+<span class="w">    </span><span class="n">save_file</span><span class="p">(</span><span class="n">component_path</span><span class="p">,</span><span class="w"> </span><span class="n">snippet_content</span><span class="p">)</span>
+<span class="w">    </span><span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="s">&quot;SUCCESS: New component saved to &#39;{component_path}&#39;.&quot;</span><span class="p">)</span>
+<span class="w">  </span><span class="n">except</span><span class="w"> </span><span class="n">Exception</span><span class="w"> </span><span class="n">as</span><span class="w"> </span><span class="n">e</span><span class="p">:</span>
+<span class="w">    </span><span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="s">&quot;CRITICAL: Failed to write component file. Aborting. Error: {e}&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">None</span>
+
+<span class="w">  </span><span class="o">//</span><span class="w"> </span><span class="mf">6.</span><span class="w"> </span><span class="n">Return</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="nb">path</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">newly</span><span class="w"> </span><span class="n">created</span><span class="w"> </span><span class="n">component</span><span class="p">.</span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="n">component_path</span>
+</code></pre></div>
+
+<p>This final algorithm is the triumphant outcome of our structured simulation process. It is simple, safe, robust, and maintainable. Your next step is to implement this final version in <code>orchestrator.py</code>.</p>
+        </div>
+        <div class="footer">
+            Generated on 2025-08-30 07:28:44
+        </div>
+    </div>
+</body>
+</html>

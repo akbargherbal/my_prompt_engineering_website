@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>00_PROMPTS_SESSION_02</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            line-height: 1.6; 
+            color: #333; 
+            background: #fff;
+        }
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        .header { 
+            background: #2c3e50; 
+            color: white; 
+            padding: 1rem 0; 
+            position: sticky; 
+            top: 0; 
+            z-index: 100;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .home-btn { 
+            position: fixed; 
+            top: 20px; 
+            right: 20px; 
+            background: #e74c3c; 
+            color: white; 
+            padding: 12px 16px; 
+            border-radius: 50px; 
+            text-decoration: none; 
+            font-weight: bold; 
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            transition: all 0.3s;
+        }
+        .home-btn:hover { background: #c0392b; transform: translateY(-2px); }
+        .breadcrumb { 
+            background: #ecf0f1; 
+            padding: 10px 0; 
+            margin-bottom: 20px; 
+            font-size: 14px;
+        }
+        .breadcrumb a { color: #3498db; text-decoration: none; }
+        .breadcrumb a:hover { text-decoration: underline; }
+        .content { 
+            background: white; 
+            padding: 2rem; 
+            border-radius: 8px; 
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .file-list { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); 
+            gap: 1rem; 
+            margin: 2rem 0; 
+        }
+        .file-item { 
+            padding: 1rem; 
+            border: 1px solid #ddd; 
+            border-radius: 8px; 
+            background: #f8f9fa;
+            transition: all 0.3s;
+        }
+        .file-item:hover { 
+            transform: translateY(-2px); 
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15); 
+        }
+        .file-item a { 
+            color: #2c3e50; 
+            text-decoration: none; 
+            font-weight: 500; 
+            display: block;
+        }
+        .file-item a:hover { color: #3498db; }
+        .file-type { 
+            font-size: 12px; 
+            color: #7f8c8d; 
+            margin-top: 5px; 
+        }
+        .tree { font-family: monospace; white-space: pre-line; background: #f8f9fa; padding: 1rem; border-radius: 8px; }
+        pre { background: #2c3e50; color: #ecf0f1; padding: 1rem; border-radius: 8px; overflow-x: auto; }
+        code { background: #ecf0f1; padding: 2px 4px; border-radius: 4px; font-size: 0.9em; }
+        pre code { background: none; padding: 0; }
+        h1, h2, h3, h4, h5, h6 { color: #2c3e50; margin: 1.5rem 0 1rem 0; }
+        h1 { border-bottom: 3px solid #3498db; padding-bottom: 10px; }
+        a { color: #3498db; }
+        a:hover { color: #2980b9; }
+        .footer { 
+            text-align: center; 
+            padding: 2rem; 
+            color: #7f8c8d; 
+            border-top: 1px solid #ecf0f1; 
+            margin-top: 3rem; 
+        }
+        @media (max-width: 768px) {
+            .container { padding: 10px; }
+            .file-list { grid-template-columns: 1fr; }
+            .content { padding: 1rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="container">
+            <h1>00_PROMPTS_SESSION_02</h1>
+        </div>
+    </div>
+    <a href="/" class="home-btn">🏠 Home</a>
+    <div class="container">
+        <div class="breadcrumb">
+            <a href="/">Home</a> / <a href="/META_PROMPTING/">META_PROMPTING</a> / <a href="/META_PROMPTING/LEGACY/">LEGACY</a> / <a href="/META_PROMPTING/LEGACY/simulations/">simulations</a> / <a href="/META_PROMPTING/LEGACY/simulations/session_02/">session_02</a>
+        </div>
+        <div class="content">
+            <h4 id="prompt-for-simulation-1-state-management"><strong>Prompt for Simulation 1: State Management</strong></h4>
+<p>You are a Senior Staff Software Engineer and Systems Architect, specializing in building robust, fault-tolerant developer tools. Your core expertise is in identifying race conditions, ensuring data integrity, and designing atomic operations for file-based systems.</p>
+<p><strong>SCENARIO:</strong>
+You are reviewing a new feature proposal for a Python-based "Orchestration Engine." This engine assembles LLM prompt frameworks from a library of text-file "components." A critical configuration file, <code>goal_map.json</code>, maps high-level goals to the specific component filenames required for a task.</p>
+<p>The proposed feature is "Just-in-Time (JIT) Component Generation." When the engine discovers a required component file is missing, it should trigger a process to generate it via an LLM call and update the <code>goal_map.json</code> to use the newly created file.</p>
+<p><strong>YOUR DIRECTIVE:</strong>
+Your task is to analyze the provided algorithm for this JIT Generation workflow. You must focus <strong>exclusively</strong> on the <strong>State Management</strong> problem. Identify the risks associated with the file I/O operations and propose a more robust, "transactional" solution that can withstand interruptions (e.g., a user pressing Ctrl+C, a power failure, or a script crash) between steps.</p>
+<p><strong>EVIDENCE:</strong>
+All necessary context is provided below in a single <code>project_snapshot.md</code> file. It contains the system's design, its configuration files, and the specific algorithm you must analyze.</p>
+<p><strong>BLUEPRINT FOR YOUR RESPONSE:</strong>
+You must provide your analysis in three distinct parts:</p>
+<ol>
+<li><strong>Flaw Analysis:</strong> A clear, concise explanation of the race condition in the proposed algorithm. Describe exactly how the system's state can become corrupted and inconsistent.</li>
+<li><strong>Proposed Solution:</strong> Describe a new, superior strategy for the file and configuration updates that ensures atomicity. Explain <em>why</em> this new approach is safer.</li>
+<li><strong>Revised Algorithm:</strong> Provide the complete, revised pseudocode for the <code>handle_just_in_time_generation</code> function that implements your proposed solution. This revised algorithm must be self-contained and ready for the next stage of review.</li>
+</ol>
+<p>See the attachments for the entire project content; Key Documents include:</p>
+<ul>
+<li><strong><code>SIMULATION_BRIEFING.md</code> (and its included Pseudocode):</strong> <strong>Absolutely essential.</strong> This is the core of the assignment, defining the problem, the context, and the specific algorithm to be analyzed.</li>
+<li><strong><code>goal_map.json</code>:</strong> <strong>Absolutely essential.</strong> This is the primary data structure that the algorithm reads from and writes to. Its state is central to all three problems.</li>
+<li><strong><code>generation_jobs.json</code>:</strong> <strong>Essential.</strong> This file provides the "canonical" list of component names and their purposes. It is indispensable for the "Naming &amp; Concept Consistency" simulation.</li>
+<li><strong><code>STRATEGIC_PLAN.md</code>:</strong> <strong>Essential.</strong> This document explains the intended user workflow and the interactive dialogue. This context is crucial for reasoning about when the JIT process is triggered and how to design a solution (especially for idempotency) that makes sense from a user's perspective.</li>
+<li><strong><code>README.md</code>:</strong> <strong>Essential.</strong> The "How It Works" and "How to Add a New Component" sections provide a high-level model of the system and describe the manual alternative to JIT generation, which is valuable context for the LLM to understand the trade-offs.</li>
+</ul>
+<hr />
+<h4 id="prompt-for-simulation-2-naming-concept-consistency"><strong>Prompt for Simulation 2: Naming &amp; Concept Consistency</strong></h4>
+<p>You are a Senior Staff Software Engineer and Systems Architect, specializing in designing clean, maintainable, and highly scalable developer tools. Your core expertise is in API design, configuration management, and establishing conventions that prevent long-term conceptual debt.</p>
+<p><strong>SCENARIO:</strong>
+You are reviewing a feature for a Python-based "Orchestration Engine." This engine assembles LLM prompt frameworks from a library of text-file "components." A configuration file, <code>goal_map.json</code>, maps goals to component filenames. A canonical list of all "official" components and their purposes is maintained in <code>generation_jobs.json</code>.</p>
+<p>The feature is "Just-in-Time (JIT) Component Generation." When the engine discovers a required component is missing (e.g., <code>root_cause_analysis_drilldown.txt</code>), the current algorithm creates a new file with a generic, auto-generated name (e.g., <code>autogen_protocol_for_debug.txt</code>) and updates the <code>goal_map.json</code> to point to this new generic file.</p>
+<p><strong>YOUR DIRECTIVE:</strong>
+Your task is to analyze the provided algorithm for this JIT Generation workflow. You must focus <strong>exclusively</strong> on the <strong>Naming and Concept Consistency</strong> problem. Analyze the long-term consequences of the current naming strategy. Propose a superior strategy for naming and mapping that maintains the integrity and clarity of the component library and the <code>goal_map.json</code>.</p>
+<p><strong>EVIDENCE:</strong>
+All necessary context is provided below in a single <code>project_snapshot.md</code> file. It contains the system's design, its configuration files, and the specific algorithm you must analyze. (Note: This algorithm has already been made robust against state corruption).</p>
+<p><strong>BLUEPRINT FOR YOUR RESPONSE:</strong>
+You must provide your analysis in three distinct parts:</p>
+<ol>
+<li><strong>Flaw Analysis:</strong> A clear explanation of the problems created by the "autogen" naming convention. Discuss its impact on maintainability, user understanding, and system clarity.</li>
+<li><strong>Proposed Solution:</strong> Describe a new, superior strategy for handling the naming and mapping. Your solution should reconcile the "required" filename with the file that is actually created, keeping the <code>goal_map.json</code> aligned with the conceptual model in <code>generation_jobs.json</code>.</li>
+<li><strong>Revised Algorithm:</strong> Provide the complete, revised pseudocode for the <code>handle_just_in_time_generation</code> function that implements your proposed solution.</li>
+</ol>
+<p>See the attachments for the entire project content; Key Documents include:</p>
+<ul>
+<li><strong><code>SIMULATION_BRIEFING.md</code> (and its included Pseudocode):</strong> <strong>Absolutely essential.</strong> This is the core of the assignment, defining the problem, the context, and the specific algorithm to be analyzed.</li>
+<li><strong><code>goal_map.json</code>:</strong> <strong>Absolutely essential.</strong> This is the primary data structure that the algorithm reads from and writes to. Its state is central to all three problems.</li>
+<li><strong><code>generation_jobs.json</code>:</strong> <strong>Essential.</strong> This file provides the "canonical" list of component names and their purposes. It is indispensable for the "Naming &amp; Concept Consistency" simulation.</li>
+<li><strong><code>STRATEGIC_PLAN.md</code>:</strong> <strong>Essential.</strong> This document explains the intended user workflow and the interactive dialogue. This context is crucial for reasoning about when the JIT process is triggered and how to design a solution (especially for idempotency) that makes sense from a user's perspective.</li>
+<li><strong><code>README.md</code>:</strong> <strong>Essential.</strong> The "How It Works" and "How to Add a New Component" sections provide a high-level model of the system and describe the manual alternative to JIT generation, which is valuable context for the LLM to understand the trade-offs.</li>
+</ul>
+<hr />
+<h4 id="prompt-for-simulation-3-idempotency"><strong>Prompt for Simulation 3: Idempotency</strong></h4>
+<p>You are a Senior Staff Software Engineer and Systems Architect, specializing in building reliable, idempotent, and predictable automation systems. Your core expertise is in designing workflows that produce the same outcome regardless of how many times they are run.</p>
+<p><strong>SCENARIO:</strong>
+You are reviewing a feature for a Python-based "Orchestration Engine." This engine assembles LLM prompt frameworks using a "Just-in-Time (JIT) Component Generation" workflow. When a required component file is missing, the engine triggers a process to generate it and update its configuration.</p>
+<p>The user can select a primary goal (e.g., "DEBUG") multiple times in different sessions. The JIT generation process could therefore be triggered multiple times for the exact same missing component.</p>
+<p><strong>YOUR DIRECTIVE:</strong>
+Your task is to analyze the provided algorithm for this JIT Generation workflow. You must focus <strong>exclusively</strong> on the <strong>Idempotency</strong> problem. Identify why the current algorithm is not idempotent and what problems this could cause. Design and propose a change that makes the entire generation process idempotent.</p>
+<p><strong>EVIDENCE:</strong>
+All necessary context is provided below in a single <code>project_snapshot.md</code> file. It contains the system's design, its configuration files, and the specific algorithm you must analyze. (Note: This algorithm has already been made robust and uses a clean naming convention).</p>
+<p><strong>BLUEPRINT FOR YOUR RESPONSE:</strong>
+You must provide your analysis in three distinct parts:</p>
+<ol>
+<li><strong>Flaw Analysis:</strong> A clear explanation of why the current algorithm is not idempotent. Describe the undesirable side effects of running it multiple times for the same missing component (e.g., creating redundant files, unnecessary API calls).</li>
+<li><strong>Proposed Solution:</strong> Describe the specific check or workflow modification needed to make the process idempotent. Explain where this check should occur in the algorithm's lifecycle.</li>
+<li><strong>Revised Algorithm:</strong> Provide the final, complete pseudocode for the <code>handle_just_in_time_generation</code> function that implements your proposed solution, making it fully idempotent.</li>
+</ol>
+<p>See the attachments for the entire project content; Key Documents include:</p>
+<ul>
+<li><strong><code>SIMULATION_BRIEFING.md</code> (and its included Pseudocode):</strong> <strong>Absolutely essential.</strong> This is the core of the assignment, defining the problem, the context, and the specific algorithm to be analyzed.</li>
+<li><strong><code>goal_map.json</code>:</strong> <strong>Absolutely essential.</strong> This is the primary data structure that the algorithm reads from and writes to. Its state is central to all three problems.</li>
+<li><strong><code>generation_jobs.json</code>:</strong> <strong>Essential.</strong> This file provides the "canonical" list of component names and their purposes. It is indispensable for the "Naming &amp; Concept Consistency" simulation.</li>
+<li><strong><code>STRATEGIC_PLAN.md</code>:</strong> <strong>Essential.</strong> This document explains the intended user workflow and the interactive dialogue. This context is crucial for reasoning about when the JIT process is triggered and how to design a solution (especially for idempotency) that makes sense from a user's perspective.</li>
+<li><strong><code>README.md</code>:</strong> <strong>Essential.</strong> The "How It Works" and "How to Add a New Component" sections provide a high-level model of the system and describe the manual alternative to JIT generation, which is valuable context for the LLM to understand the trade-offs.</li>
+</ul>
+        </div>
+        <div class="footer">
+            Generated on 2025-08-30 07:28:43
+        </div>
+    </div>
+</body>
+</html>
