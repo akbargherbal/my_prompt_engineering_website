@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>research_questions_indepth</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            line-height: 1.6; 
+            color: #333; 
+            background: #fff;
+        }
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        .header { 
+            background: #2c3e50; 
+            color: white; 
+            padding: 1rem 0; 
+            position: sticky; 
+            top: 0; 
+            z-index: 100;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .home-btn { 
+            position: fixed; 
+            top: 20px; 
+            right: 20px; 
+            background: #e74c3c; 
+            color: white; 
+            padding: 12px 16px; 
+            border-radius: 50px; 
+            text-decoration: none; 
+            font-weight: bold; 
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            transition: all 0.3s;
+        }
+        .home-btn:hover { background: #c0392b; transform: translateY(-2px); }
+        .breadcrumb { 
+            background: #ecf0f1; 
+            padding: 10px 0; 
+            margin-bottom: 20px; 
+            font-size: 14px;
+        }
+        .breadcrumb a { color: #3498db; text-decoration: none; }
+        .breadcrumb a:hover { text-decoration: underline; }
+        .breadcrumb span { font-weight: bold; color: #333; }
+        .content { 
+            background: white; 
+            padding: 2rem; 
+            border-radius: 8px; 
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .file-list { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); 
+            gap: 1rem; 
+            margin: 2rem 0; 
+        }
+        .file-item { 
+            padding: 1rem; 
+            border: 1px solid #ddd; 
+            border-radius: 8px; 
+            background: #f8f9fa;
+            transition: all 0.3s;
+        }
+        .file-item:hover { 
+            transform: translateY(-2px); 
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15); 
+        }
+        .file-item a { 
+            color: #2c3e50; 
+            text-decoration: none; 
+            font-weight: 500; 
+            display: block;
+        }
+        .file-item a:hover { color: #3498db; }
+        .file-type { 
+            font-size: 12px; 
+            color: #7f8c8d; 
+            margin-top: 5px; 
+        }
+        .tree { font-family: monospace; white-space: pre-line; background: #f8f9fa; padding: 1rem; border-radius: 8px; }
+        pre { background: #2c3e50; color: #ecf0f1; padding: 1rem; border-radius: 8px; overflow-x: auto; }
+        code { background: #ecf0f1; padding: 2px 4px; border-radius: 4px; font-size: 0.9em; }
+        pre code { background: none; padding: 0; }
+        h1, h2, h3, h4, h5, h6 { color: #2c3e50; margin: 1.5rem 0 1rem 0; }
+        h1 { border-bottom: 3px solid #3498db; padding-bottom: 10px; }
+        a { color: #3498db; }
+        a:hover { color: #2980b9; }
+        .footer { 
+            text-align: center; 
+            padding: 2rem; 
+            color: #7f8c8d; 
+            border-top: 1px solid #ecf0f1; 
+            margin-top: 3rem; 
+        }
+        @media (max-width: 768px) {
+            .container { padding: 10px; }
+            .file-list { grid-template-columns: 1fr; }
+            .content { padding: 1rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="container">
+            <h1>research_questions_indepth</h1>
+        </div>
+    </div>
+    <a href="../../index.html" class="home-btn">🏠 Home</a>
+    <div class="container">
+        <div class="breadcrumb">
+            <a href="../../index.html">Home</a> / <a href="../../PERSONA_PROMPT_FACTORY/index.html">PERSONA_PROMPT_FACTORY</a> / <a href="../../PERSONA_PROMPT_FACTORY/GEMINI_CLI_PERSONA/index.html">GEMINI_CLI_PERSONA</a>
+        </div>
+        <div class="content">
+            <h1 id="definitive-research-questions-for-gemini-cli-integration-analysis">Definitive Research Questions for Gemini CLI Integration Analysis</h1>
+<h2 id="research-objective"><strong>RESEARCH OBJECTIVE:</strong></h2>
+<p>Conduct comprehensive codebase analysis to provide definitive answers about programmatic interaction capabilities with the Gemini CLI tool for building file-based bridge integrations.</p>
+<hr />
+<h2 id="phase-1-repository-structure-architecture-analysis"><strong>PHASE 1: REPOSITORY STRUCTURE &amp; ARCHITECTURE ANALYSIS</strong></h2>
+<h3 id="q11-core-implementation-discovery"><strong>Q1.1: Core Implementation Discovery</strong></h3>
+<ul>
+<li>What is the primary entry point file (likely <code>src/index.ts</code> or <code>bin/gemini.js</code>) and what runtime environment does it establish?</li>
+<li>Which specific Node.js libraries are used for terminal interaction (inquirer, readline, blessed, ink, etc.)?</li>
+<li>What TypeScript/JavaScript classes or modules handle the core CLI loop and user interaction?</li>
+</ul>
+<h3 id="q12-process-architecture-mapping"><strong>Q1.2: Process Architecture Mapping</strong></h3>
+<ul>
+<li>How does the main process spawn and manage subprocesses for external tool execution?</li>
+<li>What signal handlers are registered for graceful shutdown and cleanup?</li>
+<li>Are there any daemon or background service components that persist beyond CLI execution?</li>
+</ul>
+<hr />
+<h2 id="phase-2-io-stream-behavior-verification"><strong>PHASE 2: I/O STREAM BEHAVIOR VERIFICATION</strong></h2>
+<h3 id="q21-interactive-mode-io-analysis"><strong>Q2.1: Interactive Mode I/O Analysis</strong></h3>
+<ul>
+<li>In the main CLI loop implementation, does the tool read from <code>process.stdin</code> directly or through a library wrapper?</li>
+<li>Which specific terminal control library methods are called (e.g., <code>readline.createInterface()</code>, <code>inquirer.prompt()</code>, etc.)?</li>
+<li>Are there any command-line flags or environment variables that modify I/O handling behavior?</li>
+</ul>
+<h3 id="q22-non-interactive-mode-state-investigation"><strong>Q2.2: Non-Interactive Mode State Investigation</strong></h3>
+<ul>
+<li>In the <code>-p</code>/<code>--prompt</code> flag implementation, is there any mechanism for passing conversation context between invocations?</li>
+<li>Does the tool write session data to temporary files, environment variables, or other persistent storage?</li>
+<li>What happens to the process after a non-interactive prompt is completed?</li>
+</ul>
+<h3 id="q23-standard-stream-redirection-testing"><strong>Q2.3: Standard Stream Redirection Testing</strong></h3>
+<ul>
+<li>When stdin/stdout are redirected (pipes, file redirection), does the tool detect this programmatically?</li>
+<li>Are there specific code paths that handle TTY vs non-TTY environments differently?</li>
+<li>What output goes to stdout vs stderr in both interactive and non-interactive modes?</li>
+</ul>
+<hr />
+<h2 id="phase-3-network-protocol-ide-integration-analysis"><strong>PHASE 3: NETWORK PROTOCOL &amp; IDE INTEGRATION ANALYSIS</strong></h2>
+<h3 id="q31-environment-variable-investigation"><strong>Q3.1: Environment Variable Investigation</strong></h3>
+<ul>
+<li>Search the codebase for references to <code>GEMINI_CLI_IDE_SERVER_PORT</code> or similar environment variables</li>
+<li>What network server or client code is activated when this environment variable is set?</li>
+<li>Are there WebSocket, HTTP server, or other network protocol implementations?</li>
+</ul>
+<h3 id="q32-protocol-implementation-discovery"><strong>Q3.2: Protocol Implementation Discovery</strong></h3>
+<ul>
+<li>What message formats, serialization methods (JSON, protobuf, etc.) are used for network communication?</li>
+<li>Are there handshake, authentication, or connection lifecycle management procedures?</li>
+<li>Does the network protocol support bidirectional communication or is it request/response only?</li>
+</ul>
+<h3 id="q33-ide-integration-stability-assessment"><strong>Q3.3: IDE Integration Stability Assessment</strong></h3>
+<ul>
+<li>Are the network protocol interfaces marked as experimental, internal, or public API?</li>
+<li>What error handling and reconnection logic exists in the network communication code?</li>
+<li>Are there version compatibility checks or protocol negotiation mechanisms?</li>
+</ul>
+<hr />
+<h2 id="phase-4-alternative-ipc-mechanism-discovery"><strong>PHASE 4: ALTERNATIVE IPC MECHANISM DISCOVERY</strong></h2>
+<h3 id="q41-ipc-implementation-search"><strong>Q4.1: IPC Implementation Search</strong></h3>
+<ul>
+<li>Are there any named pipe, Unix socket, or file-based communication implementations?</li>
+<li>Does the tool create any temporary files, lock files, or shared memory segments?</li>
+<li>Are there any local HTTP server endpoints or REST API implementations?</li>
+</ul>
+<h3 id="q42-extensionplugin-architecture-analysis"><strong>Q4.2: Extension/Plugin Architecture Analysis</strong></h3>
+<ul>
+<li>How are MCP servers discovered, connected to, and communicated with?</li>
+<li>Are there hooks or event systems that third-party tools could integrate with?</li>
+<li>What configuration mechanisms exist for external tool registration?</li>
+</ul>
+<hr />
+<h2 id="phase-5-session-state-context-management"><strong>PHASE 5: SESSION STATE &amp; CONTEXT MANAGEMENT</strong></h2>
+<h3 id="q51-memory-management-investigation"><strong>Q5.1: Memory Management Investigation</strong></h3>
+<ul>
+<li>How is conversation history stored and managed in memory during a session?</li>
+<li>What data structures maintain context across multiple user prompts?</li>
+<li>Are there size limits, cleanup procedures, or garbage collection mechanisms for session data?</li>
+</ul>
+<h3 id="q52-persistence-mechanism-analysis"><strong>Q5.2: Persistence Mechanism Analysis</strong></h3>
+<ul>
+<li>Does the tool save conversation history to disk, cache, or other persistent storage?</li>
+<li>Are there session recovery mechanisms if the process crashes or is terminated?</li>
+<li>Can session state be exported, imported, or transferred between processes?</li>
+</ul>
+<hr />
+<h2 id="phase-6-programmatic-integration-feasibility"><strong>PHASE 6: PROGRAMMATIC INTEGRATION FEASIBILITY</strong></h2>
+<h3 id="q61-process-control-compatibility"><strong>Q6.1: Process Control Compatibility</strong></h3>
+<ul>
+<li>How does the tool handle SIGTERM, SIGKILL, and other process management signals?</li>
+<li>Can the interactive session be cleanly paused, resumed, or restarted programmatically?</li>
+<li>What happens when stdin is closed or redirected while in interactive mode?</li>
+</ul>
+<h3 id="q62-file-based-bridge-viability-assessment"><strong>Q6.2: File-Based Bridge Viability Assessment</strong></h3>
+<ul>
+<li>Based on I/O analysis, can prompts be reliably injected via stdin manipulation?</li>
+<li>Can responses be captured via stdout redirection without losing formatting or functionality?</li>
+<li>Are there timing considerations, race conditions, or synchronization requirements?</li>
+</ul>
+<h3 id="q63-alternative-architecture-recommendations"><strong>Q6.3: Alternative Architecture Recommendations</strong></h3>
+<ul>
+<li>Based on codebase analysis, what is the most reliable approach for persistent, stateful integration?</li>
+<li>Are there existing patterns in the code that suggest supported integration methods?</li>
+<li>What modifications to the proposed file-based bridge architecture would improve reliability?</li>
+</ul>
+<hr />
+<h2 id="expected-research-deliverables"><strong>EXPECTED RESEARCH DELIVERABLES:</strong></h2>
+<p>For each question group, provide:
+1. <strong>Specific code references</strong> (files, functions, line numbers)
+2. <strong>Actual implementation details</strong> (not documentation summaries)
+3. <strong>Compatibility assessment</strong> for the proposed file-based bridge approach
+4. <strong>Alternative solution recommendations</strong> based on discovered capabilities
+5. <strong>Risk factors and limitations</strong> identified through code analysis</p>
+<p>This research framework will provide the definitive technical foundation needed to answer the original integration feasibility questions with complete accuracy.</p>
+        </div>
+        <div class="footer">
+            Generated on 2025-08-30 08:39:21
+        </div>
+    </div>
+</body>
+</html>

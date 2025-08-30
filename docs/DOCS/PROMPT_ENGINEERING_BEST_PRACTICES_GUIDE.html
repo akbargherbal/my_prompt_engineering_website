@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PROMPT_ENGINEERING_BEST_PRACTICES_GUIDE</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            line-height: 1.6; 
+            color: #333; 
+            background: #fff;
+        }
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        .header { 
+            background: #2c3e50; 
+            color: white; 
+            padding: 1rem 0; 
+            position: sticky; 
+            top: 0; 
+            z-index: 100;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .home-btn { 
+            position: fixed; 
+            top: 20px; 
+            right: 20px; 
+            background: #e74c3c; 
+            color: white; 
+            padding: 12px 16px; 
+            border-radius: 50px; 
+            text-decoration: none; 
+            font-weight: bold; 
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            transition: all 0.3s;
+        }
+        .home-btn:hover { background: #c0392b; transform: translateY(-2px); }
+        .breadcrumb { 
+            background: #ecf0f1; 
+            padding: 10px 0; 
+            margin-bottom: 20px; 
+            font-size: 14px;
+        }
+        .breadcrumb a { color: #3498db; text-decoration: none; }
+        .breadcrumb a:hover { text-decoration: underline; }
+        .breadcrumb span { font-weight: bold; color: #333; }
+        .content { 
+            background: white; 
+            padding: 2rem; 
+            border-radius: 8px; 
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .file-list { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); 
+            gap: 1rem; 
+            margin: 2rem 0; 
+        }
+        .file-item { 
+            padding: 1rem; 
+            border: 1px solid #ddd; 
+            border-radius: 8px; 
+            background: #f8f9fa;
+            transition: all 0.3s;
+        }
+        .file-item:hover { 
+            transform: translateY(-2px); 
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15); 
+        }
+        .file-item a { 
+            color: #2c3e50; 
+            text-decoration: none; 
+            font-weight: 500; 
+            display: block;
+        }
+        .file-item a:hover { color: #3498db; }
+        .file-type { 
+            font-size: 12px; 
+            color: #7f8c8d; 
+            margin-top: 5px; 
+        }
+        .tree { font-family: monospace; white-space: pre-line; background: #f8f9fa; padding: 1rem; border-radius: 8px; }
+        pre { background: #2c3e50; color: #ecf0f1; padding: 1rem; border-radius: 8px; overflow-x: auto; }
+        code { background: #ecf0f1; padding: 2px 4px; border-radius: 4px; font-size: 0.9em; }
+        pre code { background: none; padding: 0; }
+        h1, h2, h3, h4, h5, h6 { color: #2c3e50; margin: 1.5rem 0 1rem 0; }
+        h1 { border-bottom: 3px solid #3498db; padding-bottom: 10px; }
+        a { color: #3498db; }
+        a:hover { color: #2980b9; }
+        .footer { 
+            text-align: center; 
+            padding: 2rem; 
+            color: #7f8c8d; 
+            border-top: 1px solid #ecf0f1; 
+            margin-top: 3rem; 
+        }
+        @media (max-width: 768px) {
+            .container { padding: 10px; }
+            .file-list { grid-template-columns: 1fr; }
+            .content { padding: 1rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="container">
+            <h1>PROMPT_ENGINEERING_BEST_PRACTICES_GUIDE</h1>
+        </div>
+    </div>
+    <a href="../index.html" class="home-btn">🏠 Home</a>
+    <div class="container">
+        <div class="breadcrumb">
+            <a href="../index.html">Home</a> / <a href="../DOCS/index.html">DOCS</a>
+        </div>
+        <div class="content">
+            <h1 id="prompt-engineering-best-practices-guide">Prompt Engineering Best Practices Guide</h1>
+<p><strong>Executive Summary</strong></p>
+<p>The most effective techniques for generating production-ready code from Agentic Code Editors hinge on a systematic approach that combines detailed context provisioning, structured reasoning, and iterative refinement. Proven strategies from 2024-2025 demonstrate a clear shift from simple, single-shot prompts to sophisticated, multi-turn agentic workflows. By treating the AI as a junior developer that requires clear, comprehensive instructions and a well-defined environment, developers can consistently produce high-quality, maintainable code while minimizing rework and debugging cycles.</p>
+<h3 id="top-10-proven-techniques-for-agentic-code-editors">Top 10 Proven Techniques for Agentic Code Editors</h3>
+<p>These techniques are ranked by their empirical effectiveness, high adoption in successful projects, and consistency across various coding tasks, with a focus on ease of implementation.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Rank</th>
+<th style="text-align: left;">Technique</th>
+<th style="text-align: left;">Classification</th>
+<th style="text-align: left;">Summary</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>1</strong></td>
+<td style="text-align: left;"><strong>Context Engineering with Project-Specific Files</strong></td>
+<td style="text-align: left;">Context Optimization</td>
+<td style="text-align: left;">Creating dedicated files (like <code>CLAUDE.md</code>) that provide persistent, high-level context about the project's architecture, tools, and coding conventions. This is the single most effective technique for ensuring the AI adheres to project standards.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>2</strong></td>
+<td style="text-align: left;"><strong>Structured Chain-of-Thought (SCoT) Prompting</strong></td>
+<td style="text-align: left;">Advanced Strategies</td>
+<td style="text-align: left;">Forcing the AI to first break down a problem into logical steps that mirror programming structures (sequence, branch, loop) before writing code. This significantly improves logical correctness and has been shown to outperform standard Chain-of-Thought by up to 13.79% in Pass@1 accuracy.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>3</strong></td>
+<td style="text-align: left;"><strong>Iterative Refinement &amp; Self-Correction</strong></td>
+<td style="text-align: left;">Quality Assurance</td>
+<td style="text-align: left;">Treating code generation as a loop, not a single event. This involves generating code, immediately asking the AI to critique its own output for bugs or improvements, and then refining it based on that feedback.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>4</strong></td>
+<td style="text-align: left;"><strong>Test-Driven Development (TDD) with AI</strong></td>
+<td style="text-align: left;">Quality Assurance</td>
+<td style="text-align: left;">Providing the AI with a set of unit tests or a test file first, and then instructing it to write the implementation code required to make all tests pass. This ensures the generated code meets a clear, verifiable target.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>5</strong></td>
+<td style="text-align: left;"><strong>Few-Shot Example-Based Prompting</strong></td>
+<td style="text-align: left;">Foundation Techniques</td>
+<td style="text-align: left;">Including 2-3 high-quality examples of the desired code style, format, or logic directly within the prompt. This is highly effective for enforcing coding standards and ensuring stylistic consistency.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>6</strong></td>
+<td style="text-align: left;"><strong>Meta-Prompting for Task Decomposition</strong></td>
+<td style="text-align: left;">Advanced Strategies</td>
+<td style="text-align: left;">Using a "prompt to create a prompt." This involves first asking the AI to break down a complex feature request into a detailed checklist or a series of smaller, actionable prompts, which are then executed sequentially.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>7</strong></td>
+<td style="text-align: left;"><strong>Explicit Context Provisioning (File &amp; Snippet Inclusion)</strong></td>
+<td style="text-align: left;">Context Optimization</td>
+<td style="text-align: left;">Manually including relevant code snippets, file contents, and directory structures directly in the prompt. Modern editors facilitate this, and it's crucial for tasks that require modifying existing code.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>8</strong></td>
+<td style="text-align: left;"><strong>Persona-Based Prompting with Role Assignment</strong></td>
+<td style="text-align: left;">Foundation Techniques</td>
+<td style="text-align: left;">Assigning the AI a specific role, such as "You are a senior Python developer specializing in secure and readable code." This primes the model to generate output that aligns with the expertise and best practices of that role.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>9</strong></td>
+<td style="text-align: left;"><strong>Multi-Agent Workflows</strong></td>
+<td style="text-align: left;">Advanced Strategies</td>
+<td style="text-align: left;">Using multiple AI instances for different, specialized tasks. For example, one agent acts as the "Implementer" to write code, while a second "Tester" agent writes unit tests for the generated code, and a third "Reviewer" agent checks for bugs and style violations.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>10</strong></td>
+<td style="text-align: left;"><strong>Progressive Disclosure of Requirements</strong></td>
+<td style="text-align: left;">Advanced Strategies</td>
+<td style="text-align: left;">For large or complex features, instead of providing all requirements at once, developers should provide an initial high-level goal and then add constraints and details progressively over several turns. This mimics a natural development conversation and avoids overwhelming the model.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="implementation-guide">Implementation Guide</h3>
+<h4 id="1-context-engineering-with-project-specific-files">1. Context Engineering with Project-Specific Files</h4>
+<ul>
+<li><strong>How it Works:</strong> Create a markdown file (e.g., <code>CLAUDE.md</code> or a custom project context file) in your project's root directory. Agentic editors like Claude Code automatically ingest this file as context for every prompt.</li>
+<li><strong>What to Include:</strong></li>
+<li><strong>Commands &amp; Scripts:</strong> How to build, run, test, and lint the project (e.g., <code>npm run test</code>).</li>
+<li><strong>Tech Stack &amp; Libraries:</strong> Key frameworks and their versions.</li>
+<li><strong>Coding Conventions:</strong> Style guides (e.g., "Use ES modules, not CommonJS"), naming conventions, and architectural patterns.</li>
+<li><strong>Directory Structure Overview:</strong> A brief explanation of important folders.</li>
+<li><strong>Example (<code>CLAUDE.md</code>):</strong></li>
+</ul>
+<p>```markdown
+  # Project Context for MyWebApp</p>
+<p>## Commands</p>
+<ul>
+<li><code>npm install</code>: Install dependencies</li>
+<li><code>npm run dev</code>: Start the development server</li>
+<li><code>npm run test</code>: Run all unit tests with Vitest</li>
+<li><code>npm run lint</code>: Lint files with ESLint</li>
+</ul>
+<p>## Tech Stack</p>
+<ul>
+<li>Frontend: React with TypeScript, Tailwind CSS</li>
+<li>State Management: Zustand</li>
+<li>Backend API Endpoint: <code>https://api.mywebapp.com/v2</code></li>
+</ul>
+<p>## Coding Conventions</p>
+<ul>
+<li>All components must be functional components with React Hooks.</li>
+<li>Use absolute imports for modules.</li>
+<li>
+<p>All functions must have JSDoc comments.
+  ```</p>
+</li>
+<li>
+<p><strong>Common Pitfalls:</strong> Forgetting to update this file as the project evolves, leading to the AI using outdated information.</p>
+</li>
+</ul>
+<h4 id="2-structured-chain-of-thought-scot-prompting">2. Structured Chain-of-Thought (SCoT) Prompting</h4>
+<ul>
+<li><strong>How it Works:</strong> Instruct the AI to think through the problem using explicit programming structures before generating the final code. This forces a more logical and robust thought process.</li>
+<li><strong>Before (Vague Prompt):</strong> "Write a Python function that takes a list of users and returns the active ones."</li>
+<li><strong>After (SCoT Prompt):</strong></li>
+</ul>
+<p>````
+  You will write a Python function to filter active users.</p>
+<p>First, think step-by-step using the following program structures:
+  1.  <strong>Sequence:</strong> Define the function signature.
+  2.  <strong>Loop:</strong> Iterate through each user in the input list.
+  3.  <strong>Branch:</strong> Inside the loop, check if a user's 'status' attribute is 'active'.
+  4.  <strong>Sequence:</strong> If active, add the user to a new list.
+  5.  <strong>Sequence:</strong> After the loop, return the new list of active users.</p>
+<p>Now, based on these steps, write the Python code.
+  ```- <strong>Use Cases:</strong> Algorithm implementation, complex data transformations, and any task requiring non-trivial logic.
+  ````</p>
+<h4 id="3-iterative-refinement-self-correction">3. Iterative Refinement &amp; Self-Correction</h4>
+<ul>
+<li><strong>How it Works:</strong> After receiving the initial code, immediately follow up with a prompt asking for critique and improvement. This leverages the model's ability to analyze code for flaws.</li>
+<li><strong>Initial Prompt:</strong> "Generate a JavaScript function to validate an email address."</li>
+<li><strong>Follow-up Prompt (Self-Correction):</strong>
+  <code>Review the function you just provided. Are there any edge cases it misses? Is the regex optimal for performance? Could it be more readable? Provide a refined version that addresses these points.</code></li>
+<li><strong>Common Pitfalls:</strong> Accepting the first output without questioning it. This technique relies on the developer's critical oversight.</li>
+</ul>
+<h4 id="4-test-driven-development-tdd-with-ai">4. Test-Driven Development (TDD) with AI</h4>
+<ul>
+<li><strong>How it Works:</strong> Provide the AI with the test cases you want the code to pass. This gives the model a concrete, verifiable goal.</li>
+<li><strong>Example Prompt:</strong></li>
+</ul>
+<p><code>```
+  Here is a set of Pytest tests in a file named</code>test_calculator.py`:</p>
+<p>```python
+  import pytest
+  from calculator import add</p>
+<p>def test_add_positive_numbers():
+      assert add(2, 3) == 5</p>
+<p>def test_add_negative_numbers():
+      assert add(-2, -3) == -5</p>
+<p>def test_add_mixed_numbers():
+      assert add(5, -3) == 2
+  ````</p>
+<p>Now, create the <code>calculator.py</code> file with the <code>add</code> function implementation that makes all of these tests pass.</p>
+<p>```</p>
+<p>```</p>
+<ul>
+<li><strong>Use Cases:</strong> Essential for creating reliable business logic, utility functions, and API endpoints.</li>
+</ul>
+<h4 id="5-few-shot-example-based-prompting">5. Few-Shot Example-Based Prompting</h4>
+<ul>
+<li><strong>How it Works:</strong> Provide examples of the input you'll give and the output you expect. This is highly effective for formatting and style.</li>
+<li><strong>Example Prompt (Generating API client):</strong></li>
+</ul>
+<p>````
+  I need a TypeScript function to call an API. I will provide the function name and endpoint, and you will generate the code.</p>
+<p># Example 1
+  ## Input:
+  Function Name: <code>getUser</code>
+  Endpoint: <code>/users/{userId}</code></p>
+<p>## Output:
+  <code>``typescript
+  /**
+   * Fetches a user by their ID.
+   * @param userId - The ID of the user to fetch.
+   */
+  export const getUser = async (userId: string): Promise&lt;User&gt; =&gt; {
+    const response = await apiClient.get(</code>/users/${userId}`);
+    return response.data;
+  };
+  ````</p>
+<p># Example 2</p>
+<p>## Input:</p>
+<p>Function Name: <code>getPosts</code>
+  Endpoint: <code>/posts</code></p>
+<p>## Output:</p>
+<p><code>typescript
+  /**
+   * Fetches all posts.
+   */
+  export const getPosts = async (): Promise&lt;Post[]&gt; =&gt; {
+    const response = await apiClient.get(`/posts`);
+    return response.data;
+  };</code></p>
+<hr />
+<p>Now, generate the code for the following:</p>
+<p>## Input:</p>
+<p>Function Name: <code>updatePost</code>
+  Endpoint: <code>/posts/{postId}</code></p>
+<p>```</p>
+<p>```</p>
+<hr />
+<h3 id="real-world-examples-templates">Real-World Examples &amp; Templates</h3>
+<ul>
+<li><strong>Template for Refactoring Legacy Code:</strong></li>
+</ul>
+<p>````
+  I need to refactor a piece of legacy code. Your role is a senior software engineer focused on modernization and best practices.</p>
+<p><strong>Context:</strong>
+  - The current language is [e.g., legacy PHP 5.6].
+  - The target is [e.g., modern PHP 8.2 with strict types].
+  - The code connects to a [e.g., MySQL] database.</p>
+<p><strong>Files for Context:</strong>
+  <include file="db_connection.php">
+  <include file="old_user_model.php"></p>
+<p><strong>The Legacy Code to Refactor:</strong>
+  ```php
+  // [Paste the legacy function here]
+  ````</p>
+<p><strong>Refactoring Requirements:</strong></p>
+<ol>
+<li>Convert the function to a method within a <code>User</code> class.</li>
+<li>Replace the raw <code>mysql_query</code> calls with prepared statements using PDO.</li>
+<li>Add explicit type hints for all parameters and return values.</li>
+<li>Implement proper error handling using a try-catch block.</li>
+<li>Ensure the new code is secure against SQL injection.</li>
+</ol>
+<p>First, provide a step-by-step plan for the refactoring. Then, provide the complete, refactored code.</p>
+<p>```</p>
+<p>```</p>
+<hr />
+<h3 id="anti-patterns-to-avoid">Anti-Patterns to Avoid</h3>
+<ol>
+<li><strong>Vague &amp; Underspecified Prompts:</strong> "Make a chat app." This gives the AI too much room to make poor assumptions about the tech stack, features, and architecture.</li>
+<li><strong>Overloading a Single Prompt:</strong> "Build a full-stack e-commerce site with user auth, a product catalog, a shopping cart, Stripe integration, and an admin dashboard." This overwhelms the model and leads to incomplete or jumbled code. Break it down into smaller, feature-specific prompts.</li>
+<li><strong>Ignoring the Existing Codebase:</strong> Prompting for new features without providing any context from the current project files. This results in code that is stylistically inconsistent and doesn't integrate properly.</li>
+<li><strong>Trusting without Verifying:</strong> Directly committing AI-generated code to production without thorough review and testing. AI models can hallucinate variable names, use deprecated libraries, or introduce subtle security flaws.</li>
+<li><strong>Not Specifying Constraints:</strong> Failing to mention important constraints like "use this specific library version," "do not make external API calls," or "the function must have a time complexity of O(n log n)." This leads to suboptimal or incorrect solutions.</li>
+</ol>
+<h3 id="source-attribution">Source Attribution</h3>
+<p>This synthesis is based on best practices and research from the following sources, reflecting the state of agentic AI development in 2024-2025.</p>
+<ul>
+<li><strong>Anthropic Documentation:</strong></li>
+<li><strong>OpenAI Documentation &amp; Research:</strong></li>
+<li><strong>Academic Research (arXiv.org):</strong></li>
+<li><strong>Established Guides (promptingguide.ai, GitHub):</strong></li>
+<li><strong>Industry Best Practices (Engineering Blogs &amp; Case Studies):</strong></li>
+</ul>
+<hr />
+<h1 id="gemini-cli-playbook">Gemini CLI Playbook</h1>
+<p>This playbook will serve as our collection of proven, high-leverage strategies. We will continually append lessons learned as we use Gemini CLI, discovering what makes it tick and what doesn’t. This playbook is a work in progress and should always be kept up to date.</p>
+<h3 id="playbook-entry-1-the-thematic-feature-catalog"><strong>Playbook Entry #1: The Thematic Feature Catalog</strong></h3>
+<h4 id="1-objective">1. Objective</h4>
+<p>This playbook entry automates the project planning phase. It addresses the challenge of manually creating a detailed and logically-ordered feature list, which is often a tedious prerequisite for TDD. The goal is to use a specialized AI persona to analyze high-level project artifacts (like mockups or summaries) and automatically generate a comprehensive, thematically-batched, and correctly-ordered feature plan. This elevates the developer's role from <strong>Feature Writer</strong> to <strong>Project Visionary</strong>.</p>
+<h4 id="2-core-principles-used">2. Core Principles Used</h4>
+<p>This workflow is a direct application of several advanced techniques from the guide:</p>
+<ul>
+<li><strong>#6 - Meta-Prompting:</strong> We are prompting the AI to create the structured plan (<em>the feature catalog</em>) that will guide subsequent steps.</li>
+<li><strong>#8 - Persona-Based Prompting:</strong> We invoke a highly specialized persona, the <code>Lead Technical Planner &amp; Feature Cataloger</code>, to ensure the output is structured correctly.</li>
+<li><strong>#10 - Progressive Disclosure of Requirements:</strong> The persona's core function is to break down the entire application into logically-sequenced themes (Foundational UI -&gt; Core Logic -&gt; Refinement), creating a natural, staged development path.</li>
+</ul>
+<h4 id="3-the-workflow-from-idea-to-actionable-plan">3. The Workflow: From Idea to Actionable Plan</h4>
+<p>This workflow consists of a single, powerful command that transforms raw ideas into a structured specification.</p>
+<h5 id="phase-1-the-cataloging-command-your-primary-input"><strong>Phase 1: The Cataloging Command (Your Primary Input)</strong></h5>
+<p>Your only task is to provide the raw materials and invoke the planner.</p>
+<ul>
+<li><strong>The Prompt Template:</strong></li>
+</ul>
+<p><code>``
+  You are a Lead Technical Planner &amp; Feature Cataloger, as defined in</code>cataloguer.md`.</p>
+<p>Your task is to analyze the provided application context and generate a complete, thematically-sorted implementation plan in JSON format.</p>
+<p><strong>Application Context:</strong>
+  @STATIC_MOCKUP.html
+  @app_summary.md</p>
+<p>Now, create the file <code>themed_features.json</code> based on your analysis and the core directives of your persona.
+  ```</p>
+<h5 id="phase-2-the-ai-generated-plan-the-artifact"><strong>Phase 2: The AI-Generated Plan (The Artifact)</strong></h5>
+<p>The AI will not write code or tests. It will produce a single file, <code>themed_features.json</code>, which contains every feature, interaction, and behavior, neatly organized into the three core themes in the correct implementation order. This file is the official "blueprint" for the application. The output of this playbook entry serves as the direct input for Playbook Entry #3.</p>
+<hr />
+<h3 id="playbook-entry-2-the-ai-generated-test-contract"><strong>Playbook Entry #2: The AI-Generated Test Contract</strong></h3>
+<h4 id="1-objective_1">1. Objective</h4>
+<p>This is the evolution of our original TDD workflow. Its objective is to take the AI-generated <code>themed_features.json</code> blueprint and translate it into a complete, multi-file test suite that acts as a verifiable contract for the entire application. This eliminates the human bottleneck of writing tests and moves the developer's role from <strong>Test Architect</strong> to <strong>Plan Approver</strong>.</p>
+<h4 id="2-core-principles-used_1">2. Core Principles Used</h4>
+<p>This workflow now explicitly chains multiple techniques together:</p>
+<ul>
+<li>It builds directly on the <strong>Meta-Prompting (#6)</strong> output from Entry #2.</li>
+<li>It then uses <strong>Test-Driven Development with AI (#4)</strong> to generate the implementation code against the new contract.</li>
+<li>It relies on <strong>Context Engineering (#1)</strong> via the project's <code>GEMINI.md</code> file to ensure the generated code and tests adhere to the chosen tech stack.</li>
+</ul>
+<h4 id="3-the-new-workflow-from-plan-to-passing-tests">3. The New Workflow: From Plan to Passing Tests</h4>
+<p>The process now uses the structured plan to generate tests in batches.</p>
+<h5 id="phase-1-define-the-test-contract-from-the-ais-plan"><strong>Phase 1: Define the Test Contract (From the AI's Plan)</strong></h5>
+<p>Your job is to command the AI to turn its own plan into test code.</p>
+<ul>
+<li><strong>The Prompt Template (For Generating Batched Tests):</strong></li>
+</ul>
+<p>```
+  You are a senior test engineer with expertise in Pytest and Playwright.</p>
+<p>Your task is to create a complete and robust test suite based on the attached thematic feature plan.</p>
+<p><strong>Thematic Feature Plan:</strong>
+  @themed_features.json</p>
+<p><strong>Your Test Suite Must:</strong>
+  1.  Create a separate test file for each theme in the plan (e.g., <code>test_batch_01_ui.py</code>, <code>test_batch_02_logic.py</code>).
+  2.  For each feature within a theme, create a corresponding <code>test_</code> function.
+  3.  Use Playwright locators and assertions to validate the "trigger," "behavior," and "feedback" for each feature.</p>
+<p>Now, using your tools, create the complete test suite.
+  ```</p>
+<h5 id="phase-2-the-thematic-implementation-command"><strong>Phase 2: The Thematic Implementation Command</strong></h5>
+<p>This phase remains the same as our previous discussions. You give the AI one of the new test files (e.g., <code>@tests/test_batch_01_ui.py</code>) and instruct it to write the code to make that specific batch of tests pass. This focused approach is what prevents the model from being overwhelmed.</p>
+<hr />
+<h4 id="4-the-evaluation-tool-the-agentic-quality-rubric">4. The Evaluation Tool: The Agentic Quality Rubric</h4>
+<p>To objectively measure the success of any workflow, we use this rubric. A successful run should score high, particularly on the "Rework Required" axis.</p>
+<ul>
+<li><strong>1. Factual Accuracy &amp; Grounding:</strong> (Score 1-5) Is the output perfectly aligned with the source documents?</li>
+<li><strong>2. Plan Adherence &amp; Completeness:</strong> (Score 1-5) Did the AI successfully execute every step of its own plan?</li>
+<li><strong>3. Audience &amp; Quality:</strong> (Score 1-5) Is the content well-written, clear, and appropriate for the target audience?</li>
+<li><strong>4. Rework Required (The "Babysitting" Score):</strong> (Score 1-5) How much human effort is needed to make the output shippable? <strong>5 means zero rework.</strong></li>
+</ul>
+        </div>
+        <div class="footer">
+            Generated on 2025-08-30 08:39:13
+        </div>
+    </div>
+</body>
+</html>
