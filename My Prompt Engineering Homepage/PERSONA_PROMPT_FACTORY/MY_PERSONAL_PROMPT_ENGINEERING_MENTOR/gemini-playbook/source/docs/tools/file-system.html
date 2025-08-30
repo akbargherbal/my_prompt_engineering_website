@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>file-system</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            line-height: 1.6; 
+            color: #333; 
+            background: #fff;
+        }
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        .header { 
+            background: #2c3e50; 
+            color: white; 
+            padding: 1rem 0; 
+            position: sticky; 
+            top: 0; 
+            z-index: 100;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .home-btn { 
+            position: fixed; 
+            top: 20px; 
+            right: 20px; 
+            background: #e74c3c; 
+            color: white; 
+            padding: 12px 16px; 
+            border-radius: 50px; 
+            text-decoration: none; 
+            font-weight: bold; 
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            transition: all 0.3s;
+        }
+        .home-btn:hover { background: #c0392b; transform: translateY(-2px); }
+        .breadcrumb { 
+            background: #ecf0f1; 
+            padding: 10px 0; 
+            margin-bottom: 20px; 
+            font-size: 14px;
+        }
+        .breadcrumb a { color: #3498db; text-decoration: none; }
+        .breadcrumb a:hover { text-decoration: underline; }
+        .breadcrumb span { font-weight: bold; color: #333; }
+        .content { 
+            background: white; 
+            padding: 2rem; 
+            border-radius: 8px; 
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .file-list { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); 
+            gap: 1rem; 
+            margin: 2rem 0; 
+        }
+        .file-item { 
+            padding: 1rem; 
+            border: 1px solid #ddd; 
+            border-radius: 8px; 
+            background: #f8f9fa;
+            transition: all 0.3s;
+        }
+        .file-item:hover { 
+            transform: translateY(-2px); 
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15); 
+        }
+        .file-item a { 
+            color: #2c3e50; 
+            text-decoration: none; 
+            font-weight: 500; 
+            display: block;
+        }
+        .file-item a:hover { color: #3498db; }
+        .file-type { 
+            font-size: 12px; 
+            color: #7f8c8d; 
+            margin-top: 5px; 
+        }
+        .tree { font-family: monospace; white-space: pre-line; background: #f8f9fa; padding: 1rem; border-radius: 8px; }
+        pre { background: #2c3e50; color: #ecf0f1; padding: 1rem; border-radius: 8px; overflow-x: auto; }
+        code { background: #ecf0f1; padding: 2px 4px; border-radius: 4px; font-size: 0.9em; }
+        pre code { background: none; padding: 0; }
+        h1, h2, h3, h4, h5, h6 { color: #2c3e50; margin: 1.5rem 0 1rem 0; }
+        h1 { border-bottom: 3px solid #3498db; padding-bottom: 10px; }
+        a { color: #3498db; }
+        a:hover { color: #2980b9; }
+        .footer { 
+            text-align: center; 
+            padding: 2rem; 
+            color: #7f8c8d; 
+            border-top: 1px solid #ecf0f1; 
+            margin-top: 3rem; 
+        }
+        @media (max-width: 768px) {
+            .container { padding: 10px; }
+            .file-list { grid-template-columns: 1fr; }
+            .content { padding: 1rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="container">
+            <h1>file-system</h1>
+        </div>
+    </div>
+    <a href="../../../../../../index.html" class="home-btn">🏠 Home</a>
+    <div class="container">
+        <div class="breadcrumb">
+            <a href="../../../../../../index.html">Home</a> / <a href="../../../../../../PERSONA_PROMPT_FACTORY/index.html">PERSONA_PROMPT_FACTORY</a> / <a href="../../../../../../PERSONA_PROMPT_FACTORY/MY_PERSONAL_PROMPT_ENGINEERING_MENTOR/index.html">MY_PERSONAL_PROMPT_ENGINEERING_MENTOR</a> / <a href="../../../../../../PERSONA_PROMPT_FACTORY/MY_PERSONAL_PROMPT_ENGINEERING_MENTOR/gemini-playbook/index.html">gemini-playbook</a> / <a href="../../../../../../PERSONA_PROMPT_FACTORY/MY_PERSONAL_PROMPT_ENGINEERING_MENTOR/gemini-playbook/source/index.html">source</a> / <a href="../../../../../../PERSONA_PROMPT_FACTORY/MY_PERSONAL_PROMPT_ENGINEERING_MENTOR/gemini-playbook/source/docs/index.html">docs</a> / <a href="../../../../../../PERSONA_PROMPT_FACTORY/MY_PERSONAL_PROMPT_ENGINEERING_MENTOR/gemini-playbook/source/docs/tools/index.html">tools</a>
+        </div>
+        <div class="content">
+            <h1 id="gemini-cli-file-system-tools">Gemini CLI file system tools</h1>
+<p>The Gemini CLI provides a comprehensive suite of tools for interacting with the local file system. These tools allow the Gemini model to read from, write to, list, search, and modify files and directories, all under your control and typically with confirmation for sensitive operations.</p>
+<p><strong>Note:</strong> All file system tools operate within a <code>rootDirectory</code> (usually the current working directory where you launched the CLI) for security. Paths that you provide to these tools are generally expected to be absolute or are resolved relative to this root directory.</p>
+<h2 id="1-list_directory-readfolder">1. <code>list_directory</code> (ReadFolder)</h2>
+<p><code>list_directory</code> lists the names of files and subdirectories directly within a specified directory path. It can optionally ignore entries matching provided glob patterns.</p>
+<ul>
+<li><strong>Tool name:</strong> <code>list_directory</code></li>
+<li><strong>Display name:</strong> ReadFolder</li>
+<li><strong>File:</strong> <code>ls.ts</code></li>
+<li><strong>Parameters:</strong></li>
+<li><code>path</code> (string, required): The absolute path to the directory to list.</li>
+<li><code>ignore</code> (array of strings, optional): A list of glob patterns to exclude from the listing (e.g., <code>["*.log", ".git"]</code>).</li>
+<li><code>respect_git_ignore</code> (boolean, optional): Whether to respect <code>.gitignore</code> patterns when listing files. Defaults to <code>true</code>.</li>
+<li><strong>Behavior:</strong></li>
+<li>Returns a list of file and directory names.</li>
+<li>Indicates whether each entry is a directory.</li>
+<li>Sorts entries with directories first, then alphabetically.</li>
+<li><strong>Output (<code>llmContent</code>):</strong> A string like: <code>Directory listing for /path/to/your/folder:\n[DIR] subfolder1\nfile1.txt\nfile2.png</code></li>
+<li><strong>Confirmation:</strong> No.</li>
+</ul>
+<h2 id="2-read_file-readfile">2. <code>read_file</code> (ReadFile)</h2>
+<p><code>read_file</code> reads and returns the content of a specified file. This tool handles text, images (PNG, JPG, GIF, WEBP, SVG, BMP), and PDF files. For text files, it can read specific line ranges. Other binary file types are generally skipped.</p>
+<ul>
+<li><strong>Tool name:</strong> <code>read_file</code></li>
+<li><strong>Display name:</strong> ReadFile</li>
+<li><strong>File:</strong> <code>read-file.ts</code></li>
+<li><strong>Parameters:</strong></li>
+<li><code>path</code> (string, required): The absolute path to the file to read.</li>
+<li><code>offset</code> (number, optional): For text files, the 0-based line number to start reading from. Requires <code>limit</code> to be set.</li>
+<li><code>limit</code> (number, optional): For text files, the maximum number of lines to read. If omitted, reads a default maximum (e.g., 2000 lines) or the entire file if feasible.</li>
+<li><strong>Behavior:</strong></li>
+<li>For text files: Returns the content. If <code>offset</code> and <code>limit</code> are used, returns only that slice of lines. Indicates if content was truncated due to line limits or line length limits.</li>
+<li>For image and PDF files: Returns the file content as a base64-encoded data structure suitable for model consumption.</li>
+<li>For other binary files: Attempts to identify and skip them, returning a message indicating it's a generic binary file.</li>
+<li><strong>Output:</strong> (<code>llmContent</code>):</li>
+<li>For text files: The file content, potentially prefixed with a truncation message (e.g., <code>[File content truncated: showing lines 1-100 of 500 total lines...]\nActual file content...</code>).</li>
+<li>For image/PDF files: An object containing <code>inlineData</code> with <code>mimeType</code> and base64 <code>data</code> (e.g., <code>{ inlineData: { mimeType: 'image/png', data: 'base64encodedstring' } }</code>).</li>
+<li>For other binary files: A message like <code>Cannot display content of binary file: /path/to/data.bin</code>.</li>
+<li><strong>Confirmation:</strong> No.</li>
+</ul>
+<h2 id="3-write_file-writefile">3. <code>write_file</code> (WriteFile)</h2>
+<p><code>write_file</code> writes content to a specified file. If the file exists, it will be overwritten. If the file doesn't exist, it (and any necessary parent directories) will be created.</p>
+<ul>
+<li><strong>Tool name:</strong> <code>write_file</code></li>
+<li><strong>Display name:</strong> WriteFile</li>
+<li><strong>File:</strong> <code>write-file.ts</code></li>
+<li><strong>Parameters:</strong></li>
+<li><code>file_path</code> (string, required): The absolute path to the file to write to.</li>
+<li><code>content</code> (string, required): The content to write into the file.</li>
+<li><strong>Behavior:</strong></li>
+<li>Writes the provided <code>content</code> to the <code>file_path</code>.</li>
+<li>Creates parent directories if they don't exist.</li>
+<li><strong>Output (<code>llmContent</code>):</strong> A success message, e.g., <code>Successfully overwrote file: /path/to/your/file.txt</code> or <code>Successfully created and wrote to new file: /path/to/new/file.txt</code>.</li>
+<li><strong>Confirmation:</strong> Yes. Shows a diff of changes and asks for user approval before writing.</li>
+</ul>
+<h2 id="4-glob-findfiles">4. <code>glob</code> (FindFiles)</h2>
+<p><code>glob</code> finds files matching specific glob patterns (e.g., <code>src/**/*.ts</code>, <code>*.md</code>), returning absolute paths sorted by modification time (newest first).</p>
+<ul>
+<li><strong>Tool name:</strong> <code>glob</code></li>
+<li><strong>Display name:</strong> FindFiles</li>
+<li><strong>File:</strong> <code>glob.ts</code></li>
+<li><strong>Parameters:</strong></li>
+<li><code>pattern</code> (string, required): The glob pattern to match against (e.g., <code>"*.py"</code>, <code>"src/**/*.js"</code>).</li>
+<li><code>path</code> (string, optional): The absolute path to the directory to search within. If omitted, searches the tool's root directory.</li>
+<li><code>case_sensitive</code> (boolean, optional): Whether the search should be case-sensitive. Defaults to <code>false</code>.</li>
+<li><code>respect_git_ignore</code> (boolean, optional): Whether to respect .gitignore patterns when finding files. Defaults to <code>true</code>.</li>
+<li><strong>Behavior:</strong></li>
+<li>Searches for files matching the glob pattern within the specified directory.</li>
+<li>Returns a list of absolute paths, sorted with the most recently modified files first.</li>
+<li>Ignores common nuisance directories like <code>node_modules</code> and <code>.git</code> by default.</li>
+<li><strong>Output (<code>llmContent</code>):</strong> A message like: <code>Found 5 file(s) matching "*.ts" within src, sorted by modification time (newest first):\nsrc/file1.ts\nsrc/subdir/file2.ts...</code></li>
+<li><strong>Confirmation:</strong> No.</li>
+</ul>
+<h2 id="5-search_file_content-searchtext">5. <code>search_file_content</code> (SearchText)</h2>
+<p><code>search_file_content</code> searches for a regular expression pattern within the content of files in a specified directory. Can filter files by a glob pattern. Returns the lines containing matches, along with their file paths and line numbers.</p>
+<ul>
+<li><strong>Tool name:</strong> <code>search_file_content</code></li>
+<li><strong>Display name:</strong> SearchText</li>
+<li><strong>File:</strong> <code>grep.ts</code></li>
+<li><strong>Parameters:</strong></li>
+<li><code>pattern</code> (string, required): The regular expression (regex) to search for (e.g., <code>"function\s+myFunction"</code>).</li>
+<li><code>path</code> (string, optional): The absolute path to the directory to search within. Defaults to the current working directory.</li>
+<li><code>include</code> (string, optional): A glob pattern to filter which files are searched (e.g., <code>"*.js"</code>, <code>"src/**/*.{ts,tsx}"</code>). If omitted, searches most files (respecting common ignores).</li>
+<li><strong>Behavior:</strong></li>
+<li>Uses <code>git grep</code> if available in a Git repository for speed; otherwise, falls back to system <code>grep</code> or a JavaScript-based search.</li>
+<li>Returns a list of matching lines, each prefixed with its file path (relative to the search directory) and line number.</li>
+<li><strong>Output (<code>llmContent</code>):</strong> A formatted string of matches, e.g.:
+  ```
+  Found 3 matches for pattern "myFunction" in path "." (filter: "*.ts"):</li>
+</ul>
+<hr />
+<p>File: src/utils.ts
+  L15: export function myFunction() {
+  L22:   myFunction.call();</p>
+<hr />
+<p>File: src/index.ts
+  L5: import { myFunction } from './utils';</p>
+<hr />
+<p>```
+- <strong>Confirmation:</strong> No.</p>
+<h2 id="6-replace-edit">6. <code>replace</code> (Edit)</h2>
+<p><code>replace</code> replaces text within a file. By default, replaces a single occurrence, but can replace multiple occurrences when <code>expected_replacements</code> is specified. This tool is designed for precise, targeted changes and requires significant context around the <code>old_string</code> to ensure it modifies the correct location.</p>
+<ul>
+<li><strong>Tool name:</strong> <code>replace</code></li>
+<li><strong>Display name:</strong> Edit</li>
+<li><strong>File:</strong> <code>edit.ts</code></li>
+<li><strong>Parameters:</strong></li>
+<li><code>file_path</code> (string, required): The absolute path to the file to modify.</li>
+<li>
+<p><code>old_string</code> (string, required): The exact literal text to replace.</p>
+<p><strong>CRITICAL:</strong> This string must uniquely identify the single instance to change. It should include at least 3 lines of context <em>before</em> and <em>after</em> the target text, matching whitespace and indentation precisely. If <code>old_string</code> is empty, the tool attempts to create a new file at <code>file_path</code> with <code>new_string</code> as content.</p>
+</li>
+<li>
+<p><code>new_string</code> (string, required): The exact literal text to replace <code>old_string</code> with.</p>
+</li>
+<li>
+<p><code>expected_replacements</code> (number, optional): The number of occurrences to replace. Defaults to <code>1</code>.</p>
+</li>
+<li>
+<p><strong>Behavior:</strong></p>
+</li>
+<li>If <code>old_string</code> is empty and <code>file_path</code> does not exist, creates a new file with <code>new_string</code> as content.</li>
+<li>If <code>old_string</code> is provided, it reads the <code>file_path</code> and attempts to find exactly one occurrence of <code>old_string</code>.</li>
+<li>If one occurrence is found, it replaces it with <code>new_string</code>.</li>
+<li><strong>Enhanced Reliability (Multi-Stage Edit Correction):</strong> To significantly improve the success rate of edits, especially when the model-provided <code>old_string</code> might not be perfectly precise, the tool incorporates a multi-stage edit correction mechanism.<ul>
+<li>If the initial <code>old_string</code> isn't found or matches multiple locations, the tool can leverage the Gemini model to iteratively refine <code>old_string</code> (and potentially <code>new_string</code>).</li>
+<li>This self-correction process attempts to identify the unique segment the model intended to modify, making the <code>replace</code> operation more robust even with slightly imperfect initial context.</li>
+</ul>
+</li>
+<li><strong>Failure conditions:</strong> Despite the correction mechanism, the tool will fail if:</li>
+<li><code>file_path</code> is not absolute or is outside the root directory.</li>
+<li><code>old_string</code> is not empty, but the <code>file_path</code> does not exist.</li>
+<li><code>old_string</code> is empty, but the <code>file_path</code> already exists.</li>
+<li><code>old_string</code> is not found in the file after attempts to correct it.</li>
+<li><code>old_string</code> is found multiple times, and the self-correction mechanism cannot resolve it to a single, unambiguous match.</li>
+<li><strong>Output (<code>llmContent</code>):</strong></li>
+<li>On success: <code>Successfully modified file: /path/to/file.txt (1 replacements).</code> or <code>Created new file: /path/to/new_file.txt with provided content.</code></li>
+<li>On failure: An error message explaining the reason (e.g., <code>Failed to edit, 0 occurrences found...</code>, <code>Failed to edit, expected 1 occurrences but found 2...</code>).</li>
+<li><strong>Confirmation:</strong> Yes. Shows a diff of the proposed changes and asks for user approval before writing to the file.</li>
+</ul>
+<p>These file system tools provide a foundation for the Gemini CLI to understand and interact with your local project context.</p>
+        </div>
+        <div class="footer">
+            Generated on 2025-08-30 08:20:39
+        </div>
+    </div>
+</body>
+</html>

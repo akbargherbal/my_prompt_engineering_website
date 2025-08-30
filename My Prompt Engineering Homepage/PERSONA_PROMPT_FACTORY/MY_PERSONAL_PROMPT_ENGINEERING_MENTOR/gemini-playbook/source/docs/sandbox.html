@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>sandbox</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            line-height: 1.6; 
+            color: #333; 
+            background: #fff;
+        }
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        .header { 
+            background: #2c3e50; 
+            color: white; 
+            padding: 1rem 0; 
+            position: sticky; 
+            top: 0; 
+            z-index: 100;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .home-btn { 
+            position: fixed; 
+            top: 20px; 
+            right: 20px; 
+            background: #e74c3c; 
+            color: white; 
+            padding: 12px 16px; 
+            border-radius: 50px; 
+            text-decoration: none; 
+            font-weight: bold; 
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            transition: all 0.3s;
+        }
+        .home-btn:hover { background: #c0392b; transform: translateY(-2px); }
+        .breadcrumb { 
+            background: #ecf0f1; 
+            padding: 10px 0; 
+            margin-bottom: 20px; 
+            font-size: 14px;
+        }
+        .breadcrumb a { color: #3498db; text-decoration: none; }
+        .breadcrumb a:hover { text-decoration: underline; }
+        .breadcrumb span { font-weight: bold; color: #333; }
+        .content { 
+            background: white; 
+            padding: 2rem; 
+            border-radius: 8px; 
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .file-list { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); 
+            gap: 1rem; 
+            margin: 2rem 0; 
+        }
+        .file-item { 
+            padding: 1rem; 
+            border: 1px solid #ddd; 
+            border-radius: 8px; 
+            background: #f8f9fa;
+            transition: all 0.3s;
+        }
+        .file-item:hover { 
+            transform: translateY(-2px); 
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15); 
+        }
+        .file-item a { 
+            color: #2c3e50; 
+            text-decoration: none; 
+            font-weight: 500; 
+            display: block;
+        }
+        .file-item a:hover { color: #3498db; }
+        .file-type { 
+            font-size: 12px; 
+            color: #7f8c8d; 
+            margin-top: 5px; 
+        }
+        .tree { font-family: monospace; white-space: pre-line; background: #f8f9fa; padding: 1rem; border-radius: 8px; }
+        pre { background: #2c3e50; color: #ecf0f1; padding: 1rem; border-radius: 8px; overflow-x: auto; }
+        code { background: #ecf0f1; padding: 2px 4px; border-radius: 4px; font-size: 0.9em; }
+        pre code { background: none; padding: 0; }
+        h1, h2, h3, h4, h5, h6 { color: #2c3e50; margin: 1.5rem 0 1rem 0; }
+        h1 { border-bottom: 3px solid #3498db; padding-bottom: 10px; }
+        a { color: #3498db; }
+        a:hover { color: #2980b9; }
+        .footer { 
+            text-align: center; 
+            padding: 2rem; 
+            color: #7f8c8d; 
+            border-top: 1px solid #ecf0f1; 
+            margin-top: 3rem; 
+        }
+        @media (max-width: 768px) {
+            .container { padding: 10px; }
+            .file-list { grid-template-columns: 1fr; }
+            .content { padding: 1rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="container">
+            <h1>sandbox</h1>
+        </div>
+    </div>
+    <a href="../../../../../index.html" class="home-btn">🏠 Home</a>
+    <div class="container">
+        <div class="breadcrumb">
+            <a href="../../../../../index.html">Home</a> / <a href="../../../../../PERSONA_PROMPT_FACTORY/index.html">PERSONA_PROMPT_FACTORY</a> / <a href="../../../../../PERSONA_PROMPT_FACTORY/MY_PERSONAL_PROMPT_ENGINEERING_MENTOR/index.html">MY_PERSONAL_PROMPT_ENGINEERING_MENTOR</a> / <a href="../../../../../PERSONA_PROMPT_FACTORY/MY_PERSONAL_PROMPT_ENGINEERING_MENTOR/gemini-playbook/index.html">gemini-playbook</a> / <a href="../../../../../PERSONA_PROMPT_FACTORY/MY_PERSONAL_PROMPT_ENGINEERING_MENTOR/gemini-playbook/source/index.html">source</a> / <a href="../../../../../PERSONA_PROMPT_FACTORY/MY_PERSONAL_PROMPT_ENGINEERING_MENTOR/gemini-playbook/source/docs/index.html">docs</a>
+        </div>
+        <div class="content">
+            <h1 id="sandboxing-in-the-gemini-cli">Sandboxing in the Gemini CLI</h1>
+<p>This document provides a guide to sandboxing in the Gemini CLI, including prerequisites, quickstart, and configuration.</p>
+<h2 id="prerequisites">Prerequisites</h2>
+<p>Before using sandboxing, you need to install and set up the Gemini CLI:</p>
+<div class="codehilite"><pre><span></span><code>npm<span class="w"> </span>install<span class="w"> </span>-g<span class="w"> </span>@google/gemini-cli
+</code></pre></div>
+
+<p>To verify the installation</p>
+<div class="codehilite"><pre><span></span><code>gemini<span class="w"> </span>--version
+</code></pre></div>
+
+<h2 id="overview-of-sandboxing">Overview of sandboxing</h2>
+<p>Sandboxing isolates potentially dangerous operations (such as shell commands or file modifications) from your host system, providing a security barrier between AI operations and your environment.</p>
+<p>The benefits of sandboxing include:</p>
+<ul>
+<li><strong>Security</strong>: Prevent accidental system damage or data loss.</li>
+<li><strong>Isolation</strong>: Limit file system access to project directory.</li>
+<li><strong>Consistency</strong>: Ensure reproducible environments across different systems.</li>
+<li><strong>Safety</strong>: Reduce risk when working with untrusted code or experimental commands.</li>
+</ul>
+<h2 id="sandboxing-methods">Sandboxing methods</h2>
+<p>Your ideal method of sandboxing may differ depending on your platform and your preferred container solution.</p>
+<h3 id="1-macos-seatbelt-macos-only">1. macOS Seatbelt (macOS only)</h3>
+<p>Lightweight, built-in sandboxing using <code>sandbox-exec</code>.</p>
+<p><strong>Default profile</strong>: <code>permissive-open</code> - restricts writes outside project directory but allows most other operations.</p>
+<h3 id="2-container-based-dockerpodman">2. Container-based (Docker/Podman)</h3>
+<p>Cross-platform sandboxing with complete process isolation.</p>
+<p><strong>Note</strong>: Requires building the sandbox image locally or using a published image from your organization's registry.</p>
+<h2 id="quickstart">Quickstart</h2>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Enable sandboxing with command flag</span>
+gemini<span class="w"> </span>-s<span class="w"> </span>-p<span class="w"> </span><span class="s2">&quot;analyze the code structure&quot;</span>
+
+<span class="c1"># Use environment variable</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">GEMINI_SANDBOX</span><span class="o">=</span><span class="nb">true</span>
+gemini<span class="w"> </span>-p<span class="w"> </span><span class="s2">&quot;run the test suite&quot;</span>
+
+<span class="c1"># Configure in settings.json</span>
+<span class="o">{</span>
+<span class="w">  </span><span class="s2">&quot;sandbox&quot;</span>:<span class="w"> </span><span class="s2">&quot;docker&quot;</span>
+<span class="o">}</span>
+</code></pre></div>
+
+<h2 id="configuration">Configuration</h2>
+<h3 id="enable-sandboxing-in-order-of-precedence">Enable sandboxing (in order of precedence)</h3>
+<ol>
+<li><strong>Command flag</strong>: <code>-s</code> or <code>--sandbox</code></li>
+<li><strong>Environment variable</strong>: <code>GEMINI_SANDBOX=true|docker|podman|sandbox-exec</code></li>
+<li><strong>Settings file</strong>: <code>"sandbox": true</code> in <code>settings.json</code></li>
+</ol>
+<h3 id="macos-seatbelt-profiles">macOS Seatbelt profiles</h3>
+<p>Built-in profiles (set via <code>SEATBELT_PROFILE</code> env var):</p>
+<ul>
+<li><code>permissive-open</code> (default): Write restrictions, network allowed</li>
+<li><code>permissive-closed</code>: Write restrictions, no network</li>
+<li><code>permissive-proxied</code>: Write restrictions, network via proxy</li>
+<li><code>restrictive-open</code>: Strict restrictions, network allowed</li>
+<li><code>restrictive-closed</code>: Maximum restrictions</li>
+</ul>
+<h3 id="custom-sandbox-flags">Custom Sandbox Flags</h3>
+<p>For container-based sandboxing, you can inject custom flags into the <code>docker</code> or <code>podman</code> command using the <code>SANDBOX_FLAGS</code> environment variable. This is useful for advanced configurations, such as disabling security features for specific use cases.</p>
+<p><strong>Example (Podman)</strong>:</p>
+<p>To disable SELinux labeling for volume mounts, you can set the following:</p>
+<div class="codehilite"><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">SANDBOX_FLAGS</span><span class="o">=</span><span class="s2">&quot;--security-opt label=disable&quot;</span>
+</code></pre></div>
+
+<p>Multiple flags can be provided as a space-separated string:</p>
+<div class="codehilite"><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">SANDBOX_FLAGS</span><span class="o">=</span><span class="s2">&quot;--flag1 --flag2=value&quot;</span>
+</code></pre></div>
+
+<h2 id="linux-uidgid-handling">Linux UID/GID handling</h2>
+<p>The sandbox automatically handles user permissions on Linux. Override these permissions with:</p>
+<div class="codehilite"><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">SANDBOX_SET_UID_GID</span><span class="o">=</span><span class="nb">true</span><span class="w">   </span><span class="c1"># Force host UID/GID</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">SANDBOX_SET_UID_GID</span><span class="o">=</span><span class="nb">false</span><span class="w">  </span><span class="c1"># Disable UID/GID mapping</span>
+</code></pre></div>
+
+<h2 id="troubleshooting">Troubleshooting</h2>
+<h3 id="common-issues">Common issues</h3>
+<p><strong>"Operation not permitted"</strong></p>
+<ul>
+<li>Operation requires access outside sandbox.</li>
+<li>Try more permissive profile or add mount points.</li>
+</ul>
+<p><strong>Missing commands</strong></p>
+<ul>
+<li>Add to custom Dockerfile.</li>
+<li>Install via <code>sandbox.bashrc</code>.</li>
+</ul>
+<p><strong>Network issues</strong></p>
+<ul>
+<li>Check sandbox profile allows network.</li>
+<li>Verify proxy configuration.</li>
+</ul>
+<h3 id="debug-mode">Debug mode</h3>
+<div class="codehilite"><pre><span></span><code><span class="nv">DEBUG</span><span class="o">=</span><span class="m">1</span><span class="w"> </span>gemini<span class="w"> </span>-s<span class="w"> </span>-p<span class="w"> </span><span class="s2">&quot;debug command&quot;</span>
+</code></pre></div>
+
+<p><strong>Note:</strong> If you have <code>DEBUG=true</code> in a project's <code>.env</code> file, it won't affect gemini-cli due to automatic exclusion. Use <code>.gemini/.env</code> files for gemini-cli specific debug settings.</p>
+<h3 id="inspect-sandbox">Inspect sandbox</h3>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Check environment</span>
+gemini<span class="w"> </span>-s<span class="w"> </span>-p<span class="w"> </span><span class="s2">&quot;run shell command: env | grep SANDBOX&quot;</span>
+
+<span class="c1"># List mounts</span>
+gemini<span class="w"> </span>-s<span class="w"> </span>-p<span class="w"> </span><span class="s2">&quot;run shell command: mount | grep workspace&quot;</span>
+</code></pre></div>
+
+<h2 id="security-notes">Security notes</h2>
+<ul>
+<li>Sandboxing reduces but doesn't eliminate all risks.</li>
+<li>Use the most restrictive profile that allows your work.</li>
+<li>Container overhead is minimal after first build.</li>
+<li>GUI applications may not work in sandboxes.</li>
+</ul>
+<h2 id="related-documentation">Related documentation</h2>
+<ul>
+<li><a href="./cli/configuration.md">Configuration</a>: Full configuration options.</li>
+<li><a href="./cli/commands.md">Commands</a>: Available commands.</li>
+<li><a href="./troubleshooting.md">Troubleshooting</a>: General troubleshooting.</li>
+</ul>
+        </div>
+        <div class="footer">
+            Generated on 2025-08-30 08:20:39
+        </div>
+    </div>
+</body>
+</html>

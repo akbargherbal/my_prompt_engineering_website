@@ -1,0 +1,981 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DOCUMENT_04</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            line-height: 1.6; 
+            color: #333; 
+            background: #fff;
+        }
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        .header { 
+            background: #2c3e50; 
+            color: white; 
+            padding: 1rem 0; 
+            position: sticky; 
+            top: 0; 
+            z-index: 100;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .home-btn { 
+            position: fixed; 
+            top: 20px; 
+            right: 20px; 
+            background: #e74c3c; 
+            color: white; 
+            padding: 12px 16px; 
+            border-radius: 50px; 
+            text-decoration: none; 
+            font-weight: bold; 
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            transition: all 0.3s;
+        }
+        .home-btn:hover { background: #c0392b; transform: translateY(-2px); }
+        .breadcrumb { 
+            background: #ecf0f1; 
+            padding: 10px 0; 
+            margin-bottom: 20px; 
+            font-size: 14px;
+        }
+        .breadcrumb a { color: #3498db; text-decoration: none; }
+        .breadcrumb a:hover { text-decoration: underline; }
+        .breadcrumb span { font-weight: bold; color: #333; }
+        .content { 
+            background: white; 
+            padding: 2rem; 
+            border-radius: 8px; 
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .file-list { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); 
+            gap: 1rem; 
+            margin: 2rem 0; 
+        }
+        .file-item { 
+            padding: 1rem; 
+            border: 1px solid #ddd; 
+            border-radius: 8px; 
+            background: #f8f9fa;
+            transition: all 0.3s;
+        }
+        .file-item:hover { 
+            transform: translateY(-2px); 
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15); 
+        }
+        .file-item a { 
+            color: #2c3e50; 
+            text-decoration: none; 
+            font-weight: 500; 
+            display: block;
+        }
+        .file-item a:hover { color: #3498db; }
+        .file-type { 
+            font-size: 12px; 
+            color: #7f8c8d; 
+            margin-top: 5px; 
+        }
+        .tree { font-family: monospace; white-space: pre-line; background: #f8f9fa; padding: 1rem; border-radius: 8px; }
+        pre { background: #2c3e50; color: #ecf0f1; padding: 1rem; border-radius: 8px; overflow-x: auto; }
+        code { background: #ecf0f1; padding: 2px 4px; border-radius: 4px; font-size: 0.9em; }
+        pre code { background: none; padding: 0; }
+        h1, h2, h3, h4, h5, h6 { color: #2c3e50; margin: 1.5rem 0 1rem 0; }
+        h1 { border-bottom: 3px solid #3498db; padding-bottom: 10px; }
+        a { color: #3498db; }
+        a:hover { color: #2980b9; }
+        .footer { 
+            text-align: center; 
+            padding: 2rem; 
+            color: #7f8c8d; 
+            border-top: 1px solid #ecf0f1; 
+            margin-top: 3rem; 
+        }
+        @media (max-width: 768px) {
+            .container { padding: 10px; }
+            .file-list { grid-template-columns: 1fr; }
+            .content { padding: 1rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="container">
+            <h1>DOCUMENT_04</h1>
+        </div>
+    </div>
+    <a href="../../../../../../../../index.html" class="home-btn">🏠 Home</a>
+    <div class="container">
+        <div class="breadcrumb">
+            <a href="../../../../../../../../index.html">Home</a> / <a href="../../../../../../../../FRAMEWORK_ARCHITECTURE/index.html">FRAMEWORK_ARCHITECTURE</a> / <a href="../../../../../../../../FRAMEWORK_ARCHITECTURE/FRAMEWORKS/index.html">FRAMEWORKS</a> / <a href="../../../../../../../../FRAMEWORK_ARCHITECTURE/FRAMEWORKS/PDP_FRAMEWORK/index.html">PDP_FRAMEWORK</a> / <a href="../../../../../../../../FRAMEWORK_ARCHITECTURE/FRAMEWORKS/PDP_FRAMEWORK/REWRITE_PDP/index.html">REWRITE_PDP</a> / <a href="../../../../../../../../FRAMEWORK_ARCHITECTURE/FRAMEWORKS/PDP_FRAMEWORK/REWRITE_PDP/REWRITE/index.html">REWRITE</a> / <a href="../../../../../../../../FRAMEWORK_ARCHITECTURE/FRAMEWORKS/PDP_FRAMEWORK/REWRITE_PDP/REWRITE/PROJECT/index.html">PROJECT</a> / <a href="../../../../../../../../FRAMEWORK_ARCHITECTURE/FRAMEWORKS/PDP_FRAMEWORK/REWRITE_PDP/REWRITE/PROJECT/01_PLANNING/index.html">01_PLANNING</a> / <a href="../../../../../../../../FRAMEWORK_ARCHITECTURE/FRAMEWORKS/PDP_FRAMEWORK/REWRITE_PDP/REWRITE/PROJECT/01_PLANNING/OUTPUT/index.html">OUTPUT</a>
+        </div>
+        <div class="content">
+            <p><strong>Change Count</strong>: 15+ changes identified
+<strong>Change Classification</strong>: Large/extensive changes detected
+<strong>Complete Updated Document</strong>:</p>
+<h1 id="development-execution-plan-gemini-cli-vs-code-bridge">Development Execution Plan: Gemini CLI VS Code Bridge</h1>
+<h2 id="execution-overview">Execution Overview</h2>
+<ul>
+<li><strong>Total Development Timeline</strong>: 12-14 weeks</li>
+<li><strong>Development Phases</strong>: 5 phases (including critical validation phase)</li>
+<li><strong>Key Technical Risks</strong>: Threading deadlocks, cross-platform subprocess variations, Gemini CLI stability</li>
+<li><strong>Success Validation Strategy</strong>: Complete conversation cycles without terminal interaction, 48-hour continuous operation tests</li>
+<li><strong>Team Capacity Assumptions</strong>: Single developer with intermediate Python/threading experience, leveraging state-of-the-art agentic code editors (e.g., Claude Code) to accelerate implementation. Assumes 6-8 hours of daily development capacity.</li>
+</ul>
+<h2 id="sprintmilestone-structure">Sprint/Milestone Structure</h2>
+<h3 id="phase-0-critical-validation-weeks-1-2">Phase 0: Critical Validation - Weeks 1-2</h3>
+<p><strong>Goal</strong>: Validate core architecture assumptions before committing to implementation approach
+<strong>Duration</strong>: 10-14 days
+<strong>Entry Criteria</strong>:</p>
+<ul>
+<li>Development environment setup with Python 3.8+ and Gemini CLI installed across target platforms</li>
+<li>Access to Windows, macOS, and Linux testing environments (VMs acceptable)</li>
+<li>Basic project repository structure created with initial documentation</li>
+</ul>
+<p><strong>Exit Criteria</strong>:</p>
+<ul>
+<li>Gemini CLI subprocess communication validated across all target platforms with 50+ test prompts</li>
+<li>Two-thread coordination model proven stable through 1000+ rapid iterations without deadlocks</li>
+<li>Platform-specific subprocess behaviors documented with configuration requirements</li>
+<li>Go/no-go decision made on architecture complexity vs. sequential fallback</li>
+</ul>
+<p><strong>Key Features/Tasks</strong>:</p>
+<ul>
+<li><strong>Subprocess Communication Proof-of-Concept</strong> (Est: 3-4 days)</li>
+<li><strong>Acceptance Criteria</strong>: Gemini CLI responds reliably to programmatic stdin with various prompt types (simple text, multi-line, special characters, code blocks)</li>
+<li><strong>Dependencies</strong>: Gemini CLI installation and API authentication on all platforms</li>
+<li><strong>Risk Level</strong>: High - Core architecture viability depends on this validation</li>
+<li>
+<p><strong>Testing Requirements</strong>: 50+ prompt variations across Windows, macOS, Linux with response validation</p>
+</li>
+<li>
+<p><strong>Threading Model Validation</strong> (Est: 2-3 days)</p>
+</li>
+<li><strong>Acceptance Criteria</strong>: Two-thread model (main + output reader) operates without deadlocks through 1000+ rapid queue operations</li>
+<li><strong>Dependencies</strong>: Subprocess PoC completion for realistic testing conditions</li>
+<li><strong>Risk Level</strong>: High - Deadlock potential is primary architectural concern</li>
+<li>
+<p><strong>Testing Requirements</strong>: Automated stress testing with rapid stdin writes and stdout reads</p>
+</li>
+<li>
+<p><strong>Cross-Platform Behavior Documentation</strong> (Est: 2-3 days)</p>
+</li>
+<li><strong>Acceptance Criteria</strong>: Platform-specific subprocess configurations and limitations clearly documented</li>
+<li><strong>Dependencies</strong>: Subprocess and threading validation completion</li>
+<li><strong>Risk Level</strong>: Medium - Required for Phase 1 implementation decisions</li>
+<li>
+<p><strong>Testing Requirements</strong>: Identical behavior validation across platforms or documented variations</p>
+</li>
+<li>
+<p><strong>Architecture Decision Documentation</strong> (Est: 1-2 days)</p>
+</li>
+<li><strong>Acceptance Criteria</strong>: Final architecture approach selected with technical justification and fallback plans</li>
+<li><strong>Dependencies</strong>: All validation tasks completed</li>
+<li><strong>Risk Level</strong>: Low - Documentation task but critical for team alignment</li>
+</ul>
+<p><strong>Quality Gates</strong>:</p>
+<ul>
+<li>[ ] Gemini CLI subprocess communication 100% reliable across all platforms</li>
+<li>[ ] Threading stress test passes 1000+ iterations without deadlocks or memory leaks</li>
+<li>[ ] Platform compatibility matrix complete with specific configuration requirements</li>
+<li>[ ] Architecture decision document approved with clear implementation path</li>
+<li>[ ] Risk mitigation strategies defined for identified platform-specific issues</li>
+</ul>
+<p><strong>Risk Mitigation</strong>:</p>
+<ul>
+<li><strong>Risk</strong>: Gemini CLI proves unreliable for programmatic interaction</li>
+<li><strong>Mitigation</strong>: Test with multiple prompt types and error scenarios, document workarounds</li>
+<li>
+<p><strong>Contingency</strong>: Evaluate alternative CLI tools or consider different interaction models</p>
+</li>
+<li>
+<p><strong>Risk</strong>: Threading coordination too complex for reliable implementation</p>
+</li>
+<li><strong>Mitigation</strong>: Implement sequential processing fallback during validation phase</li>
+<li><strong>Contingency</strong>: Switch to single-threaded polling architecture with acceptable latency trade-offs</li>
+</ul>
+<hr />
+<h3 id="phase-1-foundation-implementation-weeks-3-6">Phase 1: Foundation Implementation - Weeks 3-6</h3>
+<p><strong>Goal</strong>: Build core bridge functionality with simplified two-thread architecture
+<strong>Duration</strong>: 20-28 days
+<strong>Entry Criteria</strong>:</p>
+<ul>
+<li>Phase 0 validation complete with architecture decision finalized</li>
+<li>Platform-specific subprocess configurations documented and tested</li>
+<li>Development environment configured with testing framework and cross-platform access</li>
+</ul>
+<p><strong>Exit Criteria</strong>:</p>
+<ul>
+<li>Working bridge.py script with stable subprocess management and file monitoring</li>
+<li>Complete conversation cycle functional (write prompt → save → view response)</li>
+<li>Two-thread coordination operating reliably for 8+ hour sessions</li>
+<li>Basic error recovery implemented for common failure scenarios</li>
+</ul>
+<p><strong>Key Features/Tasks</strong>:</p>
+<ul>
+<li><strong>Core Subprocess Management</strong> (Est: 5-7 days)</li>
+<li><strong>Acceptance Criteria</strong>: Persistent Gemini CLI process with captured stdin/stdout, automatic restart on failure, health monitoring</li>
+<li><strong>Dependencies</strong>: Phase 0 platform configuration validation</li>
+<li><strong>Risk Level</strong>: Medium - Complex process lifecycle management with cross-platform considerations</li>
+<li>
+<p><strong>Testing Requirements</strong>: 24-hour continuous operation test, process crash recovery validation</p>
+</li>
+<li>
+<p><strong>File System Watcher Implementation</strong> (Est: 3-4 days)</p>
+</li>
+<li><strong>Acceptance Criteria</strong>: Detects prompt.md changes within 200ms, debounced to prevent rapid-fire processing, cross-platform file event handling</li>
+<li><strong>Dependencies</strong>: None (foundational component)</li>
+<li><strong>Risk Level</strong>: Low - Watchdog library handles platform differences, debouncing prevents edge cases</li>
+<li>
+<p><strong>Testing Requirements</strong>: Rapid file save testing, concurrent access scenarios, platform behavior validation</p>
+</li>
+<li>
+<p><strong>Two-Thread Coordination System</strong> (Est: 7-10 days)</p>
+</li>
+<li><strong>Acceptance Criteria</strong>: Main thread handles file watching and subprocess stdin, output thread manages stdout reading, bounded queue communication (maxsize=100), shutdown coordination via threading.Event</li>
+<li><strong>Dependencies</strong>: Subprocess management and file watcher components</li>
+<li><strong>Risk Level</strong>: High - Threading synchronization is most complex architectural component</li>
+<li>
+<p><strong>Testing Requirements</strong>: Stress testing with 1000+ rapid operations, deadlock detection, memory leak validation</p>
+</li>
+<li>
+<p><strong>Prompt Processing Pipeline</strong> (Est: 2-3 days)</p>
+</li>
+<li><strong>Acceptance Criteria</strong>: Reads complete prompt.md content, handles UTF-8 encoding, sends to Gemini CLI stdin without data loss, manages special characters and multi-line prompts</li>
+<li><strong>Dependencies</strong>: File watcher system, subprocess management</li>
+<li><strong>Risk Level</strong>: Low - Straightforward file I/O with established error handling patterns</li>
+<li>
+<p><strong>Testing Requirements</strong>: Various prompt formats, encoding edge cases, large prompt handling</p>
+</li>
+<li>
+<p><strong>Response Logging System</strong> (Est: 2-3 days)</p>
+</li>
+<li><strong>Acceptance Criteria</strong>: Appends all Gemini CLI output to response.md, UTF-8 encoding support, atomic writes to prevent corruption, handles disk space and permission issues</li>
+<li><strong>Dependencies</strong>: Two-thread coordination (receives output via queue)</li>
+<li><strong>Risk Level</strong>: Low - Simple append-only file operations with standard error handling</li>
+<li><strong>Testing Requirements</strong>: Concurrent write scenarios, disk full conditions, permission error recovery</li>
+</ul>
+<p><strong>Quality Gates</strong>:</p>
+<ul>
+<li>[ ] Subprocess operates continuously for 24+ hours without manual intervention</li>
+<li>[ ] File watcher responds to changes within 200ms consistently across platforms</li>
+<li>[ ] Threading coordination passes 1000+ operation stress test without deadlocks</li>
+<li>[ ] Complete conversation cycle works: prompt.md save → Gemini CLI processing → response.md update</li>
+<li>[ ] Memory usage remains under 50MB during 8-hour continuous operation</li>
+</ul>
+<p><strong>Risk Mitigation</strong>:</p>
+<ul>
+<li><strong>Risk</strong>: Threading deadlocks develop under stress conditions</li>
+<li><strong>Mitigation</strong>: Implement comprehensive timeout mechanisms, bounded queues, and shutdown coordination</li>
+<li>
+<p><strong>Contingency</strong>: Switch to sequential processing architecture if threading proves unreliable</p>
+</li>
+<li>
+<p><strong>Risk</strong>: Cross-platform subprocess behavior variations cause failures</p>
+</li>
+<li><strong>Mitigation</strong>: Platform-specific configuration based on Phase 0 validation, comprehensive error logging</li>
+<li><strong>Contingency</strong>: Platform-specific code paths or reduced platform support for MVP</li>
+</ul>
+<hr />
+<h3 id="phase-2-reliability-production-hardening-weeks-7-10">Phase 2: Reliability &amp; Production Hardening - Weeks 7-10</h3>
+<p><strong>Goal</strong>: Transform working prototype into production-ready daily-use tool
+<strong>Duration</strong>: 20-28 days
+<strong>Entry Criteria</strong>:</p>
+<ul>
+<li>Phase 1 core functionality operational with basic error handling</li>
+<li>8-hour continuous operation test passed without critical failures</li>
+<li>All threading coordination stable through stress testing</li>
+</ul>
+<p><strong>Exit Criteria</strong>:</p>
+<ul>
+<li>Comprehensive error recovery handles 95% of failure scenarios automatically</li>
+<li>Production-quality logging and monitoring enables effective troubleshooting</li>
+<li>Graceful shutdown procedures prevent data loss and resource leaks</li>
+<li>Configuration management supports user customization requirements</li>
+</ul>
+<p><strong>Key Features/Tasks</strong>:</p>
+<ul>
+<li><strong>Advanced Error Recovery System</strong> (Est: 6-8 days)</li>
+<li><strong>Acceptance Criteria</strong>: Automatic subprocess restart on failures, thread failure detection and recovery, graceful degradation modes when recovery fails, comprehensive error classification (recoverable vs. fatal)</li>
+<li><strong>Dependencies</strong>: Core subprocess management and threading system</li>
+<li><strong>Risk Level</strong>: Medium - Complex failure scenario handling with edge case coverage</li>
+<li>
+<p><strong>Testing Requirements</strong>: Systematic failure injection testing, recovery time measurement, degraded mode validation</p>
+</li>
+<li>
+<p><strong>Production Logging and Monitoring</strong> (Est: 3-4 days)</p>
+</li>
+<li><strong>Acceptance Criteria</strong>: Structured logging with configurable levels, error categorization and reporting, performance metrics tracking, user-friendly error messages</li>
+<li><strong>Dependencies</strong>: All core components for comprehensive coverage</li>
+<li><strong>Risk Level</strong>: Low - Standard logging patterns with established libraries</li>
+<li>
+<p><strong>Testing Requirements</strong>: Log completeness validation, performance impact assessment, error message clarity testing</p>
+</li>
+<li>
+<p><strong>Graceful Shutdown and Resource Management</strong> (Est: 4-5 days)</p>
+</li>
+<li><strong>Acceptance Criteria</strong>: Clean thread termination within 5 seconds, subprocess cleanup without orphan processes, file handle and memory resource cleanup, preservation of in-flight operations</li>
+<li><strong>Dependencies</strong>: All threading and subprocess components</li>
+<li><strong>Risk Level</strong>: Medium - Resource cleanup complexity across platforms</li>
+<li>
+<p><strong>Testing Requirements</strong>: Shutdown under load conditions, resource leak detection, signal handling validation</p>
+</li>
+<li>
+<p><strong>Configuration Management System</strong> (Est: 3-4 days)</p>
+</li>
+<li><strong>Acceptance Criteria</strong>: Environment variable configuration for key settings, file path customization, timeout and retry parameter adjustment, configuration validation with helpful error messages</li>
+<li><strong>Dependencies</strong>: None (independent configuration layer)</li>
+<li><strong>Risk Level</strong>: Low - Standard configuration patterns</li>
+<li>
+<p><strong>Testing Requirements</strong>: Invalid configuration handling, default value validation, platform path differences</p>
+</li>
+<li>
+<p><strong>Health Monitoring and Status Reporting</strong> (Est: 4-6 days)</p>
+</li>
+<li><strong>Acceptance Criteria</strong>: Subprocess health checks with timeout detection, thread status monitoring, file system accessibility validation, clear status reporting for debugging</li>
+<li><strong>Dependencies</strong>: All core components for monitoring coverage</li>
+<li><strong>Risk Level</strong>: Low - Monitoring implementation using established patterns</li>
+<li><strong>Testing Requirements</strong>: Health check accuracy, false positive/negative rates, status report completeness</li>
+</ul>
+<p><strong>Quality Gates</strong>:</p>
+<ul>
+<li>[ ] Automatic recovery successful for 90% of induced failure scenarios</li>
+<li>[ ] Comprehensive logs available for all error conditions with clear troubleshooting guidance</li>
+<li>[ ] Shutdown procedures complete within 5 seconds without resource leaks</li>
+<li>[ ] Configuration system handles all common customization scenarios</li>
+<li>[ ] 48-hour continuous operation test passes with automatic error recovery</li>
+</ul>
+<p><strong>Risk Mitigation</strong>:</p>
+<ul>
+<li><strong>Risk</strong>: Error recovery mechanisms introduce new failure modes</li>
+<li><strong>Mitigation</strong>: Systematic failure injection testing with recovery validation</li>
+<li>
+<p><strong>Contingency</strong>: Disable automatic recovery for problematic scenarios, require manual restart</p>
+</li>
+<li>
+<p><strong>Risk</strong>: Complex error handling reduces system reliability</p>
+</li>
+<li><strong>Mitigation</strong>: Keep recovery logic simple with clear fallback to manual intervention</li>
+<li><strong>Contingency</strong>: Document manual recovery procedures for all automated recovery scenarios</li>
+</ul>
+<hr />
+<h3 id="phase-3-cross-platform-validation-polish-weeks-11-12">Phase 3: Cross-Platform Validation &amp; Polish - Weeks 11-12</h3>
+<p><strong>Goal</strong>: Ensure production stability and optimal user experience across all target platforms
+<strong>Duration</strong>: 10-14 days
+<strong>Entry Criteria</strong>:</p>
+<ul>
+<li>Phase 2 reliability features operational on primary development platform</li>
+<li>All automated testing framework complete with comprehensive coverage</li>
+<li>Production-ready error handling and monitoring systems functional</li>
+</ul>
+<p><strong>Exit Criteria</strong>:</p>
+<ul>
+<li>Identical functionality verified across Windows, macOS, and Linux platforms</li>
+<li>Performance optimized for minimal resource usage during idle and active periods</li>
+<li>User experience refined based on real-world usage patterns and feedback</li>
+<li>Complete troubleshooting documentation for platform-specific issues</li>
+</ul>
+<p><strong>Key Features/Tasks</strong>:</p>
+<ul>
+<li><strong>Cross-Platform Deployment Validation</strong> (Est: 4-5 days)</li>
+<li><strong>Acceptance Criteria</strong>: Identical behavior across Windows 10+, macOS 12+, Ubuntu 20+, platform-specific installation tested, consistent performance characteristics</li>
+<li><strong>Dependencies</strong>: All Phase 2 features completed and tested</li>
+<li><strong>Risk Level</strong>: Medium - Platform differences may require code modifications</li>
+<li>
+<p><strong>Testing Requirements</strong>: Automated test suite execution on all platforms, performance benchmarking, edge case validation</p>
+</li>
+<li>
+<p><strong>Performance Optimization</strong> (Est: 3-4 days)</p>
+</li>
+<li><strong>Acceptance Criteria</strong>: Sub-500ms response time from file save to subprocess communication, memory usage under 50MB during 8-hour sessions, CPU usage minimal during idle periods, optimized queue and buffer sizes</li>
+<li><strong>Dependencies</strong>: Core functionality stable for baseline measurement</li>
+<li><strong>Risk Level</strong>: Low - Optimization of working system</li>
+<li>
+<p><strong>Testing Requirements</strong>: Performance benchmarking, resource usage profiling, stress test optimization</p>
+</li>
+<li>
+<p><strong>User Experience Refinement</strong> (Est: 2-3 days)</p>
+</li>
+<li><strong>Acceptance Criteria</strong>: Clear startup and shutdown messages, helpful error guidance for common issues, consistent file handling behavior, intuitive configuration options</li>
+<li><strong>Dependencies</strong>: All core functionality and error handling</li>
+<li><strong>Risk Level</strong>: Low - UX improvements on stable foundation</li>
+<li>
+<p><strong>Testing Requirements</strong>: User workflow testing, error message clarity validation, configuration usability assessment</p>
+</li>
+<li>
+<p><strong>Documentation and Troubleshooting Guide Creation</strong> (Est: 2-3 days)</p>
+</li>
+<li><strong>Acceptance Criteria</strong>: Complete installation guide for all platforms, troubleshooting guide for common issues, configuration reference documentation, developer maintenance guide</li>
+<li><strong>Dependencies</strong>: All features completed and tested</li>
+<li><strong>Risk Level</strong>: Low - Documentation of completed functionality</li>
+<li><strong>Testing Requirements</strong>: Documentation accuracy validation, user guide completeness testing</li>
+</ul>
+<p><strong>Quality Gates</strong>:</p>
+<ul>
+<li>[ ] Automated test suite passes 100% on Windows, macOS, and Linux</li>
+<li>[ ] Performance benchmarks meet sub-500ms response time and &lt;50MB memory usage targets</li>
+<li>[ ] User experience testing shows intuitive operation without documentation reference</li>
+<li>[ ] Troubleshooting documentation covers 95% of observed error scenarios</li>
+<li>[ ] Cross-platform installation process validated by independent testing</li>
+</ul>
+<p><strong>Risk Mitigation</strong>:</p>
+<ul>
+<li><strong>Risk</strong>: Platform-specific issues discovered late in development</li>
+<li><strong>Mitigation</strong>: Early cross-platform testing throughout development, platform-specific test automation</li>
+<li>
+<p><strong>Contingency</strong>: Document platform limitations and provide workarounds or reduce platform support</p>
+</li>
+<li>
+<p><strong>Risk</strong>: Performance optimization introduces stability issues</p>
+</li>
+<li><strong>Mitigation</strong>: Maintain baseline performance tests, validate optimization changes</li>
+<li><strong>Contingency</strong>: Roll back optimizations that compromise stability</li>
+</ul>
+<hr />
+<h3 id="phase-4-documentation-production-readiness-weeks-13-14">Phase 4: Documentation &amp; Production Readiness - Weeks 13-14</h3>
+<p><strong>Goal</strong>: Finalize project for daily production use with complete documentation and validation
+<strong>Duration</strong>: 7-10 days
+<strong>Entry Criteria</strong>:</p>
+<ul>
+<li>All Phase 3 cross-platform validation complete with consistent behavior</li>
+<li>Performance and reliability targets met across all supported platforms</li>
+<li>User experience validated through testing scenarios</li>
+</ul>
+<p><strong>Exit Criteria</strong>:</p>
+<ul>
+<li>Complete user and developer documentation available</li>
+<li>Production deployment process validated and documented</li>
+<li>Final stability validation through extended operation testing</li>
+<li>Launch readiness checklist completed with sign-off criteria</li>
+</ul>
+<p><strong>Key Features/Tasks</strong>:</p>
+<ul>
+<li><strong>Comprehensive Documentation Suite</strong> (Est: 3-4 days)</li>
+<li><strong>Acceptance Criteria</strong>: User installation and operation guide, developer setup and maintenance documentation, API reference for future extensions, troubleshooting and FAQ sections</li>
+<li><strong>Dependencies</strong>: All functionality completed and tested</li>
+<li><strong>Risk Level</strong>: Low - Documentation of completed features</li>
+<li>
+<p><strong>Testing Requirements</strong>: Documentation accuracy and completeness validation</p>
+</li>
+<li>
+<p><strong>Production Deployment Process</strong> (Est: 2-3 days)</p>
+</li>
+<li><strong>Acceptance Criteria</strong>: Standardized installation procedures, dependency management guidance, configuration templates and examples, deployment validation checklist</li>
+<li><strong>Dependencies</strong>: Cross-platform validation complete</li>
+<li><strong>Risk Level</strong>: Low - Process documentation and validation</li>
+<li>
+<p><strong>Testing Requirements</strong>: Clean installation testing, configuration template validation</p>
+</li>
+<li>
+<p><strong>Final Stability and Performance Validation</strong> (Est: 2-3 days)</p>
+</li>
+<li><strong>Acceptance Criteria</strong>: 48-hour continuous operation test on all platforms, performance benchmarks consistently met, memory leak and resource usage validation, stress testing with extended conversation sessions</li>
+<li><strong>Dependencies</strong>: All features and optimizations complete</li>
+<li><strong>Risk Level</strong>: Medium - Final validation may reveal edge cases</li>
+<li><strong>Testing Requirements</strong>: Extended operation testing, comprehensive stress testing, edge case scenario validation</li>
+</ul>
+<p><strong>Quality Gates</strong>:</p>
+<ul>
+<li>[ ] Documentation complete and validated by independent review</li>
+<li>[ ] Production deployment process successfully tested on clean systems</li>
+<li>[ ] 48-hour stability test passes on all supported platforms</li>
+<li>[ ] Performance benchmarks consistently achieved across testing scenarios</li>
+<li>[ ] Launch readiness checklist 100% complete with documented validation</li>
+</ul>
+<p><strong>Risk Mitigation</strong>:</p>
+<ul>
+<li><strong>Risk</strong>: Final validation reveals stability or performance issues</li>
+<li><strong>Mitigation</strong>: Comprehensive testing throughout development, early identification of edge cases</li>
+<li><strong>Contingency</strong>: Document known limitations and provide workarounds, schedule follow-up fixes</li>
+</ul>
+<hr />
+<h2 id="development-workflow">Development Workflow</h2>
+<h3 id="daily-development-process">Daily Development Process</h3>
+<p><strong>Morning Routine</strong> (15 minutes):</p>
+<ol>
+<li>Review previous day's progress and any blockers encountered</li>
+<li>Check automated test results and continuous integration status</li>
+<li>Identify top 2-3 priorities for current development session</li>
+<li>Update development log with planned activities</li>
+</ol>
+<p><strong>Core Development Cycle</strong> (6-7 hours):</p>
+<ol>
+<li><strong>Feature Implementation</strong> (2-3 hour focused blocks)</li>
+<li>Utilize agentic code editor to generate boilerplate, implement architectural patterns from Phase 0, and create unit tests.</li>
+<li>Refine and validate generated code, focusing on threading safety and error handling.</li>
+<li>Update inline documentation for any new interfaces or complex logic.</li>
+<li>
+<p>Commit frequently with descriptive commit messages following established standards.</p>
+</li>
+<li>
+<p><strong>Testing and Validation</strong> (30-60 minutes per feature)</p>
+</li>
+<li>Run comprehensive test suite including unit, integration, and platform-specific tests</li>
+<li>Manual testing of new functionality with various prompt types and edge cases</li>
+<li>Cross-platform testing if changes affect subprocess or file system interactions</li>
+<li>
+<p>Performance impact assessment for memory and CPU usage</p>
+</li>
+<li>
+<p><strong>Code Review and Integration</strong> (30-45 minutes)</p>
+</li>
+<li>Self-review code changes with focus on threading safety and error handling</li>
+<li>Address any automated linting, type checking, or code quality issues</li>
+<li>Update documentation for user-facing changes or new configuration options</li>
+<li>Integration testing with existing components to prevent regressions</li>
+</ol>
+<p><strong>Evening Wrap-up</strong> (15 minutes):</p>
+<ul>
+<li>Update progress tracking with completed tasks and effort spent</li>
+<li>Document any obstacles encountered and resolution approaches attempted</li>
+<li>Plan next day's priorities based on remaining phase scope and dependencies</li>
+<li>Record any architectural decisions or implementation discoveries for team reference</li>
+</ul>
+<h3 id="weekly-progress-validation">Weekly Progress Validation</h3>
+<p><strong>Mid-Week Check</strong> (Wednesday - 30 minutes):</p>
+<ul>
+<li>Assess progress against current phase milestones with specific deliverable review</li>
+<li>Identify any scope adjustments needed based on complexity discoveries</li>
+<li>Review and address any technical blockers or dependency issues</li>
+<li>Validate threading stability and subprocess reliability through spot testing</li>
+</ul>
+<p><strong>End-of-Week Review</strong> (Friday - 45 minutes):</p>
+<ul>
+<li>Validate completed features against detailed acceptance criteria</li>
+<li>Deploy and integrate completed work into main development branch</li>
+<li>Run comprehensive test suite including cross-platform validation where applicable</li>
+<li>Plan following week priorities based on remaining phase scope and risk mitigation needs</li>
+<li>Update stakeholder communication with progress summary and any timeline adjustments</li>
+</ul>
+<h3 id="code-organization-strategy">Code Organization Strategy</h3>
+<h4 id="repository-structure">Repository Structure</h4>
+<div class="codehilite"><pre><span></span><code><span class="n">gemini</span><span class="o">-</span><span class="n">vscode</span><span class="o">-</span><span class="n">bridge</span><span class="o">/</span>
+<span class="err">├──</span><span class="w"> </span><span class="n">src</span><span class="o">/</span>
+<span class="err">│</span><span class="w">   </span><span class="err">├──</span><span class="w"> </span><span class="n">bridge</span><span class="o">/</span>
+<span class="err">│</span><span class="w">   </span><span class="err">│</span><span class="w">   </span><span class="err">├──</span><span class="w"> </span><span class="n">__init__</span><span class="o">.</span><span class="n">py</span>
+<span class="err">│</span><span class="w">   </span><span class="err">│</span><span class="w">   </span><span class="err">├──</span><span class="w"> </span><span class="n">main</span><span class="o">.</span><span class="n">py</span><span class="w">              </span><span class="c1"># Main coordination and startup</span>
+<span class="err">│</span><span class="w">   </span><span class="err">│</span><span class="w">   </span><span class="err">├──</span><span class="w"> </span><span class="n">subprocess_manager</span><span class="o">.</span><span class="n">py</span><span class="w"> </span><span class="c1"># Gemini CLI process management</span>
+<span class="err">│</span><span class="w">   </span><span class="err">│</span><span class="w">   </span><span class="err">├──</span><span class="w"> </span><span class="n">file_watcher</span><span class="o">.</span><span class="n">py</span><span class="w">      </span><span class="c1"># File system monitoring</span>
+<span class="err">│</span><span class="w">   </span><span class="err">│</span><span class="w">   </span><span class="err">├──</span><span class="w"> </span><span class="n">thread_coordinator</span><span class="o">.</span><span class="n">py</span><span class="w"> </span><span class="c1"># Threading and queue management</span>
+<span class="err">│</span><span class="w">   </span><span class="err">│</span><span class="w">   </span><span class="err">├──</span><span class="w"> </span><span class="n">config</span><span class="o">.</span><span class="n">py</span><span class="w">            </span><span class="c1"># Configuration management</span>
+<span class="err">│</span><span class="w">   </span><span class="err">│</span><span class="w">   </span><span class="err">└──</span><span class="w"> </span><span class="n">error_handler</span><span class="o">.</span><span class="n">py</span><span class="w">     </span><span class="c1"># Error classification and recovery</span>
+<span class="err">│</span><span class="w">   </span><span class="err">└──</span><span class="w"> </span><span class="n">utils</span><span class="o">/</span>
+<span class="err">│</span><span class="w">       </span><span class="err">├──</span><span class="w"> </span><span class="n">__init__</span><span class="o">.</span><span class="n">py</span>
+<span class="err">│</span><span class="w">       </span><span class="err">├──</span><span class="w"> </span><span class="n">platform_config</span><span class="o">.</span><span class="n">py</span><span class="w">   </span><span class="c1"># Platform-specific configurations</span>
+<span class="err">│</span><span class="w">       </span><span class="err">├──</span><span class="w"> </span><span class="n">logging_setup</span><span class="o">.</span><span class="n">py</span><span class="w">     </span><span class="c1"># Logging configuration</span>
+<span class="err">│</span><span class="w">       </span><span class="err">└──</span><span class="w"> </span><span class="n">validation</span><span class="o">.</span><span class="n">py</span><span class="w">        </span><span class="c1"># Input validation utilities</span>
+<span class="err">├──</span><span class="w"> </span><span class="n">tests</span><span class="o">/</span>
+<span class="err">│</span><span class="w">   </span><span class="err">├──</span><span class="w"> </span><span class="n">unit</span><span class="o">/</span>
+<span class="err">│</span><span class="w">   </span><span class="err">│</span><span class="w">   </span><span class="err">├──</span><span class="w"> </span><span class="n">test_subprocess_manager</span><span class="o">.</span><span class="n">py</span>
+<span class="err">│</span><span class="w">   </span><span class="err">│</span><span class="w">   </span><span class="err">├──</span><span class="w"> </span><span class="n">test_file_watcher</span><span class="o">.</span><span class="n">py</span>
+<span class="err">│</span><span class="w">   </span><span class="err">│</span><span class="w">   </span><span class="err">├──</span><span class="w"> </span><span class="n">test_thread_coordinator</span><span class="o">.</span><span class="n">py</span>
+<span class="err">│</span><span class="w">   </span><span class="err">│</span><span class="w">   </span><span class="err">└──</span><span class="w"> </span><span class="n">test_config</span><span class="o">.</span><span class="n">py</span>
+<span class="err">│</span><span class="w">   </span><span class="err">├──</span><span class="w"> </span><span class="n">integration</span><span class="o">/</span>
+<span class="err">│</span><span class="w">   </span><span class="err">│</span><span class="w">   </span><span class="err">├──</span><span class="w"> </span><span class="n">test_complete_workflow</span><span class="o">.</span><span class="n">py</span>
+<span class="err">│</span><span class="w">   </span><span class="err">│</span><span class="w">   </span><span class="err">├──</span><span class="w"> </span><span class="n">test_error_recovery</span><span class="o">.</span><span class="n">py</span>
+<span class="err">│</span><span class="w">   </span><span class="err">│</span><span class="w">   </span><span class="err">└──</span><span class="w"> </span><span class="n">test_cross_platform</span><span class="o">.</span><span class="n">py</span>
+<span class="err">│</span><span class="w">   </span><span class="err">└──</span><span class="w"> </span><span class="n">fixtures</span><span class="o">/</span>
+<span class="err">│</span><span class="w">       </span><span class="err">├──</span><span class="w"> </span><span class="n">sample_prompts</span><span class="o">/</span><span class="w">      </span><span class="c1"># Test prompt variations</span>
+<span class="err">│</span><span class="w">       </span><span class="err">└──</span><span class="w"> </span><span class="n">expected_responses</span><span class="o">/</span><span class="w">  </span><span class="c1"># Response pattern validation</span>
+<span class="err">├──</span><span class="w"> </span><span class="n">docs</span><span class="o">/</span>
+<span class="err">│</span><span class="w">   </span><span class="err">├──</span><span class="w"> </span><span class="n">user_guide</span><span class="o">.</span><span class="n">md</span><span class="w">           </span><span class="c1"># Installation and usage guide</span>
+<span class="err">│</span><span class="w">   </span><span class="err">├──</span><span class="w"> </span><span class="n">developer_guide</span><span class="o">.</span><span class="n">md</span><span class="w">      </span><span class="c1"># Development setup and architecture</span>
+<span class="err">│</span><span class="w">   </span><span class="err">├──</span><span class="w"> </span><span class="n">troubleshooting</span><span class="o">.</span><span class="n">md</span><span class="w">      </span><span class="c1"># Common issues and solutions</span>
+<span class="err">│</span><span class="w">   </span><span class="err">└──</span><span class="w"> </span><span class="n">api_reference</span><span class="o">.</span><span class="n">md</span><span class="w">        </span><span class="c1"># Internal API documentation</span>
+<span class="err">├──</span><span class="w"> </span><span class="n">config</span><span class="o">/</span>
+<span class="err">│</span><span class="w">   </span><span class="err">├──</span><span class="w"> </span><span class="n">default</span><span class="o">.</span><span class="n">env</span><span class="w">            </span><span class="c1"># Default configuration template</span>
+<span class="err">│</span><span class="w">   </span><span class="err">└──</span><span class="w"> </span><span class="n">platform_specific</span><span class="o">/</span><span class="w">     </span><span class="c1"># Platform-specific config examples</span>
+<span class="err">└──</span><span class="w"> </span><span class="n">scripts</span><span class="o">/</span>
+<span class="w">    </span><span class="err">├──</span><span class="w"> </span><span class="n">install</span><span class="o">.</span><span class="n">py</span><span class="w">             </span><span class="c1"># Installation and setup automation</span>
+<span class="w">    </span><span class="err">├──</span><span class="w"> </span><span class="n">validate_setup</span><span class="o">.</span><span class="n">py</span><span class="w">      </span><span class="c1"># Environment validation</span>
+<span class="w">    </span><span class="err">└──</span><span class="w"> </span><span class="n">performance_test</span><span class="o">.</span><span class="n">py</span><span class="w">    </span><span class="c1"># Performance benchmarking</span>
+</code></pre></div>
+
+<h4 id="git-workflow">Git Workflow</h4>
+<p><strong>Branch Strategy</strong>:
+- <code>main</code>: Production-ready code with comprehensive testing
+- <code>develop</code>: Integration branch for completed features with basic testing
+- <code>feature/phase-N-feature-name</code>: Individual feature development with focused scope
+- <code>hotfix/issue-description</code>: Critical fixes for production issues
+- <code>experiment/approach-name</code>: Architecture validation and proof-of-concept work</p>
+<p><strong>Commit Standards</strong>:</p>
+<div class="codehilite"><pre><span></span><code><span class="k">[type](scope): [brief description]</span>
+
+<span class="k">[optional detailed explanation of changes]</span>
+<span class="k">[optional breaking changes note]</span>
+
+<span class="na">Examples</span><span class="o">:</span>
+<span class="na">feat(subprocess)</span><span class="o">:</span><span class="w"> </span><span class="s">Add automatic restart on process failure</span>
+<span class="na">fix(threading)</span><span class="o">:</span><span class="w"> </span><span class="s">Resolve deadlock in queue shutdown coordination</span><span class="w">  </span>
+<span class="na">docs(user)</span><span class="o">:</span><span class="w"> </span><span class="s">Update installation guide for Windows path issues</span>
+<span class="na">test(integration)</span><span class="o">:</span><span class="w"> </span><span class="s">Add cross-platform subprocess validation</span>
+<span class="na">refactor(config)</span><span class="o">:</span><span class="w"> </span><span class="s">Simplify environment variable handling</span>
+</code></pre></div>
+
+<p><strong>Merge Process</strong>:
+1. Feature development in focused feature branch with regular commits
+2. Comprehensive self-review including threading safety and error handling
+3. Local testing completion including relevant cross-platform validation
+4. Pull request to develop branch with detailed description and testing summary
+5. Automated testing execution and manual code review focusing on architecture compliance
+6. Merge to develop after approval, immediate deletion of feature branch
+7. Weekly merge from develop to main after comprehensive integration testing</p>
+<h3 id="testing-and-quality-assurance">Testing and Quality Assurance</h3>
+<h4 id="unit-testing-strategy">Unit Testing Strategy</h4>
+<p><strong>Coverage Requirements</strong>:
+- <strong>Critical Threading Logic</strong>: 95%+ coverage with deadlock and race condition testing
+- <strong>Subprocess Management</strong>: 90%+ coverage including failure scenarios and recovery
+- <strong>File I/O Operations</strong>: 85%+ coverage with encoding and permission error handling
+- <strong>Configuration Management</strong>: 80%+ coverage focusing on validation and error cases
+- <strong>Error Handling Components</strong>: 90%+ coverage with systematic failure injection</p>
+<p><strong>Testing Patterns</strong>:```python
+import pytest
+import queue
+import threading</p>
+<h1 id="assume-threadcoordinator-and-other-necessary-modules-are-imported">Assume ThreadCoordinator and other necessary modules are imported</h1>
+<h1 id="pytest-uses-fixtures-for-setup-and-teardown">Pytest uses fixtures for setup and teardown</h1>
+<p>@pytest.fixture
+def coordinator():
+    """Provides a ThreadCoordinator instance for each test."""
+    # This is a simplified example; a real fixture would manage setup/teardown
+    return ThreadCoordinator()</p>
+<h1 id="threading-focused-unit-test-structure-using-pytest">Threading-focused unit test structure (using pytest)</h1>
+<p>class TestThreadCoordinator:
+    def test_normal_operation_cycle(self, coordinator):
+        """Test complete request/response cycle under normal conditions"""
+        # Arrange
+        test_prompt = "Test prompt content"
+        shutdown_event = threading.Event() # Assuming this is managed by coordinator</p>
+<div class="codehilite"><pre><span></span><code><span class="w">    </span><span class="c1"># Act</span>
+<span class="w">    </span><span class="n">success</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">coordinator</span><span class="o">.</span><span class="n">process_prompt</span><span class="p">(</span><span class="n">test_prompt</span><span class="p">)</span>
+
+<span class="w">    </span><span class="c1"># Assert</span>
+<span class="w">    </span><span class="nb">assert</span><span class="w"> </span><span class="n">success</span>
+<span class="w">    </span><span class="nb">assert</span><span class="w"> </span><span class="ow">not</span><span class="w"> </span><span class="n">shutdown_event</span><span class="o">.</span><span class="n">is_set</span><span class="p">()</span>
+
+<span class="n">def</span><span class="w"> </span><span class="n">test_deadlock_prevention_under_load</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="n">coordinator</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Test coordination stability with rapid concurrent operations&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="c1"># Simulate 100 rapid operations to test deadlock prevention</span>
+<span class="w">    </span><span class="n">operations</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[]</span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">):</span>
+<span class="w">        </span><span class="n">operation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">coordinator</span><span class="o">.</span><span class="n">process_prompt</span><span class="p">,</span><span class="w"> </span>
+<span class="w">                                    </span><span class="n">args</span><span class="o">=</span><span class="p">[</span><span class="n">f</span><span class="s2">&quot;Prompt {i}&quot;</span><span class="p">])</span>
+<span class="w">        </span><span class="n">operations</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">operation</span><span class="p">)</span>
+
+<span class="w">    </span><span class="c1"># Execute all operations concurrently</span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="n">op</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">operations</span><span class="p">:</span>
+<span class="w">        </span><span class="n">op</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+
+<span class="w">    </span><span class="c1"># Verify all complete without deadlock</span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="n">op</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">operations</span><span class="p">:</span>
+<span class="w">        </span><span class="n">op</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">timeout</span><span class="o">=</span><span class="mf">5.0</span><span class="p">)</span>
+<span class="w">        </span><span class="nb">assert</span><span class="w"> </span><span class="ow">not</span><span class="w"> </span><span class="n">op</span><span class="o">.</span><span class="n">is_alive</span><span class="p">(),</span><span class="w"> </span><span class="s2">&quot;Operation thread did not complete - possible deadlock&quot;</span>
+
+<span class="n">def</span><span class="w"> </span><span class="n">test_graceful_shutdown_under_load</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="n">coordinator</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Test clean shutdown while operations are in progress&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="c1"># Start long-running operation</span>
+<span class="w">    </span><span class="n">long_operation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_simulate_long_operation</span><span class="p">)</span>
+<span class="w">    </span><span class="n">long_operation</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+
+<span class="w">    </span><span class="c1"># Request shutdown</span>
+<span class="w">    </span><span class="n">success</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">coordinator</span><span class="o">.</span><span class="n">shutdown</span><span class="p">(</span><span class="n">timeout</span><span class="o">=</span><span class="mf">5.0</span><span class="p">)</span>
+
+<span class="w">    </span><span class="c1"># Verify clean shutdown</span>
+<span class="w">    </span><span class="nb">assert</span><span class="w"> </span><span class="n">success</span>
+<span class="w">    </span><span class="nb">assert</span><span class="w"> </span><span class="ow">not</span><span class="w"> </span><span class="n">long_operation</span><span class="o">.</span><span class="n">is_alive</span><span class="p">()</span>
+
+<span class="c1"># Pytest uses parametrization instead of subtests</span>
+<span class="err">@</span><span class="n">pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">parametrize</span><span class="p">(</span><span class="s2">&quot;scenario_name, simulate_error_func&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="p">(</span><span class="s2">&quot;subprocess_crash&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">_simulate_process_crash</span><span class="p">),</span>
+<span class="w">    </span><span class="p">(</span><span class="s2">&quot;queue_overflow&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">_simulate_queue_overflow</span><span class="p">),</span>
+<span class="w">    </span><span class="p">(</span><span class="s2">&quot;thread_failure&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">_simulate_thread_failure</span><span class="p">)</span>
+<span class="p">])</span>
+<span class="n">def</span><span class="w"> </span><span class="n">test_error_recovery_scenarios</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="n">coordinator</span><span class="p">,</span><span class="w"> </span><span class="n">scenario_name</span><span class="p">,</span><span class="w"> </span><span class="n">simulate_error_func</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Test automatic recovery from various failure conditions&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="c1"># Trigger error condition</span>
+<span class="w">    </span><span class="n">simulate_error_func</span><span class="p">()</span>
+
+<span class="w">    </span><span class="c1"># Verify recovery</span>
+<span class="w">    </span><span class="n">recovered</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">coordinator</span><span class="o">.</span><span class="n">recover_from_error</span><span class="p">()</span>
+<span class="w">    </span><span class="nb">assert</span><span class="w"> </span><span class="n">recovered</span><span class="p">,</span><span class="w"> </span><span class="n">f</span><span class="s2">&quot;Failed to recover from {scenario_name}&quot;</span>
+</code></pre></div>
+
+<p>```</p>
+<h4 id="integration-testing-plan">Integration Testing Plan</h4>
+<p><strong>Core Integration Scenarios</strong>:</p>
+<ol>
+<li>
+<p><strong>Complete Workflow Integration Test</strong>
+   ```python
+   def test_complete_conversation_cycle(self):
+       """Test entire user workflow from prompt creation to response viewing"""
+       # Create test prompt file
+       test_prompt = "Explain the concept of recursion in programming"
+       self.write_prompt_file(test_prompt)</p>
+<p># Verify file change detection and processing
+   self.wait_for_processing_completion(timeout=10.0)</p>
+<p># Validate response file creation and content
+   response_content = self.read_response_file()
+   assert "recursion" in response_content.lower()
+   assert len(response_content) &gt; 50  # Substantial response</p>
+<p># Test conversation continuity with follow-up prompt
+   followup_prompt = "Can you provide a Python example?"
+   self.write_prompt_file(followup_prompt)
+   self.wait_for_processing_completion(timeout=10.0)</p>
+<p># Verify context maintained in follow-up response
+   followup_response = self.read_latest_response()
+   assert "python" in followup_response.lower()
+   ```</p>
+</li>
+<li>
+<p><strong>Error Recovery Integration Test</strong>
+   ```python
+   def test_subprocess_failure_recovery(self):
+       """Test automatic recovery when Gemini CLI process crashes"""
+       # Establish normal operation
+       self.send_test_prompt("Initial test prompt")
+       self.verify_normal_response()</p>
+<p># Simulate process crash
+   self.bridge.subprocess_manager.terminate_process()</p>
+<p># Send prompt that should trigger recovery
+   self.send_test_prompt("Recovery test prompt")</p>
+<p># Verify automatic restart and continued operation
+   response = self.wait_for_response(timeout=15.0)  # Allow recovery time
+   assert response is not None
+   self.verify_process_health()
+   ```</p>
+</li>
+<li>
+<p><strong>Cross-Platform Behavior Validation</strong>
+   ```python
+   def test_platform_specific_behaviors(self):
+       """Validate consistent behavior across supported platforms"""
+       # In pytest, this could be structured with parametrization for clarity.
+       # For this example, we keep the loop to illustrate the checks.
+       platform_tests = [
+           ("file_path_handling", self._test_path_normalization),
+           ("subprocess_lifecycle", self._test_process_management),
+           ("file_encoding", self._test_unicode_handling),
+           ("threading_stability", self._test_concurrent_operations)
+       ]</p>
+<p>for test_name, test_function in platform_tests:
+       print(f"Running platform-specific test: {test_name} on {platform.system()}")
+       test_function()
+   ```</p>
+</li>
+<li>
+<p><strong>Performance and Stability Integration</strong>
+   ```python
+   def test_extended_operation_stability(self):
+       """Test system stability during extended operation periods"""
+       # Configure for extended testing
+       test_duration = 3600  # 1 hour for CI, 8+ hours for pre-release
+       prompt_interval = 30  # Send prompt every 30 seconds</p>
+<p>start_time = time.time()
+   prompt_count = 0
+   error_count = 0</p>
+<p>while time.time() - start_time &lt; test_duration:
+       try:
+           # Send varied test prompts
+           test_prompt = self.generate_varied_prompt(prompt_count)
+           self.send_test_prompt(test_prompt)</p>
+<div class="codehilite"><pre><span></span><code>       # Verify response within reasonable time
+       response = self.wait_for_response(timeout=30.0)
+       assert response is not None
+
+       prompt_count += 1
+
+       # Monitor resource usage
+       memory_usage = self.get_memory_usage()
+       assert memory_usage &lt; (50 <span class="gs">* 1024 *</span> 1024)  # &lt; 50MB
+
+   except Exception as e:
+       error_count += 1
+       self.log_error(f&quot;Error during extended test: {e}&quot;)
+
+   time.sleep(prompt_interval)
+</code></pre></div>
+
+<p># Validate success rate
+   success_rate = (prompt_count - error_count) / prompt_count if prompt_count &gt; 0 else 0
+   assert success_rate &gt; 0.95  # 95% success rate required
+   ```</p>
+</li>
+</ol>
+<h4 id="manual-testing-checklists">Manual Testing Checklists</h4>
+<p><strong>Pre-Feature-Complete Checklist</strong> (Executed after each major feature):</p>
+<ul>
+<li>[ ] Feature operates correctly in primary development environment (Windows/macOS/Linux)</li>
+<li>[ ] Feature handles various prompt types (simple text, multi-line, code blocks, special characters)</li>
+<li>[ ] Error conditions produce clear, actionable error messages without system crashes</li>
+<li>[ ] Feature integrates properly with existing functionality without regressions</li>
+<li>[ ] Threading coordination remains stable with new feature under load testing</li>
+<li>[ ] Memory usage and performance impact remain within acceptable bounds</li>
+<li>[ ] Configuration options work correctly and provide meaningful customization</li>
+</ul>
+<p><strong>Pre-Phase-Complete Checklist</strong> (Executed at end of each development phase):</p>
+<ul>
+<li>[ ] All phase deliverables meet specified acceptance criteria</li>
+<li>[ ] Comprehensive automated test suite passes 100% on primary development platform</li>
+<li>[ ] Cross-platform testing completed for any platform-specific changes</li>
+<li>[ ] Performance benchmarks consistently achieved across multiple test runs</li>
+<li>[ ] Error recovery mechanisms tested with systematic failure injection</li>
+<li>[ ] Documentation updated to reflect all new features and configuration options</li>
+<li>[ ] Integration testing completed with focus on threading stability and subprocess reliability</li>
+</ul>
+<p><strong>Pre-Production-Release Checklist</strong> (Executed before final release):</p>
+<ul>
+<li>[ ] 48-hour continuous operation test completed successfully on all supported platforms</li>
+<li>[ ] Comprehensive stress testing with 1000+ rapid operations completed without deadlocks</li>
+<li>[ ] All automated tests pass 100% on Windows, macOS, and Linux environments</li>
+<li>[ ] User installation and setup process validated on clean systems</li>
+<li>[ ] Documentation complete and validated by independent review</li>
+<li>[ ] Error recovery tested for all identified failure scenarios</li>
+<li>[ ] Performance benchmarks consistently met (sub-500ms response, &lt;50MB memory usage)</li>
+<li>[ ] Configuration management supports all required customization scenarios</li>
+</ul>
+<h2 id="risk-management-framework">Risk Management Framework</h2>
+<h3 id="high-risk-areas-requiring-special-attention">High-Risk Areas Requiring Special Attention</h3>
+<h4 id="technical-risks">Technical Risks</h4>
+<p><strong>1. Threading Coordination Deadlocks - Risk Level: HIGH</strong></p>
+<ul>
+<li><strong>Description</strong>: Two-thread coordination with queue-based communication could develop deadlocks under concurrent load or error conditions</li>
+<li><strong>Impact</strong>: Complete system freeze requiring manual restart, potential data loss</li>
+<li><strong>Early Warning Signs</strong>:</li>
+<li>Thread join operations taking longer than expected (&gt;5 seconds)</li>
+<li>Queue operations blocking indefinitely during shutdown</li>
+<li>Memory usage growing steadily during operation (potential queue backup)</li>
+<li>Increasing response times under normal load conditions</li>
+<li><strong>Mitigation Strategy</strong>:</li>
+<li>Implement comprehensive timeout mechanisms for all threading operations</li>
+<li>Use bounded queues (maxsize=100) to prevent unlimited memory growth</li>
+<li>Add deadlock detection with automatic thread restart capability</li>
+<li>Maintain simplified fallback to sequential processing architecture</li>
+<li><strong>Contingency Plan</strong>: Switch to single-threaded sequential processing with polling-based output reading, accepting 200-500ms latency increase for guaranteed stability</li>
+</ul>
+<p><strong>2. Cross-Platform Subprocess Variations - Risk Level: HIGH</strong></p>
+<ul>
+<li><strong>Description</strong>: Gemini CLI subprocess behavior, including startup, shutdown, and stream handling, may vary significantly across Windows, macOS, and Linux.</li>
+<li><strong>Impact</strong>: Platform-specific failures, inconsistent user experience, increased maintenance overhead, and potential reduction in platform support.</li>
+<li><strong>Early Warning Signs</strong>:</li>
+<li>Automated cross-platform tests fail intermittently on specific OS.</li>
+<li>Different response times or behaviors observed across operating systems during manual testing.</li>
+<li>Platform-specific encoding, path handling, or file locking issues emerge.</li>
+<li>Process startup or shutdown procedures hang or create orphan processes on one platform but not others.</li>
+<li><strong>Mitigation Strategy</strong>:</li>
+<li>Execute a comprehensive "Phase 0: Critical Validation" across all target platforms before committing to the core implementation.</li>
+<li>Implement a platform-specific configuration layer (<code>platform_config.py</code>) based on Phase 0 validation results.</li>
+<li>Develop a robust error-handling system with platform-aware recovery strategies.</li>
+<li>Integrate automated cross-platform testing into the continuous integration pipeline to catch regressions early.</li>
+<li><strong>Contingency Plan</strong>: If variations prove too complex to manage reliably, document platform-specific limitations and provide workarounds. As a last resort, reduce the list of officially supported platforms to the most stable ones (e.g., Linux and macOS only) for the initial release.</li>
+</ul>
+<p><strong>3. Gemini CLI External Dependency Stability - Risk Level: MEDIUM</strong></p>
+<ul>
+<li><strong>Description</strong>: The bridge's functionality is entirely dependent on the Gemini CLI, which in turn relies on external Google API services. These services may experience outages, rate limiting, or breaking changes.</li>
+<li><strong>Impact</strong>: The bridge becomes non-functional during external service disruptions, leading to a poor user experience.</li>
+<li><strong>Early Warning Signs</strong>:</li>
+<li>Increased API response times or frequent timeout errors from the CLI.</li>
+<li>Unexpected changes in the response format or content structure.</li>
+<li>New authentication, authorization, or rate-limiting errors appear in the CLI's stderr stream.</li>
+<li><strong>Mitigation Strategy</strong>:</li>
+<li>Implement robust retry logic with exponential backoff for recoverable errors (e.g., temporary network issues).</li>
+<li>Provide clear, user-friendly error messages that distinguish between local bridge failures and external service issues.</li>
+<li>Monitor the official Gemini API status page and incorporate status checks if an API is available.</li>
+<li><strong>Contingency Plan</strong>: There is no direct contingency for a full API outage. The plan is to ensure the bridge fails gracefully, informs the user of the external issue, and automatically recovers when the service is restored.</li>
+</ul>
+<h4 id="process-risks">Process Risks</h4>
+<p><strong>1. Scope Creep - Risk Level: MEDIUM</strong></p>
+<ul>
+<li><strong>Early Warning Signs</strong>:</li>
+<li>New feature requests emerge during development that are outside the 6 "Must Have" MVP features.</li>
+<li>"Quick additions" are proposed that seem small but touch complex areas like threading or subprocess management.</li>
+<li>Requirements for an MVP feature change mid-implementation.</li>
+<li><strong>Mitigation</strong>:</li>
+<li>Strict adherence to the "MVP Feature Prioritization Matrix" and its "Scope Protection Framework".</li>
+<li>All new feature ideas are logged in a backlog for post-MVP consideration.</li>
+<li>Enforce the formal "Scope Change Process" for any proposed modifications to the MVP.</li>
+<li><strong>Contingency</strong>: If a scope change is deemed critical, a formal re-evaluation of the 12-14 week timeline will be conducted, and a "Should Have" feature will be deferred to a future release to compensate.</li>
+</ul>
+<p><strong>2. Quality Debt Accumulation - Risk Level: MEDIUM</strong></p>
+<ul>
+<li><strong>Early Warning Signs</strong>:</li>
+<li>Unit test coverage for critical logic drops below the 95% target.</li>
+<li>An increasing number of "TODO" or "FIXME" comments appear in the codebase, especially in error handling or threading logic.</li>
+<li>Manual testing checklist items are skipped to save time during weekly reviews.</li>
+<li><strong>Mitigation</strong>:</li>
+<li>Integrate automated quality checks (linting, test coverage) into the pre-commit hooks and CI pipeline.</li>
+<li>Dedicate the last 30 minutes of each week to a "Technical Debt Review" to identify and prioritize cleanup tasks for the following week.</li>
+<li><strong>Contingency</strong>: If quality metrics drop below the established thresholds for two consecutive weeks, the first two days of the following week will be dedicated to a "quality sprint" to address the accumulated debt.</li>
+</ul>
+<h3 id="progress-tracking-and-validation">Progress Tracking and Validation</h3>
+<h4 id="daily-progress-metrics">Daily Progress Metrics</h4>
+<ul>
+<li><strong>Tasks Completed</strong>: Number of tasks and their estimated effort from the current phase plan.</li>
+<li><strong>Blockers Encountered</strong>: Any issue that stopped progress for more than 30 minutes, and the time to resolution.</li>
+<li><strong>Quality Metrics</strong>: Unit test coverage percentage, status of integration tests, and any new linting errors introduced.</li>
+<li><strong>Technical Debt Log</strong>: Any new shortcuts taken or existing debt addressed.</li>
+</ul>
+<h4 id="weekly-milestone-validation">Weekly Milestone Validation</h4>
+<p><strong>Progress Assessment</strong>:</p>
+<ul>
+<li><strong>Scope Completion</strong>: Percentage of the current phase's key features and tasks completed.</li>
+<li><strong>Quality Gates</strong>: Status of all quality gates for the current phase (e.g., "Threading stress test passes 1000+ iterations").</li>
+<li><strong>Risk Indicators</strong>: Any early warning signs observed for the high-risk areas.</li>
+<li><strong>Timeline Adherence</strong>: Current progress assessed as on track, ahead, or behind the 12-14 week schedule.</li>
+</ul>
+<p><strong>Adjustment Triggers</strong>:</p>
+<ul>
+<li><strong>Scope Adjustment</strong>: If development velocity is less than 70% of the plan for a full week, the MVP scope will be reviewed for potential reduction (e.g., moving a "Should Have" feature out).</li>
+<li><strong>Quality Focus</strong>: If critical test coverage drops below 85%, the next week's plan will prioritize testing and refactoring over new features.</li>
+<li><strong>Risk Escalation</strong>: If a high-risk indicator is observed (e.g., a threading deadlock that takes &gt;2 days to debug), the corresponding contingency plan (e.g., switching to the sequential fallback architecture) will be formally evaluated.</li>
+</ul>
+<h3 id="success-criteria-and-launch-readiness">Success Criteria and Launch Readiness</h3>
+<h4 id="technical-success-criteria">Technical Success Criteria</h4>
+<ul>
+<li>[ ] All 6 MVP Core features are implemented, tested, and meet their acceptance criteria.</li>
+<li>[ ] The core user journey (write prompt -&gt; save -&gt; view response -&gt; continue conversation) is completable without any terminal interaction.</li>
+<li>[ ] System performance meets established benchmarks: sub-500ms latency from save to stdin write, and memory usage under 50MB during an 8-hour session.</li>
+<li>[ ] The two-thread architecture is stable, passing a 48-hour continuous operation test without deadlocks or memory leaks.</li>
+<li>[ ] Graceful shutdown completes within 5 seconds, leaving no orphan processes.</li>
+</ul>
+<h4 id="quality-assurance-validation">Quality Assurance Validation</h4>
+<ul>
+<li>[ ] Unit test coverage exceeds 95% for threading logic and 90% for subprocess management.</li>
+<li>[ ] All integration tests, including the "Complete Workflow" and "Error Recovery" scenarios, pass 100% on all target platforms.</li>
+<li>[ ] The "Pre-Production-Release Checklist" is fully completed and validated.</li>
+<li>[ ] Documentation is sufficient for a developer with intermediate Python experience to understand the architecture and maintain the code.</li>
+</ul>
+<h4 id="user-experience-validation">User Experience Validation</h4>
+<ul>
+<li>[ ] The primary workflow is intuitive; a user can complete a 5-turn conversation without referencing documentation.</li>
+<li>[ ] Error messages are helpful and clearly distinguish between local and external issues.</li>
+<li>[ ] No more than one manual restart is required per 8-hour session during the final validation phase.</li>
+</ul>
+<h2 id="next-phase-handoff">Next Phase Handoff</h2>
+<h3 id="for-project-readiness-audit">For Project Readiness Audit</h3>
+<p><strong>Execution Plan Completeness</strong>: This plan provides a day-by-day, week-by-week breakdown of tasks, aligned with the strategic blueprint and technical specifications. It includes clear quality gates, risk mitigation strategies, and success criteria.
+<strong>Implementation Risks</strong>: The key risks to monitor are <strong>threading deadlocks</strong> and <strong>cross-platform inconsistencies</strong>. The plan mitigates these by front-loading validation in Phase 0 and maintaining a well-defined sequential fallback architecture as a contingency.
+<strong>Timeline Realism</strong>: The 12-14 week timeline is realistic for a single developer, accounting for the complexity of concurrent programming and the use of agentic coding assistance. The phased approach allows for early validation and course correction.</p>
+<h3 id="post-planning-implementation-notes">Post-Planning Implementation Notes</h3>
+<p><strong>First Week Priorities (Phase 0)</strong>:
+1.  Set up development and testing environments on Windows, macOS, and Linux.
+2.  Develop the "Subprocess Communication Proof-of-Concept" to validate Gemini CLI interaction.
+3.  Implement a minimal two-thread model to begin stress testing the core coordination logic immediately.</p>
+<p><strong>Early Validation Points</strong>:
+-   <strong>End of Week 2</strong>: A "Go/No-Go" decision on the two-thread architecture based on the stability of the PoC.
+-   <strong>End of Week 6 (Phase 1)</strong>: A complete, single-platform conversation cycle is functional. This is the first point at which the core user journey can be tested end-to-end.</p>
+<p><strong>Course Correction Triggers</strong>:
+-   If threading deadlocks persist after one week of debugging during Phase 1, immediately pivot to the single-threaded, polling-based "Sequential Fallback Architecture".
+-   If the Gemini CLI proves unreliable for programmatic interaction during Phase 0, halt development and evaluate alternative interaction models before proceeding.</p>
+        </div>
+        <div class="footer">
+            Generated on 2025-08-30 08:20:33
+        </div>
+    </div>
+</body>
+</html>

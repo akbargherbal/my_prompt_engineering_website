@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>configuration</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            line-height: 1.6; 
+            color: #333; 
+            background: #fff;
+        }
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        .header { 
+            background: #2c3e50; 
+            color: white; 
+            padding: 1rem 0; 
+            position: sticky; 
+            top: 0; 
+            z-index: 100;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .home-btn { 
+            position: fixed; 
+            top: 20px; 
+            right: 20px; 
+            background: #e74c3c; 
+            color: white; 
+            padding: 12px 16px; 
+            border-radius: 50px; 
+            text-decoration: none; 
+            font-weight: bold; 
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            transition: all 0.3s;
+        }
+        .home-btn:hover { background: #c0392b; transform: translateY(-2px); }
+        .breadcrumb { 
+            background: #ecf0f1; 
+            padding: 10px 0; 
+            margin-bottom: 20px; 
+            font-size: 14px;
+        }
+        .breadcrumb a { color: #3498db; text-decoration: none; }
+        .breadcrumb a:hover { text-decoration: underline; }
+        .breadcrumb span { font-weight: bold; color: #333; }
+        .content { 
+            background: white; 
+            padding: 2rem; 
+            border-radius: 8px; 
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .file-list { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); 
+            gap: 1rem; 
+            margin: 2rem 0; 
+        }
+        .file-item { 
+            padding: 1rem; 
+            border: 1px solid #ddd; 
+            border-radius: 8px; 
+            background: #f8f9fa;
+            transition: all 0.3s;
+        }
+        .file-item:hover { 
+            transform: translateY(-2px); 
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15); 
+        }
+        .file-item a { 
+            color: #2c3e50; 
+            text-decoration: none; 
+            font-weight: 500; 
+            display: block;
+        }
+        .file-item a:hover { color: #3498db; }
+        .file-type { 
+            font-size: 12px; 
+            color: #7f8c8d; 
+            margin-top: 5px; 
+        }
+        .tree { font-family: monospace; white-space: pre-line; background: #f8f9fa; padding: 1rem; border-radius: 8px; }
+        pre { background: #2c3e50; color: #ecf0f1; padding: 1rem; border-radius: 8px; overflow-x: auto; }
+        code { background: #ecf0f1; padding: 2px 4px; border-radius: 4px; font-size: 0.9em; }
+        pre code { background: none; padding: 0; }
+        h1, h2, h3, h4, h5, h6 { color: #2c3e50; margin: 1.5rem 0 1rem 0; }
+        h1 { border-bottom: 3px solid #3498db; padding-bottom: 10px; }
+        a { color: #3498db; }
+        a:hover { color: #2980b9; }
+        .footer { 
+            text-align: center; 
+            padding: 2rem; 
+            color: #7f8c8d; 
+            border-top: 1px solid #ecf0f1; 
+            margin-top: 3rem; 
+        }
+        @media (max-width: 768px) {
+            .container { padding: 10px; }
+            .file-list { grid-template-columns: 1fr; }
+            .content { padding: 1rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="container">
+            <h1>configuration</h1>
+        </div>
+    </div>
+    <a href="../../../../../../index.html" class="home-btn">🏠 Home</a>
+    <div class="container">
+        <div class="breadcrumb">
+            <a href="../../../../../../index.html">Home</a> / <a href="../../../../../../PERSONA_PROMPT_FACTORY/index.html">PERSONA_PROMPT_FACTORY</a> / <a href="../../../../../../PERSONA_PROMPT_FACTORY/MY_PERSONAL_PROMPT_ENGINEERING_MENTOR/index.html">MY_PERSONAL_PROMPT_ENGINEERING_MENTOR</a> / <a href="../../../../../../PERSONA_PROMPT_FACTORY/MY_PERSONAL_PROMPT_ENGINEERING_MENTOR/gemini-playbook/index.html">gemini-playbook</a> / <a href="../../../../../../PERSONA_PROMPT_FACTORY/MY_PERSONAL_PROMPT_ENGINEERING_MENTOR/gemini-playbook/source/index.html">source</a> / <a href="../../../../../../PERSONA_PROMPT_FACTORY/MY_PERSONAL_PROMPT_ENGINEERING_MENTOR/gemini-playbook/source/docs/index.html">docs</a> / <a href="../../../../../../PERSONA_PROMPT_FACTORY/MY_PERSONAL_PROMPT_ENGINEERING_MENTOR/gemini-playbook/source/docs/cli/index.html">cli</a>
+        </div>
+        <div class="content">
+            <h1 id="gemini-cli-configuration">Gemini CLI Configuration</h1>
+<p>Gemini CLI offers several ways to configure its behavior, including environment variables, command-line arguments, and settings files. This document outlines the different configuration methods and available settings.</p>
+<h2 id="configuration-layers">Configuration layers</h2>
+<p>Configuration is applied in the following order of precedence (lower numbers are overridden by higher numbers):</p>
+<ol>
+<li><strong>Default values:</strong> Hardcoded defaults within the application.</li>
+<li><strong>User settings file:</strong> Global settings for the current user.</li>
+<li><strong>Project settings file:</strong> Project-specific settings.</li>
+<li><strong>System settings file:</strong> System-wide settings.</li>
+<li><strong>Environment variables:</strong> System-wide or session-specific variables, potentially loaded from <code>.env</code> files.</li>
+<li><strong>Command-line arguments:</strong> Values passed when launching the CLI.</li>
+</ol>
+<h2 id="settings-files">Settings files</h2>
+<p>Gemini CLI uses <code>settings.json</code> files for persistent configuration. There are three locations for these files:</p>
+<ul>
+<li><strong>User settings file:</strong></li>
+<li><strong>Location:</strong> <code>~/.gemini/settings.json</code> (where <code>~</code> is your home directory).</li>
+<li><strong>Scope:</strong> Applies to all Gemini CLI sessions for the current user.</li>
+<li><strong>Project settings file:</strong></li>
+<li><strong>Location:</strong> <code>.gemini/settings.json</code> within your project's root directory.</li>
+<li><strong>Scope:</strong> Applies only when running Gemini CLI from that specific project. Project settings override user settings.</li>
+<li><strong>System settings file:</strong></li>
+<li><strong>Location:</strong> <code>/etc/gemini-cli/settings.json</code> (Linux), <code>C:\ProgramData\gemini-cli\settings.json</code> (Windows) or <code>/Library/Application Support/GeminiCli/settings.json</code> (macOS). The path can be overridden using the <code>GEMINI_CLI_SYSTEM_SETTINGS_PATH</code> environment variable.</li>
+<li><strong>Scope:</strong> Applies to all Gemini CLI sessions on the system, for all users. System settings override user and project settings. May be useful for system administrators at enterprises to have controls over users' Gemini CLI setups.</li>
+</ul>
+<p><strong>Note on environment variables in settings:</strong> String values within your <code>settings.json</code> files can reference environment variables using either <code>$VAR_NAME</code> or <code>${VAR_NAME}</code> syntax. These variables will be automatically resolved when the settings are loaded. For example, if you have an environment variable <code>MY_API_TOKEN</code>, you could use it in <code>settings.json</code> like this: <code>"apiKey": "$MY_API_TOKEN"</code>.</p>
+<h3 id="the-gemini-directory-in-your-project">The <code>.gemini</code> directory in your project</h3>
+<p>In addition to a project settings file, a project's <code>.gemini</code> directory can contain other project-specific files related to Gemini CLI's operation, such as:</p>
+<ul>
+<li><a href="#sandboxing">Custom sandbox profiles</a> (e.g., <code>.gemini/sandbox-macos-custom.sb</code>, <code>.gemini/sandbox.Dockerfile</code>).</li>
+</ul>
+<h3 id="available-settings-in-settingsjson">Available settings in <code>settings.json</code>:</h3>
+<ul>
+<li><strong><code>contextFileName</code></strong> (string or array of strings):</li>
+<li><strong>Description:</strong> Specifies the filename for context files (e.g., <code>GEMINI.md</code>, <code>AGENTS.md</code>). Can be a single filename or a list of accepted filenames.</li>
+<li><strong>Default:</strong> <code>GEMINI.md</code></li>
+<li>
+<p><strong>Example:</strong> <code>"contextFileName": "AGENTS.md"</code></p>
+</li>
+<li>
+<p><strong><code>bugCommand</code></strong> (object):</p>
+</li>
+<li><strong>Description:</strong> Overrides the default URL for the <code>/bug</code> command.</li>
+<li><strong>Default:</strong> <code>"urlTemplate": "https://github.com/google-gemini/gemini-cli/issues/new?template=bug_report.yml&amp;title={title}&amp;info={info}"</code></li>
+<li><strong>Properties:</strong><ul>
+<li><strong><code>urlTemplate</code></strong> (string): A URL that can contain <code>{title}</code> and <code>{info}</code> placeholders.</li>
+</ul>
+</li>
+<li>
+<p><strong>Example:</strong>
+    <code>json
+    "bugCommand": {
+      "urlTemplate": "https://bug.example.com/new?title={title}&amp;info={info}"
+    }</code></p>
+</li>
+<li>
+<p><strong><code>fileFiltering</code></strong> (object):</p>
+</li>
+<li><strong>Description:</strong> Controls git-aware file filtering behavior for @ commands and file discovery tools.</li>
+<li><strong>Default:</strong> <code>"respectGitIgnore": true, "enableRecursiveFileSearch": true</code></li>
+<li><strong>Properties:</strong><ul>
+<li><strong><code>respectGitIgnore</code></strong> (boolean): Whether to respect .gitignore patterns when discovering files. When set to <code>true</code>, git-ignored files (like <code>node_modules/</code>, <code>dist/</code>, <code>.env</code>) are automatically excluded from @ commands and file listing operations.</li>
+<li><strong><code>enableRecursiveFileSearch</code></strong> (boolean): Whether to enable searching recursively for filenames under the current tree when completing @ prefixes in the prompt.</li>
+</ul>
+</li>
+<li>
+<p><strong>Example:</strong>
+    <code>json
+    "fileFiltering": {
+      "respectGitIgnore": true,
+      "enableRecursiveFileSearch": false
+    }</code></p>
+</li>
+<li>
+<p><strong><code>coreTools</code></strong> (array of strings):</p>
+</li>
+<li><strong>Description:</strong> Allows you to specify a list of core tool names that should be made available to the model. This can be used to restrict the set of built-in tools. See <a href="../core/tools-api.md#built-in-tools">Built-in Tools</a> for a list of core tools. You can also specify command-specific restrictions for tools that support it, like the <code>ShellTool</code>. For example, <code>"coreTools": ["ShellTool(ls -l)"]</code> will only allow the <code>ls -l</code> command to be executed.</li>
+<li><strong>Default:</strong> All tools available for use by the Gemini model.</li>
+<li>
+<p><strong>Example:</strong> <code>"coreTools": ["ReadFileTool", "GlobTool", "ShellTool(ls)"]</code>.</p>
+</li>
+<li>
+<p><strong><code>excludeTools</code></strong> (array of strings):</p>
+</li>
+<li><strong>Description:</strong> Allows you to specify a list of core tool names that should be excluded from the model. A tool listed in both <code>excludeTools</code> and <code>coreTools</code> is excluded. You can also specify command-specific restrictions for tools that support it, like the <code>ShellTool</code>. For example, <code>"excludeTools": ["ShellTool(rm -rf)"]</code> will block the <code>rm -rf</code> command.</li>
+<li><strong>Default</strong>: No tools excluded.</li>
+<li><strong>Example:</strong> <code>"excludeTools": ["run_shell_command", "findFiles"]</code>.</li>
+<li>
+<p><strong>Security Note:</strong> Command-specific restrictions in
+    <code>excludeTools</code> for <code>run_shell_command</code> are based on simple string matching and can be easily bypassed. This feature is <strong>not a security mechanism</strong> and should not be relied upon to safely execute untrusted code. It is recommended to use <code>coreTools</code> to explicitly select commands
+    that can be executed.</p>
+</li>
+<li>
+<p><strong><code>allowMCPServers</code></strong> (array of strings):</p>
+</li>
+<li><strong>Description:</strong> Allows you to specify a list of MCP server names that should be made available to the model. This can be used to restrict the set of MCP servers to connect to. Note that this will be ignored if <code>--allowed-mcp-server-names</code> is set.</li>
+<li><strong>Default:</strong> All MCP servers are available for use by the Gemini model.</li>
+<li><strong>Example:</strong> <code>"allowMCPServers": ["myPythonServer"]</code>.</li>
+<li>
+<p><strong>Security Note:</strong> This uses simple string matching on MCP server names, which can be modified. If you're a system administrator looking to prevent users from bypassing this, consider configuring the <code>mcpServers</code> at the system settings level such that the user will not be able to configure any MCP servers of their own. This should not be used as an airtight security mechanism.</p>
+</li>
+<li>
+<p><strong><code>excludeMCPServers</code></strong> (array of strings):</p>
+</li>
+<li><strong>Description:</strong> Allows you to specify a list of MCP server names that should be excluded from the model. A server listed in both <code>excludeMCPServers</code> and <code>allowMCPServers</code> is excluded. Note that this will be ignored if <code>--allowed-mcp-server-names</code> is set.</li>
+<li><strong>Default</strong>: No MCP servers excluded.</li>
+<li><strong>Example:</strong> <code>"excludeMCPServers": ["myNodeServer"]</code>.</li>
+<li>
+<p><strong>Security Note:</strong> This uses simple string matching on MCP server names, which can be modified. If you're a system administrator looking to prevent users from bypassing this, consider configuring the <code>mcpServers</code> at the system settings level such that the user will not be able to configure any MCP servers of their own. This should not be used as an airtight security mechanism.</p>
+</li>
+<li>
+<p><strong><code>autoAccept</code></strong> (boolean):</p>
+</li>
+<li><strong>Description:</strong> Controls whether the CLI automatically accepts and executes tool calls that are considered safe (e.g., read-only operations) without explicit user confirmation. If set to <code>true</code>, the CLI will bypass the confirmation prompt for tools deemed safe.</li>
+<li><strong>Default:</strong> <code>false</code></li>
+<li>
+<p><strong>Example:</strong> <code>"autoAccept": true</code></p>
+</li>
+<li>
+<p><strong><code>theme</code></strong> (string):</p>
+</li>
+<li><strong>Description:</strong> Sets the visual <a href="./themes.md">theme</a> for Gemini CLI.</li>
+<li><strong>Default:</strong> <code>"Default"</code></li>
+<li>
+<p><strong>Example:</strong> <code>"theme": "GitHub"</code></p>
+</li>
+<li>
+<p><strong><code>vimMode</code></strong> (boolean):</p>
+</li>
+<li><strong>Description:</strong> Enables or disables vim mode for input editing. When enabled, the input area supports vim-style navigation and editing commands with NORMAL and INSERT modes. The vim mode status is displayed in the footer and persists between sessions.</li>
+<li><strong>Default:</strong> <code>false</code></li>
+<li>
+<p><strong>Example:</strong> <code>"vimMode": true</code></p>
+</li>
+<li>
+<p><strong><code>sandbox</code></strong> (boolean or string):</p>
+</li>
+<li><strong>Description:</strong> Controls whether and how to use sandboxing for tool execution. If set to <code>true</code>, Gemini CLI uses a pre-built <code>gemini-cli-sandbox</code> Docker image. For more information, see <a href="#sandboxing">Sandboxing</a>.</li>
+<li><strong>Default:</strong> <code>false</code></li>
+<li>
+<p><strong>Example:</strong> <code>"sandbox": "docker"</code></p>
+</li>
+<li>
+<p><strong><code>toolDiscoveryCommand</code></strong> (string):</p>
+</li>
+<li><strong>Description:</strong> Defines a custom shell command for discovering tools from your project. The shell command must return on <code>stdout</code> a JSON array of <a href="https://ai.google.dev/gemini-api/docs/function-calling#function-declarations">function declarations</a>. Tool wrappers are optional.</li>
+<li><strong>Default:</strong> Empty</li>
+<li>
+<p><strong>Example:</strong> <code>"toolDiscoveryCommand": "bin/get_tools"</code></p>
+</li>
+<li>
+<p><strong><code>toolCallCommand</code></strong> (string):</p>
+</li>
+<li><strong>Description:</strong> Defines a custom shell command for calling a specific tool that was discovered using <code>toolDiscoveryCommand</code>. The shell command must meet the following criteria:<ul>
+<li>It must take function <code>name</code> (exactly as in <a href="https://ai.google.dev/gemini-api/docs/function-calling#function-declarations">function declaration</a>) as first command line argument.</li>
+<li>It must read function arguments as JSON on <code>stdin</code>, analogous to <a href="https://cloud.google.com/vertex-ai/generative-ai/docs/model-reference/inference#functioncall"><code>functionCall.args</code></a>.</li>
+<li>It must return function output as JSON on <code>stdout</code>, analogous to <a href="https://cloud.google.com/vertex-ai/generative-ai/docs/model-reference/inference#functionresponse"><code>functionResponse.response.content</code></a>.</li>
+</ul>
+</li>
+<li><strong>Default:</strong> Empty</li>
+<li>
+<p><strong>Example:</strong> <code>"toolCallCommand": "bin/call_tool"</code></p>
+</li>
+<li>
+<p><strong><code>mcpServers</code></strong> (object):</p>
+</li>
+<li><strong>Description:</strong> Configures connections to one or more Model-Context Protocol (MCP) servers for discovering and using custom tools. Gemini CLI attempts to connect to each configured MCP server to discover available tools. If multiple MCP servers expose a tool with the same name, the tool names will be prefixed with the server alias you defined in the configuration (e.g., <code>serverAlias__actualToolName</code>) to avoid conflicts. Note that the system might strip certain schema properties from MCP tool definitions for compatibility.</li>
+<li><strong>Default:</strong> Empty</li>
+<li><strong>Properties:</strong><ul>
+<li><strong><code>&lt;SERVER_NAME&gt;</code></strong> (object): The server parameters for the named server.</li>
+<li><code>command</code> (string, required): The command to execute to start the MCP server.</li>
+<li><code>args</code> (array of strings, optional): Arguments to pass to the command.</li>
+<li><code>env</code> (object, optional): Environment variables to set for the server process.</li>
+<li><code>cwd</code> (string, optional): The working directory in which to start the server.</li>
+<li><code>timeout</code> (number, optional): Timeout in milliseconds for requests to this MCP server.</li>
+<li><code>trust</code> (boolean, optional): Trust this server and bypass all tool call confirmations.</li>
+<li><code>includeTools</code> (array of strings, optional): List of tool names to include from this MCP server. When specified, only the tools listed here will be available from this server (whitelist behavior). If not specified, all tools from the server are enabled by default.</li>
+<li><code>excludeTools</code> (array of strings, optional): List of tool names to exclude from this MCP server. Tools listed here will not be available to the model, even if they are exposed by the server. <strong>Note:</strong> <code>excludeTools</code> takes precedence over <code>includeTools</code> - if a tool is in both lists, it will be excluded.</li>
+</ul>
+</li>
+<li>
+<p><strong>Example:</strong>
+    <code>json
+    "mcpServers": {
+      "myPythonServer": {
+        "command": "python",
+        "args": ["mcp_server.py", "--port", "8080"],
+        "cwd": "./mcp_tools/python",
+        "timeout": 5000,
+        "includeTools": ["safe_tool", "file_reader"],
+      },
+      "myNodeServer": {
+        "command": "node",
+        "args": ["mcp_server.js"],
+        "cwd": "./mcp_tools/node",
+        "excludeTools": ["dangerous_tool", "file_deleter"]
+      },
+      "myDockerServer": {
+        "command": "docker",
+        "args": ["run", "-i", "--rm", "-e", "API_KEY", "ghcr.io/foo/bar"],
+        "env": {
+          "API_KEY": "$MY_API_TOKEN"
+        }
+      }
+    }</code></p>
+</li>
+<li>
+<p><strong><code>checkpointing</code></strong> (object):</p>
+</li>
+<li><strong>Description:</strong> Configures the checkpointing feature, which allows you to save and restore conversation and file states. See the <a href="../checkpointing.md">Checkpointing documentation</a> for more details.</li>
+<li><strong>Default:</strong> <code>{"enabled": false}</code></li>
+<li>
+<p><strong>Properties:</strong></p>
+<ul>
+<li><strong><code>enabled</code></strong> (boolean): When <code>true</code>, the <code>/restore</code> command is available.</li>
+</ul>
+</li>
+<li>
+<p><strong><code>preferredEditor</code></strong> (string):</p>
+</li>
+<li><strong>Description:</strong> Specifies the preferred editor to use for viewing diffs.</li>
+<li><strong>Default:</strong> <code>vscode</code></li>
+<li>
+<p><strong>Example:</strong> <code>"preferredEditor": "vscode"</code></p>
+</li>
+<li>
+<p><strong><code>telemetry</code></strong> (object)</p>
+</li>
+<li><strong>Description:</strong> Configures logging and metrics collection for Gemini CLI. For more information, see <a href="../telemetry.md">Telemetry</a>.</li>
+<li><strong>Default:</strong> <code>{"enabled": false, "target": "local", "otlpEndpoint": "http://localhost:4317", "logPrompts": true}</code></li>
+<li><strong>Properties:</strong><ul>
+<li><strong><code>enabled</code></strong> (boolean): Whether or not telemetry is enabled.</li>
+<li><strong><code>target</code></strong> (string): The destination for collected telemetry. Supported values are <code>local</code> and <code>gcp</code>.</li>
+<li><strong><code>otlpEndpoint</code></strong> (string): The endpoint for the OTLP Exporter.</li>
+<li><strong><code>logPrompts</code></strong> (boolean): Whether or not to include the content of user prompts in the logs.</li>
+</ul>
+</li>
+<li><strong>Example:</strong>
+    <code>json
+    "telemetry": {
+      "enabled": true,
+      "target": "local",
+      "otlpEndpoint": "http://localhost:16686",
+      "logPrompts": false
+    }</code></li>
+<li><strong><code>usageStatisticsEnabled</code></strong> (boolean):</li>
+<li><strong>Description:</strong> Enables or disables the collection of usage statistics. See <a href="#usage-statistics">Usage Statistics</a> for more information.</li>
+<li><strong>Default:</strong> <code>true</code></li>
+<li>
+<p><strong>Example:</strong>
+    <code>json
+    "usageStatisticsEnabled": false</code></p>
+</li>
+<li>
+<p><strong><code>hideTips</code></strong> (boolean):</p>
+</li>
+<li><strong>Description:</strong> Enables or disables helpful tips in the CLI interface.</li>
+<li><strong>Default:</strong> <code>false</code></li>
+<li>
+<p><strong>Example:</strong></p>
+<p><code>json
+"hideTips": true</code></p>
+</li>
+<li>
+<p><strong><code>hideBanner</code></strong> (boolean):</p>
+</li>
+<li><strong>Description:</strong> Enables or disables the startup banner (ASCII art logo) in the CLI interface.</li>
+<li><strong>Default:</strong> <code>false</code></li>
+<li>
+<p><strong>Example:</strong></p>
+<p><code>json
+"hideBanner": true</code></p>
+</li>
+<li>
+<p><strong><code>maxSessionTurns</code></strong> (number):</p>
+</li>
+<li><strong>Description:</strong> Sets the maximum number of turns for a session. If the session exceeds this limit, the CLI will stop processing and start a new chat.</li>
+<li><strong>Default:</strong> <code>-1</code> (unlimited)</li>
+<li>
+<p><strong>Example:</strong>
+    <code>json
+    "maxSessionTurns": 10</code></p>
+</li>
+<li>
+<p><strong><code>summarizeToolOutput</code></strong> (object):</p>
+</li>
+<li><strong>Description:</strong> Enables or disables the summarization of tool output. You can specify the token budget for the summarization using the <code>tokenBudget</code> setting.</li>
+<li>Note: Currently only the <code>run_shell_command</code> tool is supported.</li>
+<li><strong>Default:</strong> <code>{}</code> (Disabled by default)</li>
+<li>
+<p><strong>Example:</strong>
+    <code>json
+    "summarizeToolOutput": {
+      "run_shell_command": {
+        "tokenBudget": 2000
+      }
+    }</code></p>
+</li>
+<li>
+<p><strong><code>excludedProjectEnvVars</code></strong> (array of strings):</p>
+</li>
+<li><strong>Description:</strong> Specifies environment variables that should be excluded from being loaded from project <code>.env</code> files. This prevents project-specific environment variables (like <code>DEBUG=true</code>) from interfering with gemini-cli behavior. Variables from <code>.gemini/.env</code> files are never excluded.</li>
+<li><strong>Default:</strong> <code>["DEBUG", "DEBUG_MODE"]</code></li>
+<li>
+<p><strong>Example:</strong>
+    <code>json
+    "excludedProjectEnvVars": ["DEBUG", "DEBUG_MODE", "NODE_ENV"]</code></p>
+</li>
+<li>
+<p><strong><code>includeDirectories</code></strong> (array of strings):</p>
+</li>
+<li><strong>Description:</strong> Specifies an array of additional absolute or relative paths to include in the workspace context. This allows you to work with files across multiple directories as if they were one. Paths can use <code>~</code> to refer to the user's home directory. This setting can be combined with the <code>--include-directories</code> command-line flag.</li>
+<li><strong>Default:</strong> <code>[]</code></li>
+<li>
+<p><strong>Example:</strong>
+    <code>json
+    "includeDirectories": [
+      "/path/to/another/project",
+      "../shared-library",
+      "~/common-utils"
+    ]</code></p>
+</li>
+<li>
+<p><strong><code>loadMemoryFromIncludeDirectories</code></strong> (boolean):</p>
+</li>
+<li><strong>Description:</strong> Controls the behavior of the <code>/memory refresh</code> command. If set to <code>true</code>, <code>GEMINI.md</code> files should be loaded from all directories that are added. If set to <code>false</code>, <code>GEMINI.md</code> should only be loaded from the current directory.</li>
+<li><strong>Default:</strong> <code>false</code></li>
+<li>
+<p><strong>Example:</strong>
+    <code>json
+    "loadMemoryFromIncludeDirectories": true</code></p>
+</li>
+<li>
+<p><strong><code>chatCompression</code></strong> (object):</p>
+</li>
+<li><strong>Description:</strong> Controls the settings for chat history compression, both automatic and
+    when manually invoked through the /compress command.</li>
+<li><strong>Properties:</strong><ul>
+<li><strong><code>contextPercentageThreshold</code></strong> (number): A value between 0 and 1 that specifies the token threshold for compression as a percentage of the model's total token limit. For example, a value of <code>0.6</code> will trigger compression when the chat history exceeds 60% of the token limit.</li>
+</ul>
+</li>
+<li><strong>Example:</strong>
+    <code>json
+    "chatCompression": {
+      "contextPercentageThreshold": 0.6
+    }</code></li>
+</ul>
+<h3 id="example-settingsjson">Example <code>settings.json</code>:</h3>
+<div class="codehilite"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;theme&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;GitHub&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;sandbox&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;docker&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;toolDiscoveryCommand&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;bin/get_tools&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;toolCallCommand&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;bin/call_tool&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;mcpServers&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;mainServer&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;command&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;bin/mcp_server.py&quot;</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">&quot;anotherServer&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;command&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;node&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;args&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;mcp_server.js&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;--verbose&quot;</span><span class="p">]</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;telemetry&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;enabled&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;target&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;local&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;otlpEndpoint&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;http://localhost:4317&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;logPrompts&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;usageStatisticsEnabled&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;hideTips&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;hideBanner&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;maxSessionTurns&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;summarizeToolOutput&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;run_shell_command&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;tokenBudget&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;excludedProjectEnvVars&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;DEBUG&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;DEBUG_MODE&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;NODE_ENV&quot;</span><span class="p">],</span>
+<span class="w">  </span><span class="nt">&quot;includeDirectories&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;path/to/dir1&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;~/path/to/dir2&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;../path/to/dir3&quot;</span><span class="p">],</span>
+<span class="w">  </span><span class="nt">&quot;loadMemoryFromIncludeDirectories&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<h2 id="shell-history">Shell History</h2>
+<p>The CLI keeps a history of shell commands you run. To avoid conflicts between different projects, this history is stored in a project-specific directory within your user's home folder.</p>
+<ul>
+<li><strong>Location:</strong> <code>~/.gemini/tmp/&lt;project_hash&gt;/shell_history</code></li>
+<li><code>&lt;project_hash&gt;</code> is a unique identifier generated from your project's root path.</li>
+<li>The history is stored in a file named <code>shell_history</code>.</li>
+</ul>
+<h2 id="environment-variables-env-files">Environment Variables &amp; <code>.env</code> Files</h2>
+<p>Environment variables are a common way to configure applications, especially for sensitive information like API keys or for settings that might change between environments.</p>
+<p>The CLI automatically loads environment variables from an <code>.env</code> file. The loading order is:</p>
+<ol>
+<li><code>.env</code> file in the current working directory.</li>
+<li>If not found, it searches upwards in parent directories until it finds an <code>.env</code> file or reaches the project root (identified by a <code>.git</code> folder) or the home directory.</li>
+<li>If still not found, it looks for <code>~/.env</code> (in the user's home directory).</li>
+</ol>
+<p><strong>Environment Variable Exclusion:</strong> Some environment variables (like <code>DEBUG</code> and <code>DEBUG_MODE</code>) are automatically excluded from being loaded from project <code>.env</code> files to prevent interference with gemini-cli behavior. Variables from <code>.gemini/.env</code> files are never excluded. You can customize this behavior using the <code>excludedProjectEnvVars</code> setting in your <code>settings.json</code> file.</p>
+<ul>
+<li><strong><code>GEMINI_API_KEY</code></strong> (Required):</li>
+<li>Your API key for the Gemini API.</li>
+<li><strong>Crucial for operation.</strong> The CLI will not function without it.</li>
+<li>Set this in your shell profile (e.g., <code>~/.bashrc</code>, <code>~/.zshrc</code>) or an <code>.env</code> file.</li>
+<li><strong><code>GEMINI_MODEL</code></strong>:</li>
+<li>Specifies the default Gemini model to use.</li>
+<li>Overrides the hardcoded default</li>
+<li>Example: <code>export GEMINI_MODEL="gemini-2.5-flash"</code></li>
+<li><strong><code>GOOGLE_API_KEY</code></strong>:</li>
+<li>Your Google Cloud API key.</li>
+<li>Required for using Vertex AI in express mode.</li>
+<li>Ensure you have the necessary permissions.</li>
+<li>Example: <code>export GOOGLE_API_KEY="YOUR_GOOGLE_API_KEY"</code>.</li>
+<li><strong><code>GOOGLE_CLOUD_PROJECT</code></strong>:</li>
+<li>Your Google Cloud Project ID.</li>
+<li>Required for using Code Assist or Vertex AI.</li>
+<li>If using Vertex AI, ensure you have the necessary permissions in this project.</li>
+<li><strong>Cloud Shell Note:</strong> When running in a Cloud Shell environment, this variable defaults to a special project allocated for Cloud Shell users. If you have <code>GOOGLE_CLOUD_PROJECT</code> set in your global environment in Cloud Shell, it will be overridden by this default. To use a different project in Cloud Shell, you must define <code>GOOGLE_CLOUD_PROJECT</code> in a <code>.env</code> file.</li>
+<li>Example: <code>export GOOGLE_CLOUD_PROJECT="YOUR_PROJECT_ID"</code>.</li>
+<li><strong><code>GOOGLE_APPLICATION_CREDENTIALS</code></strong> (string):</li>
+<li><strong>Description:</strong> The path to your Google Application Credentials JSON file.</li>
+<li><strong>Example:</strong> <code>export GOOGLE_APPLICATION_CREDENTIALS="/path/to/your/credentials.json"</code></li>
+<li><strong><code>OTLP_GOOGLE_CLOUD_PROJECT</code></strong>:</li>
+<li>Your Google Cloud Project ID for Telemetry in Google Cloud</li>
+<li>Example: <code>export OTLP_GOOGLE_CLOUD_PROJECT="YOUR_PROJECT_ID"</code>.</li>
+<li><strong><code>GOOGLE_CLOUD_LOCATION</code></strong>:</li>
+<li>Your Google Cloud Project Location (e.g., us-central1).</li>
+<li>Required for using Vertex AI in non express mode.</li>
+<li>Example: <code>export GOOGLE_CLOUD_LOCATION="YOUR_PROJECT_LOCATION"</code>.</li>
+<li><strong><code>GEMINI_SANDBOX</code></strong>:</li>
+<li>Alternative to the <code>sandbox</code> setting in <code>settings.json</code>.</li>
+<li>Accepts <code>true</code>, <code>false</code>, <code>docker</code>, <code>podman</code>, or a custom command string.</li>
+<li><strong><code>SEATBELT_PROFILE</code></strong> (macOS specific):</li>
+<li>Switches the Seatbelt (<code>sandbox-exec</code>) profile on macOS.</li>
+<li><code>permissive-open</code>: (Default) Restricts writes to the project folder (and a few other folders, see <code>packages/cli/src/utils/sandbox-macos-permissive-open.sb</code>) but allows other operations.</li>
+<li><code>strict</code>: Uses a strict profile that declines operations by default.</li>
+<li><code>&lt;profile_name&gt;</code>: Uses a custom profile. To define a custom profile, create a file named <code>sandbox-macos-&lt;profile_name&gt;.sb</code> in your project's <code>.gemini/</code> directory (e.g., <code>my-project/.gemini/sandbox-macos-custom.sb</code>).</li>
+<li><strong><code>DEBUG</code> or <code>DEBUG_MODE</code></strong> (often used by underlying libraries or the CLI itself):</li>
+<li>Set to <code>true</code> or <code>1</code> to enable verbose debug logging, which can be helpful for troubleshooting.</li>
+<li><strong>Note:</strong> These variables are automatically excluded from project <code>.env</code> files by default to prevent interference with gemini-cli behavior. Use <code>.gemini/.env</code> files if you need to set these for gemini-cli specifically.</li>
+<li><strong><code>NO_COLOR</code></strong>:</li>
+<li>Set to any value to disable all color output in the CLI.</li>
+<li><strong><code>CLI_TITLE</code></strong>:</li>
+<li>Set to a string to customize the title of the CLI.</li>
+<li><strong><code>CODE_ASSIST_ENDPOINT</code></strong>:</li>
+<li>Specifies the endpoint for the code assist server.</li>
+<li>This is useful for development and testing.</li>
+</ul>
+<h2 id="command-line-arguments">Command-Line Arguments</h2>
+<p>Arguments passed directly when running the CLI can override other configurations for that specific session.</p>
+<ul>
+<li><strong><code>--model &lt;model_name&gt;</code></strong> (<strong><code>-m &lt;model_name&gt;</code></strong>):</li>
+<li>Specifies the Gemini model to use for this session.</li>
+<li>Example: <code>npm start -- --model gemini-1.5-pro-latest</code></li>
+<li><strong><code>--prompt &lt;your_prompt&gt;</code></strong> (<strong><code>-p &lt;your_prompt&gt;</code></strong>):</li>
+<li>Used to pass a prompt directly to the command. This invokes Gemini CLI in a non-interactive mode.</li>
+<li><strong><code>--prompt-interactive &lt;your_prompt&gt;</code></strong> (<strong><code>-i &lt;your_prompt&gt;</code></strong>):</li>
+<li>Starts an interactive session with the provided prompt as the initial input.</li>
+<li>The prompt is processed within the interactive session, not before it.</li>
+<li>Cannot be used when piping input from stdin.</li>
+<li>Example: <code>gemini -i "explain this code"</code></li>
+<li><strong><code>--sandbox</code></strong> (<strong><code>-s</code></strong>):</li>
+<li>Enables sandbox mode for this session.</li>
+<li><strong><code>--sandbox-image</code></strong>:</li>
+<li>Sets the sandbox image URI.</li>
+<li><strong><code>--debug</code></strong> (<strong><code>-d</code></strong>):</li>
+<li>Enables debug mode for this session, providing more verbose output.</li>
+<li><strong><code>--all-files</code></strong> (<strong><code>-a</code></strong>):</li>
+<li>If set, recursively includes all files within the current directory as context for the prompt.</li>
+<li><strong><code>--help</code></strong> (or <strong><code>-h</code></strong>):</li>
+<li>Displays help information about command-line arguments.</li>
+<li><strong><code>--show-memory-usage</code></strong>:</li>
+<li>Displays the current memory usage.</li>
+<li><strong><code>--yolo</code></strong>:</li>
+<li>Enables YOLO mode, which automatically approves all tool calls.</li>
+<li><strong><code>--telemetry</code></strong>:</li>
+<li>Enables <a href="../telemetry.md">telemetry</a>.</li>
+<li><strong><code>--telemetry-target</code></strong>:</li>
+<li>Sets the telemetry target. See <a href="../telemetry.md">telemetry</a> for more information.</li>
+<li><strong><code>--telemetry-otlp-endpoint</code></strong>:</li>
+<li>Sets the OTLP endpoint for telemetry. See <a href="../telemetry.md">telemetry</a> for more information.</li>
+<li><strong><code>--telemetry-log-prompts</code></strong>:</li>
+<li>Enables logging of prompts for telemetry. See <a href="../telemetry.md">telemetry</a> for more information.</li>
+<li><strong><code>--checkpointing</code></strong>:</li>
+<li>Enables <a href="../checkpointing.md">checkpointing</a>.</li>
+<li><strong><code>--extensions &lt;extension_name ...&gt;</code></strong> (<strong><code>-e &lt;extension_name ...&gt;</code></strong>):</li>
+<li>Specifies a list of extensions to use for the session. If not provided, all available extensions are used.</li>
+<li>Use the special term <code>gemini -e none</code> to disable all extensions.</li>
+<li>Example: <code>gemini -e my-extension -e my-other-extension</code></li>
+<li><strong><code>--list-extensions</code></strong> (<strong><code>-l</code></strong>):</li>
+<li>Lists all available extensions and exits.</li>
+<li><strong><code>--proxy</code></strong>:</li>
+<li>Sets the proxy for the CLI.</li>
+<li>Example: <code>--proxy http://localhost:7890</code>.</li>
+<li><strong><code>--include-directories &lt;dir1,dir2,...&gt;</code></strong>:</li>
+<li>Includes additional directories in the workspace for multi-directory support.</li>
+<li>Can be specified multiple times or as comma-separated values.</li>
+<li>5 directories can be added at maximum.</li>
+<li>Example: <code>--include-directories /path/to/project1,/path/to/project2</code> or <code>--include-directories /path/to/project1 --include-directories /path/to/project2</code></li>
+<li><strong><code>--version</code></strong>:</li>
+<li>Displays the version of the CLI.</li>
+</ul>
+<h2 id="context-files-hierarchical-instructional-context">Context Files (Hierarchical Instructional Context)</h2>
+<p>While not strictly configuration for the CLI's <em>behavior</em>, context files (defaulting to <code>GEMINI.md</code> but configurable via the <code>contextFileName</code> setting) are crucial for configuring the <em>instructional context</em> (also referred to as "memory") provided to the Gemini model. This powerful feature allows you to give project-specific instructions, coding style guides, or any relevant background information to the AI, making its responses more tailored and accurate to your needs. The CLI includes UI elements, such as an indicator in the footer showing the number of loaded context files, to keep you informed about the active context.</p>
+<ul>
+<li><strong>Purpose:</strong> These Markdown files contain instructions, guidelines, or context that you want the Gemini model to be aware of during your interactions. The system is designed to manage this instructional context hierarchically.</li>
+</ul>
+<h3 id="example-context-file-content-eg-geminimd">Example Context File Content (e.g., <code>GEMINI.md</code>)</h3>
+<p>Here's a conceptual example of what a context file at the root of a TypeScript project might contain:</p>
+<div class="codehilite"><pre><span></span><code><span class="gh"># Project: My Awesome TypeScript Library</span>
+
+<span class="gu">## General Instructions:</span>
+
+<span class="k">-</span><span class="w"> </span>When generating new TypeScript code, please follow the existing coding style.
+<span class="k">-</span><span class="w"> </span>Ensure all new functions and classes have JSDoc comments.
+<span class="k">-</span><span class="w"> </span>Prefer functional programming paradigms where appropriate.
+<span class="k">-</span><span class="w"> </span>All code should be compatible with TypeScript 5.0 and Node.js 20+.
+
+<span class="gu">## Coding Style:</span>
+
+<span class="k">-</span><span class="w"> </span>Use 2 spaces for indentation.
+<span class="k">-</span><span class="w"> </span>Interface names should be prefixed with <span class="sb">`I`</span> (e.g., <span class="sb">`IUserService`</span>).
+<span class="k">-</span><span class="w"> </span>Private class members should be prefixed with an underscore (<span class="sb">`_`</span>).
+<span class="k">-</span><span class="w"> </span>Always use strict equality (<span class="sb">`===`</span> and <span class="sb">`!==`</span>).
+
+<span class="gu">## Specific Component: `src/api/client.ts`</span>
+
+<span class="k">-</span><span class="w"> </span>This file handles all outbound API requests.
+<span class="k">-</span><span class="w"> </span>When adding new API call functions, ensure they include robust error handling and logging.
+<span class="k">-</span><span class="w"> </span>Use the existing <span class="sb">`fetchWithRetry`</span> utility for all GET requests.
+
+<span class="gu">## Regarding Dependencies:</span>
+
+<span class="k">-</span><span class="w"> </span>Avoid introducing new external dependencies unless absolutely necessary.
+<span class="k">-</span><span class="w"> </span>If a new dependency is required, please state the reason.
+</code></pre></div>
+
+<p>This example demonstrates how you can provide general project context, specific coding conventions, and even notes about particular files or components. The more relevant and precise your context files are, the better the AI can assist you. Project-specific context files are highly encouraged to establish conventions and context.</p>
+<ul>
+<li><strong>Hierarchical Loading and Precedence:</strong> The CLI implements a sophisticated hierarchical memory system by loading context files (e.g., <code>GEMINI.md</code>) from several locations. Content from files lower in this list (more specific) typically overrides or supplements content from files higher up (more general). The exact concatenation order and final context can be inspected using the <code>/memory show</code> command. The typical loading order is:</li>
+<li><strong>Global Context File:</strong><ul>
+<li>Location: <code>~/.gemini/&lt;contextFileName&gt;</code> (e.g., <code>~/.gemini/GEMINI.md</code> in your user home directory).</li>
+<li>Scope: Provides default instructions for all your projects.</li>
+</ul>
+</li>
+<li><strong>Project Root &amp; Ancestors Context Files:</strong><ul>
+<li>Location: The CLI searches for the configured context file in the current working directory and then in each parent directory up to either the project root (identified by a <code>.git</code> folder) or your home directory.</li>
+<li>Scope: Provides context relevant to the entire project or a significant portion of it.</li>
+</ul>
+</li>
+<li><strong>Sub-directory Context Files (Contextual/Local):</strong><ul>
+<li>Location: The CLI also scans for the configured context file in subdirectories <em>below</em> the current working directory (respecting common ignore patterns like <code>node_modules</code>, <code>.git</code>, etc.). The breadth of this search is limited to 200 directories by default, but can be configured with a <code>memoryDiscoveryMaxDirs</code> field in your <code>settings.json</code> file.</li>
+<li>Scope: Allows for highly specific instructions relevant to a particular component, module, or subsection of your project.</li>
+</ul>
+</li>
+<li><strong>Concatenation &amp; UI Indication:</strong> The contents of all found context files are concatenated (with separators indicating their origin and path) and provided as part of the system prompt to the Gemini model. The CLI footer displays the count of loaded context files, giving you a quick visual cue about the active instructional context.</li>
+<li><strong>Importing Content:</strong> You can modularize your context files by importing other Markdown files using the <code>@path/to/file.md</code> syntax. For more details, see the <a href="../core/memport.md">Memory Import Processor documentation</a>.</li>
+<li><strong>Commands for Memory Management:</strong></li>
+<li>Use <code>/memory refresh</code> to force a re-scan and reload of all context files from all configured locations. This updates the AI's instructional context.</li>
+<li>Use <code>/memory show</code> to display the combined instructional context currently loaded, allowing you to verify the hierarchy and content being used by the AI.</li>
+<li>See the <a href="./commands.md#memory">Commands documentation</a> for full details on the <code>/memory</code> command and its sub-commands (<code>show</code> and <code>refresh</code>).</li>
+</ul>
+<p>By understanding and utilizing these configuration layers and the hierarchical nature of context files, you can effectively manage the AI's memory and tailor the Gemini CLI's responses to your specific needs and projects.</p>
+<h2 id="sandboxing">Sandboxing</h2>
+<p>The Gemini CLI can execute potentially unsafe operations (like shell commands and file modifications) within a sandboxed environment to protect your system.</p>
+<p>Sandboxing is disabled by default, but you can enable it in a few ways:</p>
+<ul>
+<li>Using <code>--sandbox</code> or <code>-s</code> flag.</li>
+<li>Setting <code>GEMINI_SANDBOX</code> environment variable.</li>
+<li>Sandbox is enabled in <code>--yolo</code> mode by default.</li>
+</ul>
+<p>By default, it uses a pre-built <code>gemini-cli-sandbox</code> Docker image.</p>
+<p>For project-specific sandboxing needs, you can create a custom Dockerfile at <code>.gemini/sandbox.Dockerfile</code> in your project's root directory. This Dockerfile can be based on the base sandbox image:</p>
+<div class="codehilite"><pre><span></span><code><span class="k">FROM</span><span class="w"> </span><span class="s">gemini-cli-sandbox</span>
+
+<span class="c"># Add your custom dependencies or configurations here</span>
+<span class="c"># For example:</span>
+<span class="c"># RUN apt-get update &amp;&amp; apt-get install -y some-package</span>
+<span class="c"># COPY ./my-config /app/my-config</span>
+</code></pre></div>
+
+<p>When <code>.gemini/sandbox.Dockerfile</code> exists, you can use <code>BUILD_SANDBOX</code> environment variable when running Gemini CLI to automatically build the custom sandbox image:</p>
+<div class="codehilite"><pre><span></span><code><span class="nv">BUILD_SANDBOX</span><span class="o">=</span><span class="m">1</span><span class="w"> </span>gemini<span class="w"> </span>-s
+</code></pre></div>
+
+<h2 id="usage-statistics">Usage Statistics</h2>
+<p>To help us improve the Gemini CLI, we collect anonymized usage statistics. This data helps us understand how the CLI is used, identify common issues, and prioritize new features.</p>
+<p><strong>What we collect:</strong></p>
+<ul>
+<li><strong>Tool Calls:</strong> We log the names of the tools that are called, whether they succeed or fail, and how long they take to execute. We do not collect the arguments passed to the tools or any data returned by them.</li>
+<li><strong>API Requests:</strong> We log the Gemini model used for each request, the duration of the request, and whether it was successful. We do not collect the content of the prompts or responses.</li>
+<li><strong>Session Information:</strong> We collect information about the configuration of the CLI, such as the enabled tools and the approval mode.</li>
+</ul>
+<p><strong>What we DON'T collect:</strong></p>
+<ul>
+<li><strong>Personally Identifiable Information (PII):</strong> We do not collect any personal information, such as your name, email address, or API keys.</li>
+<li><strong>Prompt and Response Content:</strong> We do not log the content of your prompts or the responses from the Gemini model.</li>
+<li><strong>File Content:</strong> We do not log the content of any files that are read or written by the CLI.</li>
+</ul>
+<p><strong>How to opt out:</strong></p>
+<p>You can opt out of usage statistics collection at any time by setting the <code>usageStatisticsEnabled</code> property to <code>false</code> in your <code>settings.json</code> file:</p>
+<div class="codehilite"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;usageStatisticsEnabled&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span>
+<span class="p">}</span>
+</code></pre></div>
+        </div>
+        <div class="footer">
+            Generated on 2025-08-30 08:20:39
+        </div>
+    </div>
+</body>
+</html>

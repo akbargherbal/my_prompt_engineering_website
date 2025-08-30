@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TEMPLATE_PDP</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            line-height: 1.6; 
+            color: #333; 
+            background: #fff;
+        }
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        .header { 
+            background: #2c3e50; 
+            color: white; 
+            padding: 1rem 0; 
+            position: sticky; 
+            top: 0; 
+            z-index: 100;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .home-btn { 
+            position: fixed; 
+            top: 20px; 
+            right: 20px; 
+            background: #e74c3c; 
+            color: white; 
+            padding: 12px 16px; 
+            border-radius: 50px; 
+            text-decoration: none; 
+            font-weight: bold; 
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            transition: all 0.3s;
+        }
+        .home-btn:hover { background: #c0392b; transform: translateY(-2px); }
+        .breadcrumb { 
+            background: #ecf0f1; 
+            padding: 10px 0; 
+            margin-bottom: 20px; 
+            font-size: 14px;
+        }
+        .breadcrumb a { color: #3498db; text-decoration: none; }
+        .breadcrumb a:hover { text-decoration: underline; }
+        .breadcrumb span { font-weight: bold; color: #333; }
+        .content { 
+            background: white; 
+            padding: 2rem; 
+            border-radius: 8px; 
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .file-list { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); 
+            gap: 1rem; 
+            margin: 2rem 0; 
+        }
+        .file-item { 
+            padding: 1rem; 
+            border: 1px solid #ddd; 
+            border-radius: 8px; 
+            background: #f8f9fa;
+            transition: all 0.3s;
+        }
+        .file-item:hover { 
+            transform: translateY(-2px); 
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15); 
+        }
+        .file-item a { 
+            color: #2c3e50; 
+            text-decoration: none; 
+            font-weight: 500; 
+            display: block;
+        }
+        .file-item a:hover { color: #3498db; }
+        .file-type { 
+            font-size: 12px; 
+            color: #7f8c8d; 
+            margin-top: 5px; 
+        }
+        .tree { font-family: monospace; white-space: pre-line; background: #f8f9fa; padding: 1rem; border-radius: 8px; }
+        pre { background: #2c3e50; color: #ecf0f1; padding: 1rem; border-radius: 8px; overflow-x: auto; }
+        code { background: #ecf0f1; padding: 2px 4px; border-radius: 4px; font-size: 0.9em; }
+        pre code { background: none; padding: 0; }
+        h1, h2, h3, h4, h5, h6 { color: #2c3e50; margin: 1.5rem 0 1rem 0; }
+        h1 { border-bottom: 3px solid #3498db; padding-bottom: 10px; }
+        a { color: #3498db; }
+        a:hover { color: #2980b9; }
+        .footer { 
+            text-align: center; 
+            padding: 2rem; 
+            color: #7f8c8d; 
+            border-top: 1px solid #ecf0f1; 
+            margin-top: 3rem; 
+        }
+        @media (max-width: 768px) {
+            .container { padding: 10px; }
+            .file-list { grid-template-columns: 1fr; }
+            .content { padding: 1rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="container">
+            <h1>TEMPLATE_PDP</h1>
+        </div>
+    </div>
+    <a href="../../../../../../index.html" class="home-btn">🏠 Home</a>
+    <div class="container">
+        <div class="breadcrumb">
+            <a href="../../../../../../index.html">Home</a> / <a href="../../../../../../FRAMEWORK_ARCHITECTURE/index.html">FRAMEWORK_ARCHITECTURE</a> / <a href="../../../../../../FRAMEWORK_ARCHITECTURE/FRAMEWORKS/index.html">FRAMEWORKS</a> / <a href="../../../../../../FRAMEWORK_ARCHITECTURE/FRAMEWORKS/PDP_FRAMEWORK/index.html">PDP_FRAMEWORK</a> / <a href="../../../../../../FRAMEWORK_ARCHITECTURE/FRAMEWORKS/PDP_FRAMEWORK/REWRITE_PDP/index.html">REWRITE_PDP</a> / <a href="../../../../../../FRAMEWORK_ARCHITECTURE/FRAMEWORKS/PDP_FRAMEWORK/REWRITE_PDP/REWRITE/index.html">REWRITE</a> / <a href="../../../../../../FRAMEWORK_ARCHITECTURE/FRAMEWORKS/PDP_FRAMEWORK/REWRITE_PDP/REWRITE/OLD_PAPER_TO_BE_REWRITTEN/index.html">OLD_PAPER_TO_BE_REWRITTEN</a>
+        </div>
+        <div class="content">
+            <h1 id="the-persona-driven-planning-pdp-framework">The Persona-Driven Planning (PDP) Framework</h1>
+<p>A Reusable Template for LLM-Assisted Project Development</p>
+<h3 id="1-core-philosophy"><strong>1. Core Philosophy</strong></h3>
+<p>This framework treats project planning as a structured, five-stage assembly line. A raw project concept is passed through a series of specialist LLM personas, each performing a single, well-defined function. The human's role is not to do the work, but to act as the architect, editor, and final quality gate at each stage. This methodology mitigates common LLM failures (sycophancy, lack of context) and ensures a project is architecturally sound and strategically aligned before implementation begins.</p>
+<h3 id="2-prerequisites-the-concept-phase"><strong>2. Prerequisites: The Concept Phase</strong></h3>
+<p>Before beginning this framework, you must have the following "Concept" artifacts prepared. These documents define the "what" of your project.</p>
+<ol>
+<li><strong><code>app_summary.md</code></strong>: A plain-language description of the project, its purpose, target user, and core value proposition.</li>
+<li><strong><code>visual_mockup</code></strong>: A visual representation of the final product.<ul>
+<li><strong>For Web Apps:</strong> A static <code>mockup.html</code> file.</li>
+<li><strong>For CLI Apps:</strong> A text file showing sample command inputs and the desired terminal output.</li>
+<li><strong>For Automation Scripts:</strong> A diagram or text file describing the "before" and "after" state of the files or systems it will operate on.</li>
+</ul>
+</li>
+<li><strong><code>feature_list.md</code> or <code>.json</code></strong>: A comprehensive, un-prioritized "brain dump" of all desired features for the final, fully-realized version of the project.</li>
+</ol>
+<hr />
+<h2 id="the-five-stage-planning-workflow">The Five-Stage Planning Workflow</h2>
+<h3 id="stage-1-the-strategic-blueprint"><strong>Stage 1: The Strategic Blueprint</strong></h3>
+<ul>
+<li><strong>Goal:</strong> To establish the high-level project strategy and make the most critical, foundational architectural decisions with clear justification.</li>
+<li><strong>Assigned Persona:</strong> <strong>The Staff Software Engineer</strong></li>
+<li><strong>Inputs:</strong> <code>app_summary.md</code>, <code>visual_mockup</code>, <code>feature_list</code>, <code>BRIEF_PROFILE.md</code> (your developer profile).</li>
+<li><strong>Output:</strong> <code>DOCUMENT_01_STRATEGIC_BLUEPRINT.md</code></li>
+</ul>
+<h4 id="core-process"><strong>Core Process:</strong></h4>
+<ol>
+<li>Initiate a new session with the LLM.</li>
+<li>Provide all input documents and the full persona prompt for the <strong>Staff Software Engineer</strong>.</li>
+<li>The persona will analyze the project and identify the most critical decisions (e.g., database, framework, core algorithm).</li>
+<li>It will generate a simulated "Expert Debate" to explore the trade-offs of the most critical decision from multiple perspectives.</li>
+<li>It will conclude with a final, justified recommendation based on the debate and your developer profile.</li>
+</ol>
+<h4 id="human-decision-makers-role"><strong>Human Decision-Maker's Role:</strong></h4>
+<ul>
+<li>Critically evaluate the debate. Does it feel balanced and realistic?</li>
+<li>Review the final recommendation. Does the justification align with your project goals and constraints?</li>
+<li><strong>Make the final decision.</strong> You are the ultimate authority. Approve the recommendation or choose an alternative based on the evidence presented.</li>
+</ul>
+<hr />
+<h3 id="stage-2-the-technical-foundation"><strong>Stage 2: The Technical Foundation</strong></h3>
+<ul>
+<li><strong>Goal:</strong> To translate the approved strategic decisions into a concrete, unambiguous technical specification.</li>
+<li><strong>Assigned Persona:</strong> <strong>The Technical Foundation Architect</strong></li>
+<li><strong>Inputs:</strong> <code>DOCUMENT_01_STRATEGIC_BLUEPRINT.md</code> (and all concept documents).</li>
+<li><strong>Output:</strong> <code>DOCUMENT_02_TECHNICAL_FOUNDATION.md</code></li>
+</ul>
+<h4 id="core-process_1"><strong>Core Process:</strong></h4>
+<ol>
+<li>Start a new session with the LLM.</li>
+<li>Provide the approved <code>DOCUMENT_01_STRATEGIC_BLUEPRINT.md</code> and the <strong>Technical Foundation Architect</strong> persona prompt.</li>
+<li>The persona will convert the high-level strategies into definitive technical contracts, including API schemas, data models, dependencies, and setup instructions.</li>
+</ol>
+<h4 id="human-decision-makers-role_1"><strong>Human Decision-Maker's Role:</strong></h4>
+<ul>
+<li>Verify that all strategic decisions from Stage 1 have been correctly and completely implemented in the technical specs.</li>
+<li>Ensure there is no ambiguity. The document should contain decisions, not options.</li>
+<li>Approve the final technical foundation before proceeding.</li>
+</ul>
+<hr />
+<h3 id="stage-3-the-mvp-prioritization"><strong>Stage 3: The MVP Prioritization</strong></h3>
+<ul>
+<li><strong>Goal:</strong> To ruthlessly define the scope of the Minimum Viable Product (MVP) to ensure rapid delivery of core value and prevent scope creep.</li>
+<li><strong>Assigned Persona:</strong> <strong>The MVP Prioritization Strategist</strong></li>
+<li><strong>Inputs:</strong> <code>DOCUMENT_02_TECHNICAL_FOUNDATION.md</code>, <code>feature_list</code>.</li>
+<li><strong>Output:</strong> <code>DOCUMENT_03_MVP_PRIORITIZATION.md</code></li>
+</ul>
+<h4 id="core-process_2"><strong>Core Process:</strong></h4>
+<ol>
+<li>Start a new session.</li>
+<li>Provide the <code>DOCUMENT_02_TECHNICAL_FOUNDATION.md</code>, the original <code>feature_list</code>, and the <strong>MVP Prioritization Strategist</strong> persona.</li>
+<li>The persona will classify all features into tiers (<code>Must Have</code>, <code>Should Have</code>, <code>Could Have</code>, <code>Won't Have</code>) and define the MVP success criteria.</li>
+</ol>
+<h4 id="human-decision-makers-role_2"><strong>Human Decision-Maker's Role:</strong></h4>
+<ul>
+<li>Review the feature classifications. Be honest and disciplined. Does the "Must Have" list truly represent the absolute minimum for the app to be functional?</li>
+<li>Approve the final MVP scope. This is your defense against adding "just one more thing" later.</li>
+</ul>
+<hr />
+<h3 id="stage-4-the-development-execution-plan"><strong>Stage 4: The Development Execution Plan</strong></h3>
+<ul>
+<li><strong>Goal:</strong> To convert the blueprint and MVP scope into a step-by-step, actionable implementation plan.</li>
+<li><strong>Assigned Persona:</strong> <strong>The Development Execution Planner</strong></li>
+<li><strong>Inputs:</strong> <code>DOCUMENT_01</code>, <code>DOCUMENT_02</code>, <code>DOCUMENT_03</code>.</li>
+<li><strong>Output:</strong> <code>DOCUMENT_04_DEVELOPMENT_EXECUTION.md</code></li>
+</ul>
+<h4 id="core-process_3"><strong>Core Process:</strong></h4>
+<ol>
+<li>Start a new session.</li>
+<li>Provide the first three planning documents and the <strong>Development Execution Planner</strong> persona.</li>
+<li>The persona will create a detailed plan broken down by milestones, with task checklists, workflow instructions, and a testing strategy.</li>
+</ol>
+<h4 id="human-decision-makers-role_3"><strong>Human Decision-Maker's Role:</strong></h4>
+<ul>
+<li>Read through the entire plan. Does it feel logical and sequential?</li>
+<li>Assess the milestones. Are they realistic?</li>
+<li>Approve the final execution plan. This will become your guide for the implementation phase.</li>
+</ul>
+<hr />
+<h3 id="stage-5-the-project-readiness-audit-the-qa-loop"><strong>Stage 5: The Project Readiness Audit (The QA Loop)</strong></h3>
+<ul>
+<li><strong>Goal:</strong> To perform a final, comprehensive quality assurance check on the entire plan, identify inconsistencies, and give the ultimate "Go / No-Go" signal for development.</li>
+<li><strong>Assigned Persona:</strong> <strong>The Project Readiness Auditor</strong></li>
+<li><strong>Inputs:</strong> <code>DOCUMENT_01</code>, <code>DOCUMENT_02</code>, <code>DOCUMENT_03</code>, <code>DOCUMENT_04</code>, and all Concept Phase documents.</li>
+<li><strong>Output:</strong> <code>DOCUMENT_05_PROJECT_READINESS.md</code></li>
+</ul>
+<h4 id="core-process-the-qa-loop"><strong>Core Process: The QA Loop</strong></h4>
+<ol>
+<li>Start a new session. It is <strong>highly recommended</strong> to use a different LLM model or service for this stage to get a truly "second opinion."</li>
+<li>Provide all four planning documents, all concept documents, your developer profile, and the <strong>Project Readiness Auditor</strong> persona.</li>
+<li>The persona will conduct a full audit, score the plan's readiness, and provide a list of "Green Light," "Yellow Light," and "Red Light" items.</li>
+<li><strong>If the result is anything other than a perfect "GREEN LIGHT":</strong><ul>
+<li>Take the feedback (the "Yellow" and "Red" items).</li>
+<li>Go back to the specific stage (e.g., Stage 2 for a technical spec issue) and the corresponding persona.</li>
+<li>Provide the auditor's feedback and instruct the original persona to generate a revised version of its document.</li>
+<li><strong>Repeat this audit process (Stage 5) with the revised documents.</strong></li>
+</ul>
+</li>
+<li>Continue this loop until the Project Readiness Auditor gives a definitive "✅ <strong>GREEN LIGHT: Proceed with Development</strong>."</li>
+</ol>
+<h4 id="human-decision-makers-role_4"><strong>Human Decision-Maker's Role:</strong></h4>
+<ul>
+<li>You are the judge. You initiate the loop, provide the feedback to the specialist personas, and decide when a revised document is ready for re-auditing.</li>
+<li>You make the final call to exit the planning phase and begin implementation once the "GREEN LIGHT" is achieved.</li>
+</ul>
+        </div>
+        <div class="footer">
+            Generated on 2025-08-30 08:20:33
+        </div>
+    </div>
+</body>
+</html>

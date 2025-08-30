@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>sanity_check_guide</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            line-height: 1.6; 
+            color: #333; 
+            background: #fff;
+        }
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        .header { 
+            background: #2c3e50; 
+            color: white; 
+            padding: 1rem 0; 
+            position: sticky; 
+            top: 0; 
+            z-index: 100;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .home-btn { 
+            position: fixed; 
+            top: 20px; 
+            right: 20px; 
+            background: #e74c3c; 
+            color: white; 
+            padding: 12px 16px; 
+            border-radius: 50px; 
+            text-decoration: none; 
+            font-weight: bold; 
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            transition: all 0.3s;
+        }
+        .home-btn:hover { background: #c0392b; transform: translateY(-2px); }
+        .breadcrumb { 
+            background: #ecf0f1; 
+            padding: 10px 0; 
+            margin-bottom: 20px; 
+            font-size: 14px;
+        }
+        .breadcrumb a { color: #3498db; text-decoration: none; }
+        .breadcrumb a:hover { text-decoration: underline; }
+        .breadcrumb span { font-weight: bold; color: #333; }
+        .content { 
+            background: white; 
+            padding: 2rem; 
+            border-radius: 8px; 
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .file-list { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); 
+            gap: 1rem; 
+            margin: 2rem 0; 
+        }
+        .file-item { 
+            padding: 1rem; 
+            border: 1px solid #ddd; 
+            border-radius: 8px; 
+            background: #f8f9fa;
+            transition: all 0.3s;
+        }
+        .file-item:hover { 
+            transform: translateY(-2px); 
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15); 
+        }
+        .file-item a { 
+            color: #2c3e50; 
+            text-decoration: none; 
+            font-weight: 500; 
+            display: block;
+        }
+        .file-item a:hover { color: #3498db; }
+        .file-type { 
+            font-size: 12px; 
+            color: #7f8c8d; 
+            margin-top: 5px; 
+        }
+        .tree { font-family: monospace; white-space: pre-line; background: #f8f9fa; padding: 1rem; border-radius: 8px; }
+        pre { background: #2c3e50; color: #ecf0f1; padding: 1rem; border-radius: 8px; overflow-x: auto; }
+        code { background: #ecf0f1; padding: 2px 4px; border-radius: 4px; font-size: 0.9em; }
+        pre code { background: none; padding: 0; }
+        h1, h2, h3, h4, h5, h6 { color: #2c3e50; margin: 1.5rem 0 1rem 0; }
+        h1 { border-bottom: 3px solid #3498db; padding-bottom: 10px; }
+        a { color: #3498db; }
+        a:hover { color: #2980b9; }
+        .footer { 
+            text-align: center; 
+            padding: 2rem; 
+            color: #7f8c8d; 
+            border-top: 1px solid #ecf0f1; 
+            margin-top: 3rem; 
+        }
+        @media (max-width: 768px) {
+            .container { padding: 10px; }
+            .file-list { grid-template-columns: 1fr; }
+            .content { padding: 1rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="container">
+            <h1>sanity_check_guide</h1>
+        </div>
+    </div>
+    <a href="../index.html" class="home-btn">🏠 Home</a>
+    <div class="container">
+        <div class="breadcrumb">
+            <a href="../index.html">Home</a> / <a href="../DOCS/index.html">DOCS</a>
+        </div>
+        <div class="content">
+            <h1 id="sanity-check-guide-why-tests-pass-but-apps-fail">Sanity Check Guide: Why Tests Pass But Apps Fail</h1>
+<h2 id="the-problem-green-tests-broken-reality">The Problem: Green Tests, Broken Reality</h2>
+<p><strong>Scenario:</strong> LLM writes you 50 tests. All pass ✅. You deploy. Users complain the app is broken 🔥.</p>
+<p><strong>Root Cause:</strong> Tests validate that code works <em>as written</em>, not <em>as intended</em>.</p>
+<hr />
+<h2 id="the-sanity-check-framework">The "Sanity Check" Framework</h2>
+<h3 id="1-the-reality-gap-audit">1. <strong>The Reality Gap Audit</strong> 🕵️</h3>
+<p><strong>Before trusting any test suite, ask:</strong></p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># ❌ LLM Test: Tests what the code does</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_calculate_shipping</span><span class="p">():</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">calculate_shipping</span><span class="p">(</span><span class="n">weight</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">distance</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">result</span> <span class="o">==</span> <span class="mi">50</span>  <span class="c1"># Code returns 50, test passes</span>
+
+<span class="c1"># ✅ Reality Check: Tests what SHOULD happen</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_calculate_shipping_makes_business_sense</span><span class="p">():</span>
+    <span class="c1"># $50 shipping for 10lb package across 100 miles?</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">calculate_shipping</span><span class="p">(</span><span class="n">weight</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">distance</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+
+    <span class="c1"># Sanity bounds based on REAL business logic</span>
+    <span class="k">assert</span> <span class="mi">5</span> <span class="o">&lt;=</span> <span class="n">result</span> <span class="o">&lt;=</span> <span class="mi">25</span>  <span class="c1"># Reasonable shipping cost</span>
+
+    <span class="c1"># Test against known competitors</span>
+    <span class="n">competitor_cost</span> <span class="o">=</span> <span class="mf">12.50</span>
+    <span class="k">assert</span> <span class="nb">abs</span><span class="p">(</span><span class="n">result</span> <span class="o">-</span> <span class="n">competitor_cost</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">5</span>  <span class="c1"># Within reasonable range</span>
+</code></pre></div>
+
+<hr />
+<h2 id="common-green-but-wrong-test-patterns">Common "Green but Wrong" Test Patterns</h2>
+<h3 id="pattern-1-circular-logic-tests">🚨 <strong>Pattern 1: "Circular Logic" Tests</strong></h3>
+<div class="codehilite"><pre><span></span><code><span class="c1"># ❌ BAD: Tests the implementation, not the requirement</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">UserService</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_user_display_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_id</span><span class="p">):</span>
+        <span class="n">user</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">get_user</span><span class="p">(</span><span class="n">user_id</span><span class="p">)</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">user</span><span class="o">.</span><span class="n">first_name</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">user</span><span class="o">.</span><span class="n">last_name</span><span class="si">}</span><span class="s2">&quot;</span>  <span class="c1"># Bug: underscore!</span>
+
+<span class="c1"># LLM writes this test (and it passes):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_get_user_display_name</span><span class="p">():</span>
+    <span class="n">service</span> <span class="o">=</span> <span class="n">UserService</span><span class="p">()</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">service</span><span class="o">.</span><span class="n">get_user_display_name</span><span class="p">(</span><span class="mi">123</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">result</span> <span class="o">==</span> <span class="s2">&quot;John_Doe&quot;</span>  <span class="c1"># ✅ Passes, but users see &quot;John_Doe&quot;!</span>
+
+<span class="c1"># ✅ GOOD: Tests the actual requirement</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_get_user_display_name_for_humans</span><span class="p">():</span>
+    <span class="n">service</span> <span class="o">=</span> <span class="n">UserService</span><span class="p">()</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">service</span><span class="o">.</span><span class="n">get_user_display_name</span><span class="p">(</span><span class="mi">123</span><span class="p">)</span>
+
+    <span class="c1"># Test what users actually expect to see</span>
+    <span class="k">assert</span> <span class="s2">&quot; &quot;</span> <span class="ow">in</span> <span class="n">result</span>  <span class="c1"># Should have space, not underscore</span>
+    <span class="k">assert</span> <span class="s2">&quot;_&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">result</span>  <span class="c1"># Should not have underscores</span>
+    <span class="k">assert</span> <span class="n">result</span> <span class="o">==</span> <span class="s2">&quot;John Doe&quot;</span>  <span class="c1"># What users actually want</span>
+</code></pre></div>
+
+<h3 id="pattern-2-happy-path-only-tests">🚨 <strong>Pattern 2: "Happy Path Only" Tests</strong></h3>
+<div class="codehilite"><pre><span></span><code><span class="c1"># ❌ BAD: Only tests perfect scenarios</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_process_payment</span><span class="p">():</span>
+    <span class="n">payment</span> <span class="o">=</span> <span class="n">create_valid_payment</span><span class="p">()</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">process_payment</span><span class="p">(</span><span class="n">payment</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">result</span><span class="o">.</span><span class="n">success</span> <span class="o">==</span> <span class="kc">True</span>
+
+<span class="c1"># ✅ GOOD: Tests what actually happens in production</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_payment_processing_reality</span><span class="p">():</span>
+    <span class="c1"># Test network failures (happens 2-5% of the time)</span>
+    <span class="k">with</span> <span class="n">mock_network_timeout</span><span class="p">():</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">process_payment</span><span class="p">(</span><span class="n">valid_payment</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="n">result</span><span class="o">.</span><span class="n">has_retry_mechanism</span><span class="p">()</span>
+
+    <span class="c1"># Test invalid cards (happens 10-15% of the time)</span>
+    <span class="n">invalid_card</span> <span class="o">=</span> <span class="n">Payment</span><span class="p">(</span><span class="n">card_number</span><span class="o">=</span><span class="s2">&quot;1234567890123456&quot;</span><span class="p">)</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">process_payment</span><span class="p">(</span><span class="n">invalid_card</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">result</span><span class="o">.</span><span class="n">error_message_is_user_friendly</span><span class="p">()</span>
+
+    <span class="c1"># Test duplicate payments (common user behavior)</span>
+    <span class="n">process_payment</span><span class="p">(</span><span class="n">valid_payment</span><span class="p">)</span>
+    <span class="n">duplicate_result</span> <span class="o">=</span> <span class="n">process_payment</span><span class="p">(</span><span class="n">valid_payment</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">duplicate_result</span><span class="o">.</span><span class="n">prevents_double_charge</span><span class="p">()</span>
+</code></pre></div>
+
+<h3 id="pattern-3-mock-everything-tests">🚨 <strong>Pattern 3: "Mock Everything" Tests</strong></h3>
+<div class="codehilite"><pre><span></span><code><span class="c1"># ❌ BAD: Mocks hide integration problems</span>
+<span class="nd">@mock</span><span class="o">.</span><span class="n">patch</span><span class="p">(</span><span class="s1">&#39;database.get_user&#39;</span><span class="p">)</span>
+<span class="nd">@mock</span><span class="o">.</span><span class="n">patch</span><span class="p">(</span><span class="s1">&#39;email_service.send_welcome&#39;</span><span class="p">)</span>
+<span class="nd">@mock</span><span class="o">.</span><span class="n">patch</span><span class="p">(</span><span class="s1">&#39;payment_processor.charge_card&#39;</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_user_registration</span><span class="p">(</span><span class="n">mock_payment</span><span class="p">,</span> <span class="n">mock_email</span><span class="p">,</span> <span class="n">mock_db</span><span class="p">):</span>
+    <span class="n">mock_db</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="n">fake_user</span>
+    <span class="n">mock_email</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">mock_payment</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="n">success_response</span>
+
+    <span class="n">result</span> <span class="o">=</span> <span class="n">register_user</span><span class="p">(</span><span class="n">user_data</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">result</span><span class="o">.</span><span class="n">success</span> <span class="o">==</span> <span class="kc">True</span>  <span class="c1"># ✅ Always passes!</span>
+
+<span class="c1"># ✅ GOOD: Test with real dependencies (at least sometimes)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_user_registration_integration</span><span class="p">():</span>
+    <span class="c1"># Use test database, real email service (with test mode)</span>
+    <span class="k">with</span> <span class="n">test_database</span><span class="p">(),</span> <span class="n">test_email_service</span><span class="p">():</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">register_user</span><span class="p">(</span><span class="n">valid_user_data</span><span class="p">)</span>
+
+        <span class="c1"># Verify ACTUAL side effects happened</span>
+        <span class="k">assert</span> <span class="n">user_exists_in_database</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">user_id</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="n">welcome_email_was_sent</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">user_id</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="n">user_can_actually_login</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">user_id</span><span class="p">)</span>
+</code></pre></div>
+
+<hr />
+<h2 id="the-sanity-check-checklist">The "Sanity Check" Checklist</h2>
+<h3 id="quick-reality-checks-run-these-first">⚡ <strong>Quick Reality Checks (Run These First)</strong></h3>
+<div class="codehilite"><pre><span></span><code><span class="c1"># 1. Boundary Value Reality Check</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_realistic_boundaries</span><span class="p">():</span>
+    <span class="c1"># If your app calculates prices, test realistic scenarios</span>
+    <span class="n">expensive_item</span> <span class="o">=</span> <span class="n">calculate_price</span><span class="p">(</span><span class="n">item</span><span class="o">=</span><span class="s2">&quot;laptop&quot;</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="mi">100</span> <span class="o">&lt;=</span> <span class="n">expensive_item</span> <span class="o">&lt;=</span> <span class="mi">10000</span>  <span class="c1"># Reasonable laptop price</span>
+
+    <span class="n">cheap_item</span> <span class="o">=</span> <span class="n">calculate_price</span><span class="p">(</span><span class="n">item</span><span class="o">=</span><span class="s2">&quot;pen&quot;</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="mf">0.10</span> <span class="o">&lt;=</span> <span class="n">cheap_item</span> <span class="o">&lt;=</span> <span class="mi">50</span>  <span class="c1"># Reasonable pen price</span>
+
+<span class="c1"># 2. Time-Based Reality Check  </span>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_reasonable_performance</span><span class="p">():</span>
+    <span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">search_users</span><span class="p">(</span><span class="s2">&quot;john&quot;</span><span class="p">)</span>
+    <span class="n">duration</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start_time</span>
+
+    <span class="k">assert</span> <span class="n">duration</span> <span class="o">&lt;</span> <span class="mf">2.0</span>  <span class="c1"># Users won&#39;t wait longer than 2 seconds</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">100</span>  <span class="c1"># Don&#39;t return 10,000 results</span>
+
+<span class="c1"># 3. User Experience Reality Check</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_error_messages_make_sense</span><span class="p">():</span>
+    <span class="k">with</span> <span class="n">pytest</span><span class="o">.</span><span class="n">raises</span><span class="p">(</span><span class="n">ValidationError</span><span class="p">)</span> <span class="k">as</span> <span class="n">exc_info</span><span class="p">:</span>
+        <span class="n">create_user</span><span class="p">(</span><span class="n">email</span><span class="o">=</span><span class="s2">&quot;not-an-email&quot;</span><span class="p">)</span>
+
+    <span class="n">error_msg</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">exc_info</span><span class="o">.</span><span class="n">value</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+    <span class="c1"># Users should understand the error</span>
+    <span class="k">assert</span> <span class="s2">&quot;email&quot;</span> <span class="ow">in</span> <span class="n">error_msg</span>
+    <span class="k">assert</span> <span class="s2">&quot;invalid&quot;</span> <span class="ow">in</span> <span class="n">error_msg</span> <span class="ow">or</span> <span class="s2">&quot;format&quot;</span> <span class="ow">in</span> <span class="n">error_msg</span>
+    <span class="c1"># Should NOT contain technical jargon</span>
+    <span class="k">assert</span> <span class="s2">&quot;regex&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">error_msg</span>
+    <span class="k">assert</span> <span class="s2">&quot;validation.py line 47&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">error_msg</span>
+</code></pre></div>
+
+<h3 id="deep-sanity-audit-questions">🔍 <strong>Deep Sanity Audit Questions</strong></h3>
+<p><strong>For each passing test, ask:</strong></p>
+<ol>
+<li><strong>"Would a user actually do this?"</strong>
+   ```python
+   # ❌ Tests unrealistic user behavior
+   def test_user_enters_perfect_data():
+       user = User(name="John", email="perfect@email.com", age=30)</li>
+</ol>
+<p># ✅ Tests realistic user behavior<br />
+   def test_user_enters_messy_data():
+       user = User(name="  john smith  ", email="JOHN@GMAIL.COM", age="30")
+       cleaned = clean_user_data(user)
+       assert cleaned.name == "John Smith"
+       assert cleaned.email == "john@gmail.com"
+   ```</p>
+<ol>
+<li>
+<p><strong>"What happens when external services fail?"</strong>
+   <code>python
+   # Test your app when the payment processor is down
+   def test_payment_service_unavailable():
+       with mock_service_unavailable('payment_processor'):
+           result = checkout(cart)
+           # Should gracefully handle, not crash
+           assert result.user_friendly_error_message
+           assert cart.items_are_still_saved()</code></p>
+</li>
+<li>
+<p><strong>"Does this work with real data volumes?"</strong>
+   ```python
+   # ❌ Tests with 3 records
+   def test_with_tiny_dataset():
+       users = [user1, user2, user3]
+       result = process_users(users)</p>
+</li>
+</ol>
+<p># ✅ Tests with realistic data size
+   def test_with_realistic_dataset():
+       users = generate_test_users(count=10000)  # More realistic
+       start_time = time.time()
+       result = process_users(users)</p>
+<div class="codehilite"><pre><span></span><code>   assert time.time() - start_time &lt; 30  # Should complete in reasonable time
+   assert not memory_usage_exceeded_limit()
+</code></pre></div>
+
+<p>```</p>
+<hr />
+<h2 id="the-manual-spot-check-protocol">The "Manual Spot Check" Protocol</h2>
+<h3 id="after-tests-pass-do-this">🛠️ <strong>After Tests Pass, Do This:</strong></h3>
+<div class="codehilite"><pre><span></span><code><span class="c1"># 1. Actually Run Your App Manually</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">- Open your browser</span>
+<span class="sd">- Go through the signup flow</span>
+<span class="sd">- Try to break things on purpose</span>
+<span class="sd">- Use weird inputs: &quot;Robert&#39;); DROP TABLE users;--&quot;</span>
+<span class="sd">- Try on mobile</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="c1"># 2. Check Logs for Warnings</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_no_scary_logs</span><span class="p">():</span>
+    <span class="k">with</span> <span class="n">capture_logs</span><span class="p">()</span> <span class="k">as</span> <span class="n">log_capture</span><span class="p">:</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">run_typical_workflow</span><span class="p">()</span>
+
+    <span class="n">logs</span> <span class="o">=</span> <span class="n">log_capture</span><span class="o">.</span><span class="n">records</span>
+    <span class="c1"># Tests should not generate warnings/errors</span>
+    <span class="k">assert</span> <span class="ow">not</span> <span class="nb">any</span><span class="p">(</span><span class="s2">&quot;ERROR&quot;</span> <span class="ow">in</span> <span class="n">log</span><span class="o">.</span><span class="n">message</span> <span class="k">for</span> <span class="n">log</span> <span class="ow">in</span> <span class="n">logs</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="ow">not</span> <span class="nb">any</span><span class="p">(</span><span class="s2">&quot;WARNING&quot;</span> <span class="ow">in</span> <span class="n">log</span><span class="o">.</span><span class="n">message</span> <span class="k">for</span> <span class="n">log</span> <span class="ow">in</span> <span class="n">logs</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="ow">not</span> <span class="nb">any</span><span class="p">(</span><span class="s2">&quot;CRITICAL&quot;</span> <span class="ow">in</span> <span class="n">log</span><span class="o">.</span><span class="n">message</span> <span class="k">for</span> <span class="n">log</span> <span class="ow">in</span> <span class="n">logs</span><span class="p">)</span>
+
+<span class="c1"># 3. Database State Sanity Check</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_database_state_makes_sense</span><span class="p">():</span>
+    <span class="c1"># Run a typical workflow</span>
+    <span class="n">user</span> <span class="o">=</span> <span class="n">create_user</span><span class="p">(</span><span class="s2">&quot;test@example.com&quot;</span><span class="p">)</span>
+    <span class="n">order</span> <span class="o">=</span> <span class="n">create_order</span><span class="p">(</span><span class="n">user</span><span class="p">,</span> <span class="n">items</span><span class="o">=</span><span class="p">[</span><span class="n">laptop</span><span class="p">,</span> <span class="n">mouse</span><span class="p">])</span>
+
+    <span class="c1"># Check database state manually</span>
+    <span class="n">db_user</span> <span class="o">=</span> <span class="n">User</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">email</span><span class="o">=</span><span class="s2">&quot;test@example.com&quot;</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">db_user</span><span class="o">.</span><span class="n">orders</span><span class="o">.</span><span class="n">count</span><span class="p">()</span> <span class="o">==</span> <span class="mi">1</span>
+    <span class="k">assert</span> <span class="n">db_user</span><span class="o">.</span><span class="n">orders</span><span class="o">.</span><span class="n">first</span><span class="p">()</span><span class="o">.</span><span class="n">total</span> <span class="o">&gt;</span> <span class="mi">0</span>
+
+    <span class="c1"># Check for data corruption</span>
+    <span class="k">assert</span> <span class="n">all_foreign_keys_valid</span><span class="p">()</span>
+    <span class="k">assert</span> <span class="n">no_orphaned_records</span><span class="p">()</span>
+</code></pre></div>
+
+<hr />
+<h2 id="red-flags-when-to-distrust-passing-tests">Red Flags: When to Distrust Passing Tests</h2>
+<h3 id="suspicious-test-patterns">🚩 <strong>Suspicious Test Patterns:</strong></h3>
+<div class="codehilite"><pre><span></span><code><span class="c1"># 🚩 Red Flag 1: Tests that never fail</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_that_always_passes</span><span class="p">():</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">some_function</span><span class="p">()</span>
+    <span class="k">assert</span> <span class="kc">True</span>  <span class="c1"># This test is useless!</span>
+
+<span class="c1"># 🚩 Red Flag 2: Tests with hardcoded expectations</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_hardcoded_expectations</span><span class="p">():</span>
+    <span class="n">users</span> <span class="o">=</span> <span class="n">get_all_users</span><span class="p">()</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">users</span><span class="p">)</span> <span class="o">==</span> <span class="mi">5</span>  <span class="c1"># What if you add/remove users?</span>
+
+<span class="c1"># 🚩 Red Flag 3: Tests that don&#39;t test edge cases</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_only_happy_path</span><span class="p">():</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">divide</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">result</span> <span class="o">==</span> <span class="mi">5</span>
+    <span class="c1"># Missing: divide(10, 0), divide(0, 10), divide(-5, 2), etc.</span>
+</code></pre></div>
+
+<h3 id="environmental-red-flags">🚩 <strong>Environmental Red Flags:</strong></h3>
+<div class="codehilite"><pre><span></span><code><span class="c1"># If your tests need perfect conditions to pass:</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">PYTHONPATH</span><span class="o">=</span>/perfect/path
+<span class="nb">export</span><span class="w"> </span><span class="nv">DATABASE_URL</span><span class="o">=</span>sqlite://perfect_test.db
+<span class="nb">export</span><span class="w"> </span><span class="nv">API_KEY</span><span class="o">=</span>fake_key_that_never_expires
+
+<span class="c1"># Real apps need to handle imperfect environments</span>
+</code></pre></div>
+
+<hr />
+<h2 id="practical-sanity-suite-for-your-apps">Practical "Sanity Suite" for Your Apps</h2>
+<h3 id="for-django-apps">🎯 <strong>For Django Apps:</strong></h3>
+<div class="codehilite"><pre><span></span><code><span class="c1"># tests/sanity_checks.py</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">SanityTestSuite</span><span class="p">:</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">test_admin_actually_works</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Can admin user actually use Django admin?&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">login</span><span class="p">(</span><span class="n">username</span><span class="o">=</span><span class="s1">&#39;admin&#39;</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="s1">&#39;admin&#39;</span><span class="p">)</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;/admin/&#39;</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span>
+        <span class="k">assert</span> <span class="s2">&quot;Django administration&quot;</span> <span class="ow">in</span> <span class="n">response</span><span class="o">.</span><span class="n">content</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">test_static_files_load</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Do CSS/JS files actually exist and load?&quot;&quot;&quot;</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;/static/css/main.css&#39;</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span>
+        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">content</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">test_database_migrations_work</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Do all migrations actually apply cleanly?&quot;&quot;&quot;</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">django.core.management</span><span class="w"> </span><span class="kn">import</span> <span class="n">call_command</span>
+        <span class="n">call_command</span><span class="p">(</span><span class="s1">&#39;migrate&#39;</span><span class="p">,</span> <span class="s1">&#39;--check&#39;</span><span class="p">)</span>  <span class="c1"># Should not raise</span>
+</code></pre></div>
+
+<h3 id="for-fastapi-apps">🎯 <strong>For FastAPI Apps:</strong></h3>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">test_api_docs_accessible</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Users should be able to see API documentation&quot;&quot;&quot;</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;/docs&quot;</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span>
+    <span class="k">assert</span> <span class="s2">&quot;swagger&quot;</span> <span class="ow">in</span> <span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">test_health_check_meaningful</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Health check should actually verify app health&quot;&quot;&quot;</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;/health&quot;</span><span class="p">)</span>
+    <span class="n">health_data</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+
+    <span class="c1"># Should check real dependencies</span>
+    <span class="k">assert</span> <span class="n">health_data</span><span class="p">[</span><span class="s2">&quot;database&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;connected&quot;</span>
+    <span class="k">assert</span> <span class="n">health_data</span><span class="p">[</span><span class="s2">&quot;external_api&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;reachable&quot;</span>
+    <span class="k">assert</span> <span class="s2">&quot;uptime&quot;</span> <span class="ow">in</span> <span class="n">health_data</span>
+</code></pre></div>
+
+<h3 id="for-data-pipelines">🎯 <strong>For Data Pipelines:</strong></h3>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">test_pipeline_with_real_sample_data</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Use actual production data sample (anonymized)&quot;&quot;&quot;</span>
+    <span class="n">sample_data</span> <span class="o">=</span> <span class="n">load_production_sample</span><span class="p">(</span><span class="s2">&quot;last_week_sample.csv&quot;</span><span class="p">)</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">run_pipeline</span><span class="p">(</span><span class="n">sample_data</span><span class="p">)</span>
+
+    <span class="c1"># Verify realistic expectations</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span>
+    <span class="k">assert</span> <span class="nb">all</span><span class="p">(</span><span class="n">record</span><span class="o">.</span><span class="n">is_valid</span><span class="p">()</span> <span class="k">for</span> <span class="n">record</span> <span class="ow">in</span> <span class="n">result</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">no_data_was_corrupted</span><span class="p">(</span><span class="n">sample_data</span><span class="p">,</span> <span class="n">result</span><span class="p">)</span>
+</code></pre></div>
+
+<hr />
+<h2 id="key-takeaway">Key Takeaway</h2>
+<p><strong>Green tests don't guarantee working software.</strong></p>
+<p>The sanity check mindset is:
+1. <strong>Test what users actually experience</strong>
+2. <strong>Use realistic data and scenarios</strong><br />
+3. <strong>Manually spot-check critical paths</strong>
+4. <strong>Question tests that seem "too easy"</strong></p>
+<p>Think of sanity checks as <strong>"Would I trust this with my own money?"</strong> tests.</p>
+<p>If you wouldn't use your own app based on what the tests cover, your tests need work.</p>
+        </div>
+        <div class="footer">
+            Generated on 2025-08-30 08:20:30
+        </div>
+    </div>
+</body>
+</html>

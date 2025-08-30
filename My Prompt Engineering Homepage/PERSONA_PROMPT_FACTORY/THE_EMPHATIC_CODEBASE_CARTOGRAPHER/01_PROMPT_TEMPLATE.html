@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>01_PROMPT_TEMPLATE</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            line-height: 1.6; 
+            color: #333; 
+            background: #fff;
+        }
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        .header { 
+            background: #2c3e50; 
+            color: white; 
+            padding: 1rem 0; 
+            position: sticky; 
+            top: 0; 
+            z-index: 100;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .home-btn { 
+            position: fixed; 
+            top: 20px; 
+            right: 20px; 
+            background: #e74c3c; 
+            color: white; 
+            padding: 12px 16px; 
+            border-radius: 50px; 
+            text-decoration: none; 
+            font-weight: bold; 
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            transition: all 0.3s;
+        }
+        .home-btn:hover { background: #c0392b; transform: translateY(-2px); }
+        .breadcrumb { 
+            background: #ecf0f1; 
+            padding: 10px 0; 
+            margin-bottom: 20px; 
+            font-size: 14px;
+        }
+        .breadcrumb a { color: #3498db; text-decoration: none; }
+        .breadcrumb a:hover { text-decoration: underline; }
+        .breadcrumb span { font-weight: bold; color: #333; }
+        .content { 
+            background: white; 
+            padding: 2rem; 
+            border-radius: 8px; 
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .file-list { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); 
+            gap: 1rem; 
+            margin: 2rem 0; 
+        }
+        .file-item { 
+            padding: 1rem; 
+            border: 1px solid #ddd; 
+            border-radius: 8px; 
+            background: #f8f9fa;
+            transition: all 0.3s;
+        }
+        .file-item:hover { 
+            transform: translateY(-2px); 
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15); 
+        }
+        .file-item a { 
+            color: #2c3e50; 
+            text-decoration: none; 
+            font-weight: 500; 
+            display: block;
+        }
+        .file-item a:hover { color: #3498db; }
+        .file-type { 
+            font-size: 12px; 
+            color: #7f8c8d; 
+            margin-top: 5px; 
+        }
+        .tree { font-family: monospace; white-space: pre-line; background: #f8f9fa; padding: 1rem; border-radius: 8px; }
+        pre { background: #2c3e50; color: #ecf0f1; padding: 1rem; border-radius: 8px; overflow-x: auto; }
+        code { background: #ecf0f1; padding: 2px 4px; border-radius: 4px; font-size: 0.9em; }
+        pre code { background: none; padding: 0; }
+        h1, h2, h3, h4, h5, h6 { color: #2c3e50; margin: 1.5rem 0 1rem 0; }
+        h1 { border-bottom: 3px solid #3498db; padding-bottom: 10px; }
+        a { color: #3498db; }
+        a:hover { color: #2980b9; }
+        .footer { 
+            text-align: center; 
+            padding: 2rem; 
+            color: #7f8c8d; 
+            border-top: 1px solid #ecf0f1; 
+            margin-top: 3rem; 
+        }
+        @media (max-width: 768px) {
+            .container { padding: 10px; }
+            .file-list { grid-template-columns: 1fr; }
+            .content { padding: 1rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="container">
+            <h1>01_PROMPT_TEMPLATE</h1>
+        </div>
+    </div>
+    <a href="../../index.html" class="home-btn">🏠 Home</a>
+    <div class="container">
+        <div class="breadcrumb">
+            <a href="../../index.html">Home</a> / <a href="../../PERSONA_PROMPT_FACTORY/index.html">PERSONA_PROMPT_FACTORY</a> / <a href="../../PERSONA_PROMPT_FACTORY/THE_EMPHATIC_CODEBASE_CARTOGRAPHER/index.html">THE_EMPHATIC_CODEBASE_CARTOGRAPHER</a>
+        </div>
+        <div class="content">
+            <h1 id="lightweight-codebase-analysis-template">Lightweight Codebase Analysis Template</h1>
+<p><strong>Recall Persona:</strong>
+You are "The Empathetic Codebase Cartographer." Tailor all responses to my context and knowledge gaps below.</p>
+<hr />
+<h2 id="my-context">My Context:</h2>
+<ul>
+<li><strong>I Know Well:</strong> <code>[e.g., Python, Django, HTMX]</code></li>
+<li><strong>I'm Learning/New To:</strong> <code>[e.g., React, Docker, Celery]</code>  </li>
+<li><strong>My Goal:</strong> <code>[e.g., "Understand the checkout flow to add payment methods"]</code></li>
+</ul>
+<hr />
+<h2 id="codebase">Codebase:</h2>
+<p>--- START OF CODEBASE ---
+[CODEBASE_PLACEHOLDER]
+--- END OF CODEBASE ---</p>
+<hr />
+<h2 id="your-task-lay-of-the-land-session-questions">Your Task: "Lay of the Land" + Session Questions</h2>
+<p>Provide a high-level overview covering:</p>
+<ol>
+<li><strong>Tech Stack &amp; Purpose:</strong> What frameworks/languages and what does this app do?</li>
+<li><strong>Key Areas for My Goal:</strong> Which directories/files matter most for my stated goal?</li>
+<li><strong>Reality Check:</strong> How does this differ from tutorial/documentation patterns?</li>
+<li><strong>Navigation Landmarks:</strong> 3-4 major "waypoints" to orient myself in this codebase</li>
+<li><strong>Session Questions:</strong> Generate 5-7 focused questions perfect for dedicated exploration sessions</li>
+<li><strong>Best Starting Point:</strong> Single recommended entry point and why</li>
+</ol>
+<hr />
+<p><strong>Ongoing:</strong> For subsequent deep-dives, maintain waypoints, bridge tutorial-to-reality gaps, and suggest logical next steps.</p>
+        </div>
+        <div class="footer">
+            Generated on 2025-08-30 08:20:41
+        </div>
+    </div>
+</body>
+</html>

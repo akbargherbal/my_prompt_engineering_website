@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>product_requirements</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            line-height: 1.6; 
+            color: #333; 
+            background: #fff;
+        }
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        .header { 
+            background: #2c3e50; 
+            color: white; 
+            padding: 1rem 0; 
+            position: sticky; 
+            top: 0; 
+            z-index: 100;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .home-btn { 
+            position: fixed; 
+            top: 20px; 
+            right: 20px; 
+            background: #e74c3c; 
+            color: white; 
+            padding: 12px 16px; 
+            border-radius: 50px; 
+            text-decoration: none; 
+            font-weight: bold; 
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            transition: all 0.3s;
+        }
+        .home-btn:hover { background: #c0392b; transform: translateY(-2px); }
+        .breadcrumb { 
+            background: #ecf0f1; 
+            padding: 10px 0; 
+            margin-bottom: 20px; 
+            font-size: 14px;
+        }
+        .breadcrumb a { color: #3498db; text-decoration: none; }
+        .breadcrumb a:hover { text-decoration: underline; }
+        .breadcrumb span { font-weight: bold; color: #333; }
+        .content { 
+            background: white; 
+            padding: 2rem; 
+            border-radius: 8px; 
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .file-list { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); 
+            gap: 1rem; 
+            margin: 2rem 0; 
+        }
+        .file-item { 
+            padding: 1rem; 
+            border: 1px solid #ddd; 
+            border-radius: 8px; 
+            background: #f8f9fa;
+            transition: all 0.3s;
+        }
+        .file-item:hover { 
+            transform: translateY(-2px); 
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15); 
+        }
+        .file-item a { 
+            color: #2c3e50; 
+            text-decoration: none; 
+            font-weight: 500; 
+            display: block;
+        }
+        .file-item a:hover { color: #3498db; }
+        .file-type { 
+            font-size: 12px; 
+            color: #7f8c8d; 
+            margin-top: 5px; 
+        }
+        .tree { font-family: monospace; white-space: pre-line; background: #f8f9fa; padding: 1rem; border-radius: 8px; }
+        pre { background: #2c3e50; color: #ecf0f1; padding: 1rem; border-radius: 8px; overflow-x: auto; }
+        code { background: #ecf0f1; padding: 2px 4px; border-radius: 4px; font-size: 0.9em; }
+        pre code { background: none; padding: 0; }
+        h1, h2, h3, h4, h5, h6 { color: #2c3e50; margin: 1.5rem 0 1rem 0; }
+        h1 { border-bottom: 3px solid #3498db; padding-bottom: 10px; }
+        a { color: #3498db; }
+        a:hover { color: #2980b9; }
+        .footer { 
+            text-align: center; 
+            padding: 2rem; 
+            color: #7f8c8d; 
+            border-top: 1px solid #ecf0f1; 
+            margin-top: 3rem; 
+        }
+        @media (max-width: 768px) {
+            .container { padding: 10px; }
+            .file-list { grid-template-columns: 1fr; }
+            .content { padding: 1rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="container">
+            <h1>product_requirements</h1>
+        </div>
+    </div>
+    <a href="../../../../index.html" class="home-btn">🏠 Home</a>
+    <div class="container">
+        <div class="breadcrumb">
+            <a href="../../../../index.html">Home</a> / <a href="../../../../SIMULATION/index.html">SIMULATION</a> / <a href="../../../../SIMULATION/EXAMPLES/index.html">EXAMPLES</a> / <a href="../../../../SIMULATION/EXAMPLES/prk_surgery/index.html">prk_surgery</a> / <a href="../../../../SIMULATION/EXAMPLES/prk_surgery/inception/index.html">inception</a>
+        </div>
+        <div class="content">
+            <h1 id="gemini-cli-bridge-problem-statement">Gemini CLI Bridge - Problem Statement</h1>
+<h2 id="the-challenge">The Challenge</h2>
+<p>I recently had PRK surgery and need to reduce eye strain while coding. I'm using Google's Gemini CLI as an agentic code mentor, but its terminal interface creates too much context switching and strain. I want to work entirely within VSCode—writing prompts in one file, getting responses in another—both located inside my chosen repository, all in a comfortable, readable format.</p>
+<h2 id="what-i-want">What I Want</h2>
+<p><strong>A background service that watches my <code>prompt.md</code> file (in my repository) and automatically feeds it to Gemini CLI, then saves the response in <code>TUTORIALS/output.md</code> (in the same repository), where I can read it comfortably.</strong></p>
+<h3 id="my-ideal-workflow">My Ideal Workflow</h3>
+<ol>
+<li>Open <code>prompt.md</code> (inside my repo) in VSCode and type my question</li>
+<li>Save the file (Ctrl+S)</li>
+<li>Bridge detects the save and sends content to Gemini CLI running in background</li>
+<li>Gemini processes and responds</li>
+<li>Response gets written to <code>TUTORIALS/output.md</code> (also inside my repo) in pure Markdown</li>
+<li>I manually open the output file in VSCode preview or Chrome to read it</li>
+<li>Repeat for next prompt</li>
+</ol>
+<h3 id="key-requirements">Key Requirements</h3>
+<p><strong>Must Have:</strong></p>
+<ul>
+<li>Both <code>prompt.md</code> and <code>TUTORIALS/output.md</code> live inside the same repository I choose during setup</li>
+<li>All responses append <code>TUTORIALS/output.md</code></li>
+<li>Output is pure Markdown—no HTML whatsoever</li>
+<li>Gemini CLI runs in the background inside my chosen repository</li>
+<li>File watching that responds immediately when I save</li>
+<li>Zero-to-minimum terminal interaction after initial setup</li>
+<li>Everything readable and editable in VSCode</li>
+</ul>
+<p><strong>Must Not Have:</strong></p>
+<ul>
+<li>Auto-refreshing output (I read at my own pace)</li>
+<li>HTML formatting in output</li>
+<li>Complex UI elements</li>
+</ul>
+<p><strong>Safety:</strong></p>
+<ul>
+<li>Don’t let me accidentally run this in system directories</li>
+<li>Basic validation that the target directory is actually a code repository</li>
+</ul>
+<h2 id="current-problem">Current Problem</h2>
+<p>The v0.0.4 I have now:</p>
+<div class="codehilite"><pre><span></span><code>See actual codebase
+</code></pre></div>
+
+<h2 id="success-looks-like">Success Looks Like</h2>
+<p>I can work for hours just switching between two VSCode tabs—<code>prompt.md</code> for writing prompts, <code>TUTORIALS/output.md</code> for reading responses. No terminal windows, no external browsers (unless I choose), no auto-updating content. Just clean, readable Markdown responses that help me understand my codebase better while being gentle on my recovering eyes.</p>
+<p>The bridge runs silently in the background, I forget it exists, and it just works every time I save a prompt.</p>
+        </div>
+        <div class="footer">
+            Generated on 2025-08-30 08:20:42
+        </div>
+    </div>
+</body>
+</html>
