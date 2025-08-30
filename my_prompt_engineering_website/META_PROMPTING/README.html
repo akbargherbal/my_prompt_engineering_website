@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>README</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            line-height: 1.6; 
+            color: #333; 
+            background: #fff;
+        }
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        .header { 
+            background: #2c3e50; 
+            color: white; 
+            padding: 1rem 0; 
+            position: sticky; 
+            top: 0; 
+            z-index: 100;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .home-btn { 
+            position: fixed; 
+            top: 20px; 
+            right: 20px; 
+            background: #e74c3c; 
+            color: white; 
+            padding: 12px 16px; 
+            border-radius: 50px; 
+            text-decoration: none; 
+            font-weight: bold; 
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            transition: all 0.3s;
+        }
+        .home-btn:hover { background: #c0392b; transform: translateY(-2px); }
+        .breadcrumb { 
+            background: #ecf0f1; 
+            padding: 10px 0; 
+            margin-bottom: 20px; 
+            font-size: 14px;
+        }
+        .breadcrumb a { color: #3498db; text-decoration: none; }
+        .breadcrumb a:hover { text-decoration: underline; }
+        .content { 
+            background: white; 
+            padding: 2rem; 
+            border-radius: 8px; 
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .file-list { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); 
+            gap: 1rem; 
+            margin: 2rem 0; 
+        }
+        .file-item { 
+            padding: 1rem; 
+            border: 1px solid #ddd; 
+            border-radius: 8px; 
+            background: #f8f9fa;
+            transition: all 0.3s;
+        }
+        .file-item:hover { 
+            transform: translateY(-2px); 
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15); 
+        }
+        .file-item a { 
+            color: #2c3e50; 
+            text-decoration: none; 
+            font-weight: 500; 
+            display: block;
+        }
+        .file-item a:hover { color: #3498db; }
+        .file-type { 
+            font-size: 12px; 
+            color: #7f8c8d; 
+            margin-top: 5px; 
+        }
+        .tree { font-family: monospace; white-space: pre-line; background: #f8f9fa; padding: 1rem; border-radius: 8px; }
+        pre { background: #2c3e50; color: #ecf0f1; padding: 1rem; border-radius: 8px; overflow-x: auto; }
+        code { background: #ecf0f1; padding: 2px 4px; border-radius: 4px; font-size: 0.9em; }
+        pre code { background: none; padding: 0; }
+        h1, h2, h3, h4, h5, h6 { color: #2c3e50; margin: 1.5rem 0 1rem 0; }
+        h1 { border-bottom: 3px solid #3498db; padding-bottom: 10px; }
+        a { color: #3498db; }
+        a:hover { color: #2980b9; }
+        .footer { 
+            text-align: center; 
+            padding: 2rem; 
+            color: #7f8c8d; 
+            border-top: 1px solid #ecf0f1; 
+            margin-top: 3rem; 
+        }
+        @media (max-width: 768px) {
+            .container { padding: 10px; }
+            .file-list { grid-template-columns: 1fr; }
+            .content { padding: 1rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="container">
+            <h1>README</h1>
+        </div>
+    </div>
+    <a href="/" class="home-btn">🏠 Home</a>
+    <div class="container">
+        <div class="breadcrumb">
+            <a href="/">Home</a> / <a href="/META_PROMPTING/">META_PROMPTING</a>
+        </div>
+        <div class="content">
+            <h1 id="meta_prompting-the-llm-orchestration-engine">META_PROMPTING: The LLM Orchestration Engine</h1>
+<p><img alt="Project Status" src="https://img.shields.io/badge/status-v0.1.0%20%7C%20Auditing-orange" /><img alt="Language" src="https://img.shields.io/badge/Python-3.10%2B-blue" /><img alt="License" src="https://img.shields.io/badge/license-MIT-green" /></p>
+<p>An interactive command-line tool for generating expert-level, reusable LLM collaboration frameworks. This project is a "meta-framework"—a system designed to build other systems.</p>
+<hr />
+<h2 id="the-core-philosophy-a-force-multiplier-for-prompt-engineering">The Core Philosophy: A Force Multiplier for Prompt Engineering</h2>
+<p>In complex, multi-turn collaborations with Large Language Models (LLMs), the quality of the initial setup is critical. Manually creating and refining persona files and prompt templates for every new project is repetitive and inefficient. This violates the "Don't Repeat Yourself" (DRY) principle.</p>
+<p>The <strong>META_PROMPTING</strong> project solves this problem by creating an <strong>Orchestration Engine</strong>. This engine acts as a "factory" that manufactures bespoke, high-quality collaboration frameworks on demand, turning a manual, hours-long process into an automated, seconds-long one. It is a non-linear force multiplier for expert-level LLM interaction.</p>
+<h2 id="how-it-works-the-factory-analogy">How It Works: The Factory Analogy</h2>
+<p>The engine is composed of three distinct parts:</p>
+<ol>
+<li>
+<p><strong>The Component Library (<code>/components</code>) - The "Parts Bin"</strong>
+    A collection of standardized, pre-written text snippets. Each snippet represents a single, reusable pattern—a persona trait, an interaction protocol, or a critical constraint.</p>
+</li>
+<li>
+<p><strong>The Orchestrator (<code>orchestrator.py</code>) - The "Assembly Line"</strong>
+    The core of the project. This is an interactive Python script that acts as a wizard. It asks the user high-level questions about the desired collaboration and then reads the necessary snippets from the Component Library.</p>
+</li>
+<li>
+<p><strong>The Generated Framework (<code>/output</code>) - The "Final Product"</strong>
+    The orchestrator assembles the chosen components into two complete, ready-to-use Markdown files: <code>00_PERSONA.md</code> and <code>01_PROMPT_TEMPLATE.md</code>. This is the final, tailored framework that the user can immediately use to start a new, expert-level LLM session.</p>
+</li>
+</ol>
+<h2 id="project-status-roadmap">Project Status &amp; Roadmap</h2>
+<p>The project has achieved its initial goal of creating a functional <code>v0.1.0</code> Orchestration Engine. We are now in a formal, deep-dive audit and refinement phase.</p>
+<p>The strategic plan is now divided into five phases:</p>
+<ul>
+<li>[x] <strong>Phase 1: Strategic Planning</strong> - Define the problem, target audience, and core philosophy.</li>
+<li>[x] <strong>Phase 2: System Architecture &amp; Design</strong> - Design the JIT workflow and finalize the initial <code>goal_map.json</code> architecture.</li>
+<li>[x] <strong>Phase 3: Build the Orchestrator (v0.1.0)</strong> - Write the <code>orchestrator.py</code> script based on the finalized design.</li>
+<li>[ ] <strong>Phase 4: Qualitative Audit (Current Phase)</strong> - Conduct a formal audit using a "Tiger Team" of specialized LLM agents to analyze why the <code>v0.1.0</code> output does not yet meet the "80-90% solution" standard.</li>
+<li>[ ] <strong>Phase 5: Framework Evolution (v0.2.0)</strong> - Implement the findings from the audit to evolve the framework's architecture and component generation process.</li>
+</ul>
+<h2 id="usage-the-final-vision">Usage (The Final Vision)</h2>
+<p>Once complete, the engine will be run from the command line.</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># From the root of the META_PROMPTING project</span>
+python<span class="w"> </span>orchestrator.py
+</code></pre></div>
+
+<p>This will launch an interactive wizard that guides the user through the configuration process:</p>
+<div class="codehilite"><pre><span></span><code><span class="nx">Welcome</span><span class="w"> </span><span class="nx">to</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">LLM</span><span class="w"> </span><span class="nx">Orchestration</span><span class="w"> </span><span class="nx">Engine</span><span class="p">.</span>
+
+<span class="nx">What</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">PRIMARY</span><span class="w"> </span><span class="nx">GOAL</span><span class="w"> </span><span class="nx">of</span><span class="w"> </span><span class="nx">this</span><span class="w"> </span><span class="nx">task</span><span class="p">?</span><span class="w"> </span><span class="nx">Choose</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">workflow</span><span class="w"> </span><span class="nx">that</span><span class="w"> </span><span class="nx">best</span><span class="w"> </span><span class="nx">fits</span><span class="p">.</span>
+
+<span class="o">---</span><span class="w"> </span><span class="nx">Technical</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="nx">Execution</span><span class="w"> </span><span class="o">---</span>
+<span class="w"> </span><span class="nx">TEACH_OR_EXPLAIN</span><span class="w">         </span><span class="p">(</span><span class="nx">Purpose</span><span class="p">:</span><span class="w"> </span><span class="nx">To</span><span class="w"> </span><span class="nx">teach</span><span class="w"> </span><span class="nx">a</span><span class="w"> </span><span class="nx">concept</span><span class="w"> </span><span class="k">or</span><span class="w"> </span><span class="nx">document</span><span class="w"> </span><span class="nx">something</span><span class="p">.)</span>
+<span class="w"> </span><span class="nx">DIAGNOSE_ROOT_CAUSE</span><span class="w">      </span><span class="p">(</span><span class="nx">Purpose</span><span class="p">:</span><span class="w"> </span><span class="nx">To</span><span class="w"> </span><span class="nx">find</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">underlying</span><span class="w"> </span><span class="nx">cause</span><span class="w"> </span><span class="nx">of</span><span class="w"> </span><span class="nx">a</span><span class="w"> </span><span class="nx">problem</span><span class="p">.)</span>
+<span class="w"> </span><span class="nx">REVIEW_AGAINST_STANDARDS</span><span class="w"> </span><span class="p">(</span><span class="nx">Purpose</span><span class="p">:</span><span class="w"> </span><span class="nx">To</span><span class="w"> </span><span class="nx">evaluate</span><span class="w"> </span><span class="nx">a</span><span class="w"> </span><span class="nx">piece</span><span class="w"> </span><span class="nx">of</span><span class="w"> </span><span class="nx">work</span><span class="w"> </span><span class="nx">against</span><span class="w"> </span><span class="nx">a</span><span class="w"> </span><span class="nx">set</span><span class="w"> </span><span class="nx">of</span><span class="w"> </span><span class="nx">rules</span><span class="p">.)</span>
+<span class="o">...</span>
+
+<span class="o">---</span><span class="w"> </span><span class="nx">Strategic</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="nx">Developmental</span><span class="w"> </span><span class="o">---</span>
+<span class="w"> </span><span class="nx">DECONSTRUCT_AN_IDEA</span><span class="w">      </span><span class="p">(</span><span class="nx">Purpose</span><span class="p">:</span><span class="w"> </span><span class="nx">Explore</span><span class="w"> </span><span class="nx">a</span><span class="w"> </span><span class="nx">new</span><span class="w"> </span><span class="nx">concept</span><span class="w"> </span><span class="nx">to</span><span class="w"> </span><span class="nx">test</span><span class="w"> </span><span class="nx">its</span><span class="w"> </span><span class="nx">viability</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="nx">principles</span><span class="p">.)</span>
+<span class="o">...</span>
+
+<span class="nx">Your</span><span class="w"> </span><span class="kd">choice</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span>
+
+<span class="nx">Enter</span><span class="w"> </span><span class="nx">a</span><span class="w"> </span><span class="nx">title</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">Persona</span><span class="p">:</span><span class="w"> </span><span class="nx">The</span><span class="w"> </span><span class="nx">Django</span><span class="w"> </span><span class="nx">Standards</span><span class="w"> </span><span class="nx">Advocate</span>
+<span class="o">...</span>
+
+<span class="nx">Generating</span><span class="w"> </span><span class="nx">framework</span><span class="w"> </span><span class="nx">files</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="nx">directory</span><span class="p">:</span><span class="w"> </span><span class="p">.</span><span class="o">/</span><span class="nx">output</span><span class="o">/</span><span class="nx">Django_Standards_Advocate</span><span class="o">/</span>
+<span class="w">  </span><span class="o">-</span><span class="w"> </span><span class="nx">SUCCESS</span><span class="p">:</span><span class="w"> </span><span class="nx">Created</span><span class="w"> </span><span class="mi">00</span><span class="nx">_PERSONA</span><span class="p">.</span><span class="nx">md</span>
+<span class="w">  </span><span class="o">-</span><span class="w"> </span><span class="nx">SUCCESS</span><span class="p">:</span><span class="w"> </span><span class="nx">Created</span><span class="w"> </span><span class="mi">01</span><span class="nx">_PROMPT_TEMPLATE</span><span class="p">.</span><span class="nx">md</span>
+</code></pre></div>
+
+<h2 id="the-component-library">The Component Library</h2>
+<p>The library is organized into three categories to ensure a clean and scalable architecture:</p>
+<ul>
+<li><code>/components/personas/</code>: Defines the LLM's role, tone, and identity.</li>
+<li><code>/components/protocols/</code>: Defines the rules of engagement and the interaction model.</li>
+<li><code>/components/constraints/</code>: Defines non-negotiable rules to protect output integrity.</li>
+</ul>
+<h3 id="how-to-add-a-new-component">How to Add a New Component</h3>
+<p>The framework is designed to be extensible. To add a new component (e.g., a new persona trait):</p>
+<ol>
+<li><strong>Define the Job:</strong> Add a new JSON object to the <code>docs/generation_jobs.json</code> file, specifying the new component's category, name, and description.</li>
+<li><strong>Generate the Component:</strong> Run the component generation script, which will call the LLM API to write the new snippet file.</li>
+<li><strong>Integrate into the Orchestrator:</strong> If the component is part of a new goal, update <code>goal_map.json</code>. The <code>orchestrator.py</code> script will automatically pick it up without code changes.</li>
+</ol>
+<h2 id="license">License</h2>
+<p>This project is distributed under the MIT License.</p>
+<div class="codehilite"><pre><span></span><code>---
+
+<span class="gu">##</span># **Summary of Final Actions**
+
+Now that you have the final <span class="sb">`README.md`</span>, here is the complete checklist of actions to finalize this phase:
+
+1.  **Update <span class="sb">`README.md`</span>:** Replace the content of your <span class="sb">`README.md`</span> with the final version provided above.
+2.  **Archive Obsolete Files:** Move the following list of documents into a <span class="sb">`LEGACY/`</span> or <span class="sb">`archive/`</span> directory:
+    <span class="k">*</span>   <span class="sb">`docs/DESIGN_PHILOSOPHY.md`</span>
+    <span class="k">*</span>   <span class="sb">`docs/STRATEGIC_PLAN.md`</span>
+    <span class="k">*</span>   <span class="sb">`SIMULATIONS/SESSION_03/synthesis_report.md`</span>
+    <span class="k">*</span>   <span class="sb">`docs/PROMPT_SNIPPET_GENERATOR.md`</span>
+    <span class="k">*</span>   <span class="sb">`docs/generation_jobs.json`</span>
+    <span class="k">*</span>   <span class="sb">`docs/AB_TESTING.md`</span>
+
+Once these two actions are complete, your project documentation will be perfectly synchronized with our current strategy. We are then ready for you to generate the smoke test examples for the Audit Committee.
+</code></pre></div>
+        </div>
+        <div class="footer">
+            Generated on 2025-08-30 07:50:59
+        </div>
+    </div>
+</body>
+</html>

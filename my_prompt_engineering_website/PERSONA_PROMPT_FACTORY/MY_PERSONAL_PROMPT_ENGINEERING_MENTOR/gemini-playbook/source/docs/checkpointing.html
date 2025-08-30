@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>checkpointing</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            line-height: 1.6; 
+            color: #333; 
+            background: #fff;
+        }
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        .header { 
+            background: #2c3e50; 
+            color: white; 
+            padding: 1rem 0; 
+            position: sticky; 
+            top: 0; 
+            z-index: 100;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .home-btn { 
+            position: fixed; 
+            top: 20px; 
+            right: 20px; 
+            background: #e74c3c; 
+            color: white; 
+            padding: 12px 16px; 
+            border-radius: 50px; 
+            text-decoration: none; 
+            font-weight: bold; 
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            transition: all 0.3s;
+        }
+        .home-btn:hover { background: #c0392b; transform: translateY(-2px); }
+        .breadcrumb { 
+            background: #ecf0f1; 
+            padding: 10px 0; 
+            margin-bottom: 20px; 
+            font-size: 14px;
+        }
+        .breadcrumb a { color: #3498db; text-decoration: none; }
+        .breadcrumb a:hover { text-decoration: underline; }
+        .content { 
+            background: white; 
+            padding: 2rem; 
+            border-radius: 8px; 
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .file-list { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); 
+            gap: 1rem; 
+            margin: 2rem 0; 
+        }
+        .file-item { 
+            padding: 1rem; 
+            border: 1px solid #ddd; 
+            border-radius: 8px; 
+            background: #f8f9fa;
+            transition: all 0.3s;
+        }
+        .file-item:hover { 
+            transform: translateY(-2px); 
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15); 
+        }
+        .file-item a { 
+            color: #2c3e50; 
+            text-decoration: none; 
+            font-weight: 500; 
+            display: block;
+        }
+        .file-item a:hover { color: #3498db; }
+        .file-type { 
+            font-size: 12px; 
+            color: #7f8c8d; 
+            margin-top: 5px; 
+        }
+        .tree { font-family: monospace; white-space: pre-line; background: #f8f9fa; padding: 1rem; border-radius: 8px; }
+        pre { background: #2c3e50; color: #ecf0f1; padding: 1rem; border-radius: 8px; overflow-x: auto; }
+        code { background: #ecf0f1; padding: 2px 4px; border-radius: 4px; font-size: 0.9em; }
+        pre code { background: none; padding: 0; }
+        h1, h2, h3, h4, h5, h6 { color: #2c3e50; margin: 1.5rem 0 1rem 0; }
+        h1 { border-bottom: 3px solid #3498db; padding-bottom: 10px; }
+        a { color: #3498db; }
+        a:hover { color: #2980b9; }
+        .footer { 
+            text-align: center; 
+            padding: 2rem; 
+            color: #7f8c8d; 
+            border-top: 1px solid #ecf0f1; 
+            margin-top: 3rem; 
+        }
+        @media (max-width: 768px) {
+            .container { padding: 10px; }
+            .file-list { grid-template-columns: 1fr; }
+            .content { padding: 1rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="container">
+            <h1>checkpointing</h1>
+        </div>
+    </div>
+    <a href="/" class="home-btn">🏠 Home</a>
+    <div class="container">
+        <div class="breadcrumb">
+            <a href="/">Home</a> / <a href="/PERSONA_PROMPT_FACTORY/">PERSONA_PROMPT_FACTORY</a> / <a href="/PERSONA_PROMPT_FACTORY/MY_PERSONAL_PROMPT_ENGINEERING_MENTOR/">MY_PERSONAL_PROMPT_ENGINEERING_MENTOR</a> / <a href="/PERSONA_PROMPT_FACTORY/MY_PERSONAL_PROMPT_ENGINEERING_MENTOR/gemini-playbook/">gemini-playbook</a> / <a href="/PERSONA_PROMPT_FACTORY/MY_PERSONAL_PROMPT_ENGINEERING_MENTOR/gemini-playbook/source/">source</a> / <a href="/PERSONA_PROMPT_FACTORY/MY_PERSONAL_PROMPT_ENGINEERING_MENTOR/gemini-playbook/source/docs/">docs</a>
+        </div>
+        <div class="content">
+            <h1 id="checkpointing">Checkpointing</h1>
+<p>The Gemini CLI includes a Checkpointing feature that automatically saves a snapshot of your project's state before any file modifications are made by AI-powered tools. This allows you to safely experiment with and apply code changes, knowing you can instantly revert back to the state before the tool was run.</p>
+<h2 id="how-it-works">How It Works</h2>
+<p>When you approve a tool that modifies the file system (like <code>write_file</code> or <code>replace</code>), the CLI automatically creates a "checkpoint." This checkpoint includes:</p>
+<ol>
+<li><strong>A Git Snapshot:</strong> A commit is made in a special, shadow Git repository located in your home directory (<code>~/.gemini/history/&lt;project_hash&gt;</code>). This snapshot captures the complete state of your project files at that moment. It does <strong>not</strong> interfere with your own project's Git repository.</li>
+<li><strong>Conversation History:</strong> The entire conversation you've had with the agent up to that point is saved.</li>
+<li><strong>The Tool Call:</strong> The specific tool call that was about to be executed is also stored.</li>
+</ol>
+<p>If you want to undo the change or simply go back, you can use the <code>/restore</code> command. Restoring a checkpoint will:</p>
+<ul>
+<li>Revert all files in your project to the state captured in the snapshot.</li>
+<li>Restore the conversation history in the CLI.</li>
+<li>Re-propose the original tool call, allowing you to run it again, modify it, or simply ignore it.</li>
+</ul>
+<p>All checkpoint data, including the Git snapshot and conversation history, is stored locally on your machine. The Git snapshot is stored in the shadow repository while the conversation history and tool calls are saved in a JSON file in your project's temporary directory, typically located at <code>~/.gemini/tmp/&lt;project_hash&gt;/checkpoints</code>.</p>
+<h2 id="enabling-the-feature">Enabling the Feature</h2>
+<p>The Checkpointing feature is disabled by default. To enable it, you can either use a command-line flag or edit your <code>settings.json</code> file.</p>
+<h3 id="using-the-command-line-flag">Using the Command-Line Flag</h3>
+<p>You can enable checkpointing for the current session by using the <code>--checkpointing</code> flag when starting the Gemini CLI:</p>
+<div class="codehilite"><pre><span></span><code>gemini<span class="w"> </span>--checkpointing
+</code></pre></div>
+
+<h3 id="using-the-settingsjson-file">Using the <code>settings.json</code> File</h3>
+<p>To enable checkpointing by default for all sessions, you need to edit your <code>settings.json</code> file.</p>
+<p>Add the following key to your <code>settings.json</code>:</p>
+<div class="codehilite"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;checkpointing&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;enabled&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<h2 id="using-the-restore-command">Using the <code>/restore</code> Command</h2>
+<p>Once enabled, checkpoints are created automatically. To manage them, you use the <code>/restore</code> command.</p>
+<h3 id="list-available-checkpoints">List Available Checkpoints</h3>
+<p>To see a list of all saved checkpoints for the current project, simply run:</p>
+<div class="codehilite"><pre><span></span><code>/restore
+</code></pre></div>
+
+<p>The CLI will display a list of available checkpoint files. These file names are typically composed of a timestamp, the name of the file being modified, and the name of the tool that was about to be run (e.g., <code>2025-06-22T10-00-00_000Z-my-file.txt-write_file</code>).</p>
+<h3 id="restore-a-specific-checkpoint">Restore a Specific Checkpoint</h3>
+<p>To restore your project to a specific checkpoint, use the checkpoint file from the list:</p>
+<div class="codehilite"><pre><span></span><code>/restore &lt;checkpoint_file&gt;
+</code></pre></div>
+
+<p>For example:</p>
+<div class="codehilite"><pre><span></span><code>/restore 2025-06-22T10-00-00_000Z-my-file.txt-write_file
+</code></pre></div>
+
+<p>After running the command, your files and conversation will be immediately restored to the state they were in when the checkpoint was created, and the original tool prompt will reappear.</p>
+        </div>
+        <div class="footer">
+            Generated on 2025-08-30 07:51:03
+        </div>
+    </div>
+</body>
+</html>

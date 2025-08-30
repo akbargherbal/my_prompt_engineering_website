@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>tutorials</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            line-height: 1.6; 
+            color: #333; 
+            background: #fff;
+        }
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        .header { 
+            background: #2c3e50; 
+            color: white; 
+            padding: 1rem 0; 
+            position: sticky; 
+            top: 0; 
+            z-index: 100;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .home-btn { 
+            position: fixed; 
+            top: 20px; 
+            right: 20px; 
+            background: #e74c3c; 
+            color: white; 
+            padding: 12px 16px; 
+            border-radius: 50px; 
+            text-decoration: none; 
+            font-weight: bold; 
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            transition: all 0.3s;
+        }
+        .home-btn:hover { background: #c0392b; transform: translateY(-2px); }
+        .breadcrumb { 
+            background: #ecf0f1; 
+            padding: 10px 0; 
+            margin-bottom: 20px; 
+            font-size: 14px;
+        }
+        .breadcrumb a { color: #3498db; text-decoration: none; }
+        .breadcrumb a:hover { text-decoration: underline; }
+        .content { 
+            background: white; 
+            padding: 2rem; 
+            border-radius: 8px; 
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .file-list { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); 
+            gap: 1rem; 
+            margin: 2rem 0; 
+        }
+        .file-item { 
+            padding: 1rem; 
+            border: 1px solid #ddd; 
+            border-radius: 8px; 
+            background: #f8f9fa;
+            transition: all 0.3s;
+        }
+        .file-item:hover { 
+            transform: translateY(-2px); 
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15); 
+        }
+        .file-item a { 
+            color: #2c3e50; 
+            text-decoration: none; 
+            font-weight: 500; 
+            display: block;
+        }
+        .file-item a:hover { color: #3498db; }
+        .file-type { 
+            font-size: 12px; 
+            color: #7f8c8d; 
+            margin-top: 5px; 
+        }
+        .tree { font-family: monospace; white-space: pre-line; background: #f8f9fa; padding: 1rem; border-radius: 8px; }
+        pre { background: #2c3e50; color: #ecf0f1; padding: 1rem; border-radius: 8px; overflow-x: auto; }
+        code { background: #ecf0f1; padding: 2px 4px; border-radius: 4px; font-size: 0.9em; }
+        pre code { background: none; padding: 0; }
+        h1, h2, h3, h4, h5, h6 { color: #2c3e50; margin: 1.5rem 0 1rem 0; }
+        h1 { border-bottom: 3px solid #3498db; padding-bottom: 10px; }
+        a { color: #3498db; }
+        a:hover { color: #2980b9; }
+        .footer { 
+            text-align: center; 
+            padding: 2rem; 
+            color: #7f8c8d; 
+            border-top: 1px solid #ecf0f1; 
+            margin-top: 3rem; 
+        }
+        @media (max-width: 768px) {
+            .container { padding: 10px; }
+            .file-list { grid-template-columns: 1fr; }
+            .content { padding: 1rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="container">
+            <h1>tutorials</h1>
+        </div>
+    </div>
+    <a href="/" class="home-btn">🏠 Home</a>
+    <div class="container">
+        <div class="breadcrumb">
+            <a href="/">Home</a> / <a href="/PERSONA_PROMPT_FACTORY/">PERSONA_PROMPT_FACTORY</a> / <a href="/PERSONA_PROMPT_FACTORY/MY_PERSONAL_PROMPT_ENGINEERING_MENTOR/">MY_PERSONAL_PROMPT_ENGINEERING_MENTOR</a> / <a href="/PERSONA_PROMPT_FACTORY/MY_PERSONAL_PROMPT_ENGINEERING_MENTOR/gemini-playbook/">gemini-playbook</a> / <a href="/PERSONA_PROMPT_FACTORY/MY_PERSONAL_PROMPT_ENGINEERING_MENTOR/gemini-playbook/source/">source</a> / <a href="/PERSONA_PROMPT_FACTORY/MY_PERSONAL_PROMPT_ENGINEERING_MENTOR/gemini-playbook/source/docs/">docs</a> / <a href="/PERSONA_PROMPT_FACTORY/MY_PERSONAL_PROMPT_ENGINEERING_MENTOR/gemini-playbook/source/docs/cli/">cli</a>
+        </div>
+        <div class="content">
+            <h1 id="tutorials">Tutorials</h1>
+<p>This page contains tutorials for interacting with Gemini CLI.</p>
+<h2 id="setting-up-a-model-context-protocol-mcp-server">Setting up a Model Context Protocol (MCP) server</h2>
+<blockquote>
+<p>[!CAUTION]
+Before using a third-party MCP server, ensure you trust its source and understand the tools it provides. Your use of third-party servers is at your own risk.</p>
+</blockquote>
+<p>This tutorial demonstrates how to set up a MCP server, using the <a href="https://github.com/github/github-mcp-server">GitHub MCP server</a> as an example. The GitHub MCP server provides tools for interacting with GitHub repositories, such as creating issues and commenting on pull requests.</p>
+<h3 id="prerequisites">Prerequisites</h3>
+<p>Before you begin, ensure you have the following installed and configured:</p>
+<ul>
+<li><strong>Docker:</strong> Install and run <a href="https://www.docker.com/">Docker</a>.</li>
+<li><strong>GitHub Personal Access Token (PAT):</strong> Create a new <a href="https://github.com/settings/tokens/new">classic</a> or <a href="https://github.com/settings/personal-access-tokens/new">fine-grained</a> PAT with the necessary scopes.</li>
+</ul>
+<h3 id="guide">Guide</h3>
+<h4 id="configure-the-mcp-server-in-settingsjson">Configure the MCP server in <code>settings.json</code></h4>
+<p>In your project's root directory, create or open the <a href="./configuration.md"><code>.gemini/settings.json</code> file</a>. Within the file, add the <code>mcpServers</code> configuration block, which provides instructions for how to launch the GitHub MCP server.</p>
+<div class="codehilite"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;mcpServers&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;github&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;command&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;docker&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;args&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="s2">&quot;run&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">&quot;-i&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">&quot;--rm&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">&quot;-e&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">&quot;GITHUB_PERSONAL_ACCESS_TOKEN&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">&quot;ghcr.io/github/github-mcp-server&quot;</span>
+<span class="w">      </span><span class="p">],</span>
+<span class="w">      </span><span class="nt">&quot;env&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;GITHUB_PERSONAL_ACCESS_TOKEN&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;${GITHUB_PERSONAL_ACCESS_TOKEN}&quot;</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<h4 id="set-your-github-token">Set your GitHub token</h4>
+<blockquote>
+<p>[!CAUTION]
+Using a broadly scoped personal access token that has access to personal and private repositories can lead to information from the private repository being leaked into the public repository. We recommend using a fine-grained access token that doesn't share access to both public and private repositories.</p>
+</blockquote>
+<p>Use an environment variable to store your GitHub PAT:</p>
+<div class="codehilite"><pre><span></span><code><span class="nv">GITHUB_PERSONAL_ACCESS_TOKEN</span><span class="o">=</span><span class="s2">&quot;pat_YourActualGitHubTokenHere&quot;</span>
+</code></pre></div>
+
+<p>Gemini CLI uses this value in the <code>mcpServers</code> configuration that you defined in the <code>settings.json</code> file.</p>
+<h4 id="launch-gemini-cli-and-verify-the-connection">Launch Gemini CLI and verify the connection</h4>
+<p>When you launch Gemini CLI, it automatically reads your configuration and launches the GitHub MCP server in the background. You can then use natural language prompts to ask Gemini CLI to perform GitHub actions. For example:</p>
+<div class="codehilite"><pre><span></span><code><span class="s2">&quot;get all open issues assigned to me in the &#39;foo/bar&#39; repo and prioritize them&quot;</span>
+</code></pre></div>
+        </div>
+        <div class="footer">
+            Generated on 2025-08-30 07:51:04
+        </div>
+    </div>
+</body>
+</html>

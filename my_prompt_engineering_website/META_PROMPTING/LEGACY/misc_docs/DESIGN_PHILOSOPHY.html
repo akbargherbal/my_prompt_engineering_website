@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DESIGN_PHILOSOPHY</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            line-height: 1.6; 
+            color: #333; 
+            background: #fff;
+        }
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        .header { 
+            background: #2c3e50; 
+            color: white; 
+            padding: 1rem 0; 
+            position: sticky; 
+            top: 0; 
+            z-index: 100;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .home-btn { 
+            position: fixed; 
+            top: 20px; 
+            right: 20px; 
+            background: #e74c3c; 
+            color: white; 
+            padding: 12px 16px; 
+            border-radius: 50px; 
+            text-decoration: none; 
+            font-weight: bold; 
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            transition: all 0.3s;
+        }
+        .home-btn:hover { background: #c0392b; transform: translateY(-2px); }
+        .breadcrumb { 
+            background: #ecf0f1; 
+            padding: 10px 0; 
+            margin-bottom: 20px; 
+            font-size: 14px;
+        }
+        .breadcrumb a { color: #3498db; text-decoration: none; }
+        .breadcrumb a:hover { text-decoration: underline; }
+        .content { 
+            background: white; 
+            padding: 2rem; 
+            border-radius: 8px; 
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .file-list { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); 
+            gap: 1rem; 
+            margin: 2rem 0; 
+        }
+        .file-item { 
+            padding: 1rem; 
+            border: 1px solid #ddd; 
+            border-radius: 8px; 
+            background: #f8f9fa;
+            transition: all 0.3s;
+        }
+        .file-item:hover { 
+            transform: translateY(-2px); 
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15); 
+        }
+        .file-item a { 
+            color: #2c3e50; 
+            text-decoration: none; 
+            font-weight: 500; 
+            display: block;
+        }
+        .file-item a:hover { color: #3498db; }
+        .file-type { 
+            font-size: 12px; 
+            color: #7f8c8d; 
+            margin-top: 5px; 
+        }
+        .tree { font-family: monospace; white-space: pre-line; background: #f8f9fa; padding: 1rem; border-radius: 8px; }
+        pre { background: #2c3e50; color: #ecf0f1; padding: 1rem; border-radius: 8px; overflow-x: auto; }
+        code { background: #ecf0f1; padding: 2px 4px; border-radius: 4px; font-size: 0.9em; }
+        pre code { background: none; padding: 0; }
+        h1, h2, h3, h4, h5, h6 { color: #2c3e50; margin: 1.5rem 0 1rem 0; }
+        h1 { border-bottom: 3px solid #3498db; padding-bottom: 10px; }
+        a { color: #3498db; }
+        a:hover { color: #2980b9; }
+        .footer { 
+            text-align: center; 
+            padding: 2rem; 
+            color: #7f8c8d; 
+            border-top: 1px solid #ecf0f1; 
+            margin-top: 3rem; 
+        }
+        @media (max-width: 768px) {
+            .container { padding: 10px; }
+            .file-list { grid-template-columns: 1fr; }
+            .content { padding: 1rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="container">
+            <h1>DESIGN_PHILOSOPHY</h1>
+        </div>
+    </div>
+    <a href="/" class="home-btn">🏠 Home</a>
+    <div class="container">
+        <div class="breadcrumb">
+            <a href="/">Home</a> / <a href="/META_PROMPTING/">META_PROMPTING</a> / <a href="/META_PROMPTING/LEGACY/">LEGACY</a> / <a href="/META_PROMPTING/LEGACY/misc_docs/">misc_docs</a>
+        </div>
+        <div class="content">
+            <h1 id="design-philosophy-the-prime-directive">Design Philosophy: The Prime Directive</h1>
+<p><strong>DOCUMENT PURPOSE:</strong> This document is the constitution of the META_PROMPTING project. It defines the core "why" of our work, the user we are serving, and the ultimate test for success. All design and development decisions for the <code>orchestrator.py</code> engine and its surrounding framework must be measured against these principles.</p>
+<hr />
+<h3 id="1-the-prime-directive-the-8-hour-to-1-hour-transformation"><strong>1. The Prime Directive: The "8-Hour-to-1-Hour" Transformation</strong></h3>
+<p>This project exists to solve a single, expensive problem articulated in <code>docs/LEGACY_DOC.md</code>: <strong>"It takes a full day to hand-craft a persona and prompt template like this."</strong></p>
+<p>The fundamental mission of this framework is to crush this time cost.</p>
+<p>Success for this project is not ambiguous. It is defined by a single, pass/fail test: its ability to transform the workflow.</p>
+<ul>
+<li><strong>The Old Way:</strong> A full day (~8 hours) of manual, artisanal work to create a "Gold Standard" collaboration framework.</li>
+<li><strong>The New Way (Our Definition of Success):</strong></li>
+<li><strong>5 minutes</strong> using the Orchestration Engine to generate a "Good Enough" scaffolding (<code>00_PERSONA.md</code> and <code>01_PROMPT_TEMPLATE.md</code>).</li>
+<li><strong>~1 hour</strong> of focused, high-value <strong>MANUAL fine-tuning</strong> to elevate that scaffolding to Gold Standard quality.</li>
+</ul>
+<p>If the framework cannot reliably achieve this "8-hour-to-1-hour" transformation, it has failed. Its sole purpose is to act as a powerful <strong>accelerant</strong> for a high-quality, manual process—not to replace it.</p>
+<hr />
+<h3 id="2-the-target-audience-the-artisan-engineer"><strong>2. The Target Audience: The "Artisan Engineer"</strong></h3>
+<p>We are building this tool for a single user persona: the <strong>Artisan Engineer</strong>. Understanding this duality is critical to all design choices.</p>
+<ul>
+<li><strong>The Artisan:</strong> They have exacting standards and know that the final 20% of quality—the nuance, the voice, the perfect phrasing—comes from manual craftsmanship. They value their ability to apply this final polish.</li>
+<li><strong>The Engineer:</strong> They are a systems thinker who despises repetitive, low-value work. They view the 80% of scaffolding as a solved problem that should be automated so they can focus their creative energy where it matters most.</li>
+</ul>
+<p>This framework is a power tool for the Engineer, designed to empower the Artisan.</p>
+<hr />
+<h3 id="3-user-profile-needs-wants-and-values"><strong>3. User Profile: Needs, Wants, and Values</strong></h3>
+<h4 id="what-this-user-needs-the-non-negotiables"><strong>What This User NEEDS (The Non-Negotiables)</strong></h4>
+<ul>
+<li><strong>A "Good Enough" First Draft:</strong> The generated output must be structurally sound and 80% of the way there. It must feel like a competent junior partner prepared the draft for the senior artisan to perfect.</li>
+<li><strong>The Avoidance of the "Blank Page":</strong> The framework's primary value is in overcoming the activation energy required to start from nothing. It must always provide a strong, tangible starting point.</li>
+<li><strong>A Flexible Orchestrator &amp; A Rich Component Library:</strong> The system must be able to generate novel frameworks for diverse tasks (e.g., technical debugging one day, strategic planning the next) to prove it is a true meta-framework, not a one-trick pony.</li>
+<li><strong>Leaving Room for the Artisan:</strong> The generated framework must be "humble." It should be easy to edit, modify, and refine. Its goal is to get the user to the valuable manual fine-tuning stage as quickly as possible.</li>
+</ul>
+<h4 id="what-this-user-wants-the-quality-of-life-features"><strong>What This User WANTS (The Quality-of-Life Features)</strong></h4>
+<ul>
+<li><strong>Clarity &amp; Intuitiveness:</strong> The system's logic should be transparent. The file structure is clean, the configuration (<code>goal_map.json</code>) is human-readable, and the interactive wizard is unambiguous.</li>
+<li><strong>Ultimate Control:</strong> The user wants to be the master of the system. The engine's "brains" are fully exposed and editable, giving them complete control over its behavior.</li>
+<li><strong>Domain Agnosticism:</strong> The tool must support both technical execution and strategic thinking, reflecting the user's multi-faceted needs (the "50/50 balance").</li>
+<li><strong>Power and Trust:</strong> The tool should be designed for an expert. It prioritizes a direct, powerful workflow over unnecessary hand-holding.</li>
+</ul>
+<h4 id="what-this-user-appreciates-the-guiding-philosophies"><strong>What This User APPRECIATES (The Guiding Philosophies)</strong></h4>
+<ul>
+<li><strong>The DRY Principle ("Don't Repeat Yourself"):</strong> This framework is the ultimate application of DRY to prompt engineering.</li>
+<li><strong>Configuration Over Code:</strong> The user values the separation of logic (the script) and data (the configuration files).</li>
+<li><strong>Simplicity &amp; Elegance:</strong> The system should be powerful but not over-engineered. We use simple solutions that match the scale of the problem.</li>
+</ul>
+<h4 id="what-this-user-frowns-upon-the-anti-patterns"><strong>What This User FROWNS UPON (The Anti-Patterns)</strong></h4>
+<ul>
+<li><strong>The "Magic Black Box":</strong> A system that produces a "perfect" but un-editable or opaque output is useless.</li>
+<li><strong>Brittle Scaffolding:</strong> A generated output so flawed that it takes more time to fix than to write from scratch.</li>
+<li><strong>The Illusion of Choice:</strong> A system that appears flexible but can only produce slight variations of the <code>LEGACY_DOC.md</code>.</li>
+<li><strong>Hard-Coded Logic:</strong> Any requirement to modify the Python script to add new goals or components would be a critical design failure.</li>
+</ul>
+        </div>
+        <div class="footer">
+            Generated on 2025-08-30 07:50:59
+        </div>
+    </div>
+</body>
+</html>
